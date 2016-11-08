@@ -11,8 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/")
 public class WelcomeController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String welcome(){
-        return "o sta ima";
-    }
+
 }
