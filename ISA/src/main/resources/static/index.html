@@ -66,6 +66,43 @@
     </div>
 </section>
 
+<section class="main__middle__container homepage">
+
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>About</h3>
+                <div class="seper"></div>
+                    <h5>Dbar je sajt</h5>
+
+            </div>
+            <div class="col-md-3">
+                <h3>Facebook</h3>
+                <div class="seper"> </div>
+                    <h5>Dbar je sajt</h5>
+
+            </div>
+            <div class="col-md-3">
+                <h3>Tweet</h3>
+                <div class="seper"> </div>
+                <h5>Dbar je sajt</h5>
+
+            </div>
+            <div class="col-md-3">
+                <h3>Contact</h3>
+                <div class="seper"></div>
+                    <h5>Dbar je sajt</h5>
+
+            </div>
+
+        </div>
+    </div>
+
+</footer>
+
 <script type="text/javascript">
 
     $('.carousel').carousel({
@@ -73,6 +110,18 @@
         pause: 'none' // set to 'true' to pause slider on mouse hover
     })
 </script>
-
+<script type="text/javascript">
+    $( "a.submenu" ).click(function() {
+        $( ".menuBar" ).slideToggle( "normal", function() {
+// Animation complete.
+        });
+    });
+    $( "ul li.dropdown a" ).click(function() {
+        $( "ul li.dropdown ul" ).slideToggle( "normal", function() {
+// Animation complete.
+        });
+        $('ul li.dropdown').toggleClass('current');
+    });
+</script>
 </body>
 </html>
