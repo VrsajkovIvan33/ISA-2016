@@ -1,0 +1,1 @@
+INSERT INTO guest(g_name, g_surname, g_password, g_email) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com")
