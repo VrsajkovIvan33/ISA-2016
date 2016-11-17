@@ -1,2 +1,2 @@
 INSERT INTO guest(g_name, g_surname, g_password, g_email) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com")
-INSERT INTO konobar(ko_ime, ko_prezime, ko_datum_rodjenja, ko_konfekcijski_broj, ko_velicina_obuce) VALUES ("Petar", "Petrovic", "1960-10-16 00:00:00", 30, 40)
+INSERT INTO waiter(w_name, w_surname, w_date_of_birth, w_dress_size, w_shoe_size) VALUES ("Petar", "Petrovic", "1960-10-16 00:00:00", 30, 40)
