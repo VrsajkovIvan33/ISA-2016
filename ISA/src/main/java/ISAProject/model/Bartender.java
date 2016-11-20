@@ -12,74 +12,102 @@ import java.util.Date;
 public class Bartender implements Serializable {
 
     public Bartender(){
-
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "b_id")
-    private Long b_id;
+    @Column(name = "bid")
+    private Long bId;
 
-    @Column(name = "b_name", nullable = false)
-    private String b_name;
+    @Column(name = "bname", nullable = false)
+    private String bName;
 
-    @Column(name = "b_surname", nullable = false)
-    private String b_surname;
+    @Column(name = "bsurname", nullable = false)
+    private String bSurname;
 
-    @Column(name = "b_date_of_birth")
-    private Date b_date_of_birth;
+    @Column(name = "bdate_of_birth")
+    private Date bDate_of_birth;
 
-    @Column(name = "b_dress_size")
-    private Integer b_dress_size;
+    @Column(name = "bdress_size")
+    private Integer bDress_size;
 
-    @Column(name = "b_shoe_size")
-    private Integer b_shoe_size;
+    @Column(name = "bshoe_size")
+    private Integer bShoe_size;
 
-    public Long getB_id() {
-        return b_id;
+    @Column(name = "bpassword", nullable = false)
+    private String bPassword;
+
+    @Column(name = "bemail", nullable = false)
+    private String bEmail;
+
+    @Enumerated(EnumType.STRING)
+    private final User btype = User.BARTENDER;
+
+    public Long getbId() {
+        return bId;
     }
 
-    public void setB_id(Long b_id) {
-        this.b_id = b_id;
+    public void setbId(Long bId) {
+        this.bId = bId;
     }
 
-    public String getB_name() {
-        return b_name;
+    public String getbName() {
+        return bName;
     }
 
-    public void setB_name(String b_name) {
-        this.b_name = b_name;
+    public void setbName(String bName) {
+        this.bName = bName;
     }
 
-    public String getB_surname() {
-        return b_surname;
+    public String getbSurname() {
+        return bSurname;
     }
 
-    public void setB_surname(String b_surname) {
-        this.b_surname = b_surname;
+    public void setbSurname(String bSurname) {
+        this.bSurname = bSurname;
     }
 
-    public Date getB_date_of_birth() {
-        return b_date_of_birth;
+    public Date getbDate_of_birth() {
+        return bDate_of_birth;
     }
 
-    public void setB_date_of_birth(Date b_date_of_birth) {
-        this.b_date_of_birth = b_date_of_birth;
+    public void setbDate_of_birth(Date bDate_of_birth) {
+        this.bDate_of_birth = bDate_of_birth;
     }
 
-    public Integer getB_dress_size() {
-        return b_dress_size;
+    public Integer getbDress_size() {
+        return bDress_size;
     }
 
-    public void setB_dress_size(Integer b_dress_size) {
-        this.b_dress_size = b_dress_size;
+    public void setbDress_size(Integer bDress_size) {
+        this.bDress_size = bDress_size;
     }
 
-    public Integer getB_shoe_size() {
-        return b_shoe_size;
+    public Integer getbShoe_size() {
+        return bShoe_size;
     }
 
-    public void setB_shoe_size(Integer b_shoe_size) {
-        this.b_shoe_size = b_shoe_size;
+    public void setbShoe_size(Integer bShoe_size) {
+        this.bShoe_size = bShoe_size;
+    }
+
+    public String getbPassword() {
+        return bPassword;
+    }
+
+    public void setbPassword(String bPassword) {
+        this.bPassword = bPassword;
+    }
+
+    public String getbEmail() {
+        return bEmail;
+    }
+
+    public void setbEmail(String bEmail) {
+        this.bEmail = bEmail;
+    }
+
+    public User getBtype() {
+        return btype;
     }
 }

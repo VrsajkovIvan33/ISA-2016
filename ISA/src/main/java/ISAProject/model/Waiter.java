@@ -12,74 +12,102 @@ import java.util.Date;
 public class Waiter implements Serializable {
 
     public Waiter(){
-
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "w_id")
-    private Long w_id;
+    @Column(name = "wid")
+    private Long wId;
 
-    @Column(name = "w_name", nullable = false)
-    private String w_name;
+    @Column(name = "wname", nullable = false)
+    private String wName;
 
-    @Column(name = "w_surname", nullable = false)
-    private String w_surname;
+    @Column(name = "wsurname", nullable = false)
+    private String wSurname;
 
-    @Column(name = "w_date_of_birth")
-    private Date w_date_of_birth;
+    @Column(name = "wdate_of_birth")
+    private Date wDate_of_birth;
 
-    @Column(name = "w_dress_size")
-    private Integer w_dress_size;
+    @Column(name = "wdress_size")
+    private Integer wDress_size;
 
-    @Column(name = "w_shoe_size")
-    private Integer w_shoe_size;
+    @Column(name = "wshoe_size")
+    private Integer wShoe_size;
 
-    public Long getW_id() {
-        return w_id;
+    @Column(name = "wpassword", nullable = false)
+    private String wPassword;
+
+    @Column(name = "wemail", nullable = false)
+    private String wEmail;
+
+    @Enumerated(EnumType.STRING)
+    private final User wtype = User.WAITER;
+
+    public Long getwId() {
+        return wId;
     }
 
-    public void setW_id(Long w_id) {
-        this.w_id = w_id;
+    public void setwId(Long wId) {
+        this.wId = wId;
     }
 
-    public String getW_name() {
-        return w_name;
+    public String getwName() {
+        return wName;
     }
 
-    public void setW_name(String w_name) {
-        this.w_name = w_name;
+    public void setwName(String wName) {
+        this.wName = wName;
     }
 
-    public String getW_surname() {
-        return w_surname;
+    public String getwSurname() {
+        return wSurname;
     }
 
-    public void setW_surname(String w_surname) {
-        this.w_surname = w_surname;
+    public void setwSurname(String wSurname) {
+        this.wSurname = wSurname;
     }
 
-    public Date getW_date_of_birth() {
-        return w_date_of_birth;
+    public Date getwDate_of_birth() {
+        return wDate_of_birth;
     }
 
-    public void setW_date_of_birth(Date w_date_of_birth) {
-        this.w_date_of_birth = w_date_of_birth;
+    public void setwDate_of_birth(Date wDate_of_birth) {
+        this.wDate_of_birth = wDate_of_birth;
     }
 
-    public Integer getW_dress_size() {
-        return w_dress_size;
+    public Integer getwDress_size() {
+        return wDress_size;
     }
 
-    public void setW_dress_size(Integer w_dress_size) {
-        this.w_dress_size = w_dress_size;
+    public void setwDress_size(Integer wDress_size) {
+        this.wDress_size = wDress_size;
     }
 
-    public Integer getW_shoe_size() {
-        return w_shoe_size;
+    public Integer getwShoe_size() {
+        return wShoe_size;
     }
 
-    public void setW_shoe_size(Integer w_shoe_size) {
-        this.w_shoe_size = w_shoe_size;
+    public void setwShoe_size(Integer wShoe_size) {
+        this.wShoe_size = wShoe_size;
+    }
+
+    public String getwPassword() {
+        return wPassword;
+    }
+
+    public void setwPassword(String wPassword) {
+        this.wPassword = wPassword;
+    }
+
+    public String getwEmail() {
+        return wEmail;
+    }
+
+    public void setwEmail(String wEmail) {
+        this.wEmail = wEmail;
+    }
+
+    public User getWtype() {
+        return wtype;
     }
 }

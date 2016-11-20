@@ -12,74 +12,102 @@ import java.util.Date;
 public class Cook implements Serializable {
 
     public Cook(){
-
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "c_id")
-    private Long c_id;
+    @Column(name = "cid")
+    private Long cId;
 
-    @Column(name = "c_name", nullable = false)
-    private String c_name;
+    @Column(name = "cname", nullable = false)
+    private String cName;
 
-    @Column(name = "c_surname", nullable = false)
-    private String c_surname;
+    @Column(name = "csurname", nullable = false)
+    private String cSurname;
 
-    @Column(name = "c_date_of_birth")
-    private Date c_date_of_birth;
+    @Column(name = "cdate_of_birth")
+    private Date cDate_of_birth;
 
-    @Column(name = "c_dress_size")
-    private Integer c_dress_size;
+    @Column(name = "cdress_size")
+    private Integer cDress_size;
 
-    @Column(name = "c_shoe_size")
-    private Integer c_shoe_size;
+    @Column(name = "cshoe_size")
+    private Integer cShoe_size;
 
-    public Long getC_id() {
-        return c_id;
+    @Column(name = "cpassword", nullable = false)
+    private String cPassword;
+
+    @Column(name = "cemail", nullable = false)
+    private String cEmail;
+
+    @Enumerated(EnumType.STRING)
+    private final User ctype = User.COOK;
+
+    public Long getcId() {
+        return cId;
     }
 
-    public void setC_id(Long c_id) {
-        this.c_id = c_id;
+    public void setcId(Long cId) {
+        this.cId = cId;
     }
 
-    public String getC_name() {
-        return c_name;
+    public String getcName() {
+        return cName;
     }
 
-    public void setC_name(String c_name) {
-        this.c_name = c_name;
+    public void setcName(String cName) {
+        this.cName = cName;
     }
 
-    public String getC_surname() {
-        return c_surname;
+    public String getcSurname() {
+        return cSurname;
     }
 
-    public void setC_surname(String c_surname) {
-        this.c_surname = c_surname;
+    public void setcSurname(String cSurname) {
+        this.cSurname = cSurname;
     }
 
-    public Date getC_date_of_birth() {
-        return c_date_of_birth;
+    public Date getcDate_of_birth() {
+        return cDate_of_birth;
     }
 
-    public void setC_date_of_birth(Date c_date_of_birth) {
-        this.c_date_of_birth = c_date_of_birth;
+    public void setcDate_of_birth(Date cDate_of_birth) {
+        this.cDate_of_birth = cDate_of_birth;
     }
 
-    public Integer getC_dress_size() {
-        return c_dress_size;
+    public Integer getcDress_size() {
+        return cDress_size;
     }
 
-    public void setC_dress_size(Integer c_dress_size) {
-        this.c_dress_size = c_dress_size;
+    public void setcDress_size(Integer cDress_size) {
+        this.cDress_size = cDress_size;
     }
 
-    public Integer getC_shoe_size() {
-        return c_shoe_size;
+    public Integer getcShoe_size() {
+        return cShoe_size;
     }
 
-    public void setC_shoe_size(Integer c_shoe_size) {
-        this.c_shoe_size = c_shoe_size;
+    public void setcShoe_size(Integer cShoe_size) {
+        this.cShoe_size = cShoe_size;
+    }
+
+    public String getcPassword() {
+        return cPassword;
+    }
+
+    public void setcPassword(String cPassword) {
+        this.cPassword = cPassword;
+    }
+
+    public String getcEmail() {
+        return cEmail;
+    }
+
+    public void setcEmail(String cEmail) {
+        this.cEmail = cEmail;
+    }
+
+    public User getCtype() {
+        return ctype;
     }
 }
