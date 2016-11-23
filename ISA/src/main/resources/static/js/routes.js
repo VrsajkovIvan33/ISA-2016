@@ -6,6 +6,9 @@ var app = angular.module('restaurantApp.routes', ['ngRoute']);
 app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpProvider) {
     $routeProvider
         .when('/',{
-            templateUrl : 'static/index.html'
+            templateUrl : 'html/welcome.html'
+        })
+        .when('/login', {
+            templateUrl : 'html/login.html'
         });
 }]);

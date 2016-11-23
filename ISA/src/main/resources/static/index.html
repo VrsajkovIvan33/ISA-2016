@@ -24,19 +24,18 @@
     <script src='/webjars/angularjs/angular.js'></script>
     <script src='/webjars/angularjs/angular-route.js'></script>
 
+    <script src="js/modules/loginModule.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
     <script src="js/routes.js"></script>
-    <script src="js/directives.js"></script>
-    <script src="js/services.js"></script>
 </head>
 
 <body>
+<div role="main">
 <header class="main_header">
     <div class="container">
         <nav class="navbar navbar_default" role="navigation">
             <div class="navbar-header">
-                <h1 class="navbar-brand"><a href="index.html">Restaurant scheduler</a></h1>
+                <h1 class="navbar-brand"><a href="/">Restaurant scheduler</a></h1>
                 <a class="submenu">Menus</a>
             </div>
 
@@ -50,21 +49,7 @@
     </div>
 </header>
 
-<section class="slider">
-    <div id="myCarousel" class="carousel carousel-fade" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="item"> <img alt="First slide" src="img/restaurant.jpg">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>Welcome to <span>Restaurant scheduler</span> </h1>
-                        <p>dashkjfhakjh </p>
-                        <p><a class="btn btn-default btn-lg" href="#" role="button">Sign in</a><a class="btn btn-default btn-lg" href="#" role="button">Register</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div ng-view></div>
 
 <section class="main__middle__container homepage">
 
@@ -123,5 +108,7 @@
         $('ul li.dropdown').toggleClass('current');
     });
 </script>
+
+</div>
 </body>
 </html>
