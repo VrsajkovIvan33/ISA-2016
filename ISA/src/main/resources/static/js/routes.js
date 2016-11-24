@@ -8,6 +8,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/',{
             templateUrl : 'html/welcome.html'
         })
+        .when('/register',{
+            templateUrl : 'html/guestRegister.html'
+        })
         .when('/login', {
             templateUrl : 'html/login.html'
         });
