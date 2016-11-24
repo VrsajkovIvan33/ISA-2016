@@ -1,13 +1,27 @@
-<div ng-cloak>
+<head>
+    <style>
+        #centered {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            margin: -150px 0 0 -150px;
+        }
+    </style>
+</head>
+
+<div  ng-cloak>
 
     <section class="slider">
         <div id="myCarousel" class="carousel carousel-fade" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="item"> <img alt="First slide" src="img/restaurant.jpg">
                     <div class="container">
-                        <div class="carousel-caption">
-                            <input type="email" class="form-control form-control-lg" placeholder="Enter your email">
-                            <input type="password" class="form-control form-control-lg" placeholder="Enter your password">
+                        <div id="centered" class="carousel-caption col-xs-3">
+                            <form role="form">
+                                <p><input type="email" class="form-control form-control-lg" placeholder="Enter your email"></p>
+                                <p><input type="password" class="form-control form-control-lg" placeholder="Enter your password"></p>
+                                <p><button type="submit" class="btn btn-primary btn-md">Login</button></p>
+                            </form>
                         </div>
                     </div>
                 </div>
