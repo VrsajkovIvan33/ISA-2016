@@ -19,6 +19,9 @@ public class Cook implements Serializable {
     @Column(name = "cid")
     private Long cId;
 
+    @Version
+    private int version;
+
     @Column(name = "cname", nullable = false)
     private String cName;
 
@@ -109,5 +112,13 @@ public class Cook implements Serializable {
 
     public User getCtype() {
         return ctype;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

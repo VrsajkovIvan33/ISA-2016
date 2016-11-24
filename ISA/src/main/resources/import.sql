@@ -1,2 +1,2 @@
-INSERT INTO guest(gname, gsurname, gpassword, gemail, gType) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "GUEST")
-INSERT INTO waiter(wname, wsurname, wdate_of_birth, wdress_size, wshoe_size, wpassword, wemail, wType) VALUES ("Petar", "Petrovic", "1960-10-16 00:00:00", 30, 40, "petar", "petar@gmail.com", "WAITER")
+INSERT INTO guest(gname, version, gsurname, gpassword, gemail, gType) VALUES ("Marko", 1, "Vjestica", "marek", "m.vjestica94@gmail.com", "GUEST")
+INSERT INTO waiter(wname, version, wsurname, wdate_of_birth, wdress_size, wshoe_size, wpassword, wemail, wType) VALUES ("Petar", 1, "Petrovic", "1960-10-16 00:00:00", 30, 40, "petar", "petar@gmail.com", "WAITER")

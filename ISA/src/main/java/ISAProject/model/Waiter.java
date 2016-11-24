@@ -19,6 +19,9 @@ public class Waiter implements Serializable {
     @Column(name = "wid")
     private Long wId;
 
+    @Version
+    private int version;
+
     @Column(name = "wname", nullable = false)
     private String wName;
 
@@ -109,5 +112,13 @@ public class Waiter implements Serializable {
 
     public User getWtype() {
         return wtype;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

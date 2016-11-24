@@ -19,6 +19,9 @@ public class Bartender implements Serializable {
     @Column(name = "bid")
     private Long bId;
 
+    @Version
+    private int version;
+
     @Column(name = "bname", nullable = false)
     private String bName;
 
@@ -109,5 +112,13 @@ public class Bartender implements Serializable {
 
     public User getBtype() {
         return btype;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

@@ -17,6 +17,9 @@ public class Guest implements Serializable{
     @Column(name = "gid")
     private Long gId;
 
+    @Version
+    private int version;
+
     @Column(name = "gname")
     private String gName;
 
@@ -113,5 +116,13 @@ public class Guest implements Serializable{
 
     public User getGtype() {
         return gtype;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }
