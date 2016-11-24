@@ -43,6 +43,13 @@ public class Cook implements Serializable {
     @Column(name = "cemail", nullable = false)
     private String cEmail;
 
+    //TODO provera
+    /*@Column(name = "ctype", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CookType cType;*/
+    @Column(name = "ctypecook", nullable = false)
+    private String cTypeCook;
+
     @Enumerated(EnumType.STRING)
     private final User ctype = User.COOK;
 
@@ -120,5 +127,13 @@ public class Cook implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public String getcTypeCook() {
+        return cTypeCook;
+    }
+
+    public void setcTypeCook(String cTypeCook) {
+        this.cTypeCook = cTypeCook;
     }
 }

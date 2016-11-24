@@ -43,6 +43,10 @@ public class Waiter implements Serializable {
     @Column(name = "wemail", nullable = false)
     private String wEmail;
 
+    //TODO proveriti za ocenu
+    @Column(name = "wreview")
+    private float wreview;
+
     @Enumerated(EnumType.STRING)
     private final User wtype = User.WAITER;
 
@@ -121,4 +125,14 @@ public class Waiter implements Serializable {
     public void setVersion(int version) {
         this.version = version;
     }
+
+    public float getWreview() {
+        return wreview;
+    }
+
+    public void setWreview(float wreview) {
+        this.wreview = wreview;
+    }
+
+
 }

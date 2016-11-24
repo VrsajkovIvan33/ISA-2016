@@ -5,6 +5,6 @@ package ISAProject.model;
  */
 public enum User {
 
-    BARTENDER, COOK, GUEST, WAITER
+    BARTENDER, COOK, GUEST, WAITER, RESTAURANTMANAGER, SYSTEMMANAGER, PROVIDER
 
 }
