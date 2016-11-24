@@ -1,6 +1,6 @@
 <head>
     <style>
-        #centered {
+        #cenetered{
             position: absolute;
             top: 30%;
             left: 50%;
@@ -9,24 +9,12 @@
     </style>
 </head>
 
-<div ng-cloak>
-
-    <section class="slider">
-        <div id="myCarousel" class="carousel carousel-fade" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="item"> <img alt="First slide" src="img/restaurant.jpg">
-                    <div class="container">
-                        <div id="centered" class="carousel-caption col-xs-3">
-                            <form role="form">
-                                <p><input type="email" class="form-control form-control-lg" placeholder="Enter your email"></p>
-                                <p><input type="password" class="form-control form-control-lg" placeholder="Enter your password"></p>
-                                <p><button type="submit" class="btn btn-primary btn-md">Login</button></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+<div class="container">
+    <div class="carousel-caption col-xs-3" id="centered">
+        <form role="form">
+            <p><input type="email" class="form-control form-control-lg" placeholder="Enter your email"></p>
+            <p><input type="password" class="form-control form-control-lg" placeholder="Enter your password"></p>
+            <p><button type="submit" class="btn btn-primary btn-md">Login</button></p>
+        </form>
+    </div>
 </div>

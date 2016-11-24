@@ -3,8 +3,8 @@
     <title>Restaurant scheduler</title>
     <!-- Bootstrap -->
     <link href="css/style.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Belgrano' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <!--link href='http://fonts.googleapis.com/css?family=Belgrano' rel='stylesheet' type='text/css'-->
+    <!--link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'-->
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.css'>
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap-theme.css'>
     <link rel='stylesheet'
@@ -49,7 +49,16 @@
     </div>
 </header>
 
-<div ng-view></div>
+    <section class="slider">
+        <div id="myCarousel" class="carousel carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item"><img alt="First slide" src="img/restaurant.jpg">
+                    <div ng-view></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 <section class="main__middle__container homepage">
 
