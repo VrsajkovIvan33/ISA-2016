@@ -35,11 +35,6 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registerUser(@RequestBody Guest newGuest) throws Exception {
-
-        System.out.print("Stigao nov gost! " + newGuest.getgName());
-        System.out.print("prezima: " + newGuest.getgSurname());
-        System.out.print("email: " + newGuest.getgEmail());
-        System.out.print("password: " + newGuest.getgPassword());
         Guest registeredGuest = guestService.save(newGuest);
         return new ResponseEntity<Guest>(registeredGuest, HttpStatus.CREATED);
     }
