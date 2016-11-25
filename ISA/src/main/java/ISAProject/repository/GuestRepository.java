@@ -18,7 +18,4 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
     List<Guest> findByGId(Long gid);
 
     List<Guest> findByGEmail(String gemail);
-
-    @Transactional
-    Guest save(Guest guest);
 }
