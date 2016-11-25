@@ -3,5 +3,5 @@
  */
 
 angular.module('restaurantApp.services',[
-
+    'restaurantApp.GuestRegisterFactory'
 ]);

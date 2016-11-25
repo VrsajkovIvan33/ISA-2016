@@ -3,5 +3,6 @@
  */
 
 angular.module('restaurantApp.controllers',[
-    'restaurantApp.LoginController'
+    'restaurantApp.LoginController',
+    'restaurantApp.GuestRegisterController'
 ]);
