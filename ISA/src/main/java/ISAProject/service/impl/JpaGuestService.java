@@ -1,6 +1,6 @@
 package ISAProject.service.impl;
 
-import ISAProject.model.Guest;
+import ISAProject.model.users.Guest;
 import ISAProject.repository.GuestRepository;
 import ISAProject.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;

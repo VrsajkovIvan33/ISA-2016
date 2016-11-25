@@ -1,4 +1,4 @@
-package ISAProject.model;
+package ISAProject.model.users;
 
 /**
  * Created by Nole on 11/20/2016.
