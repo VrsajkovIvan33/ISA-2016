@@ -1,6 +1,6 @@
 package ISAProject.service;
 
-import ISAProject.model.Guest;
+import ISAProject.model.users.Guest;
 
 import java.util.List;
 

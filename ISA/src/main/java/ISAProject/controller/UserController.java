@@ -1,9 +1,8 @@
 package ISAProject.controller;
 
-import ISAProject.model.Guest;
-import ISAProject.model.TempUser;
+import ISAProject.model.users.Guest;
+import ISAProject.model.users.TempUser;
 import ISAProject.service.GuestService;
-import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package ISAProject.model;
+package ISAProject.model.users;
 
 import javax.persistence.*;
 import java.io.Serializable;
