@@ -14,100 +14,36 @@ public class Waiter implements Serializable {
     public Waiter(){
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "wid")
-    private Long wId;
+    @Column(name = "date_of_birth")
+    private Date date_of_birth;
 
-    @Column(name = "wname", nullable = false)
-    private String wName;
+    @Column(name = "dress_size")
+    private Integer dress_size;
 
-    @Column(name = "wsurname", nullable = false)
-    private String wSurname;
+    @Column(name = "shoe_size")
+    private Integer shoe_size;
 
-    @Column(name = "wdate_of_birth")
-    private Date wDate_of_birth;
-
-    @Column(name = "wdress_size")
-    private Integer wDress_size;
-
-    @Column(name = "wshoe_size")
-    private Integer wShoe_size;
-
-    @Column(name = "wpassword", nullable = false)
-    private String wPassword;
-
-    @Column(name = "wemail", nullable = false)
-    private String wEmail;
-
-    @Enumerated(EnumType.STRING)
-    private final User wtype = User.WAITER;
-
-    public Long getwId() {
-        return wId;
+    public Date getDate_of_birth() {
+        return date_of_birth;
     }
 
-    public void setwId(Long wId) {
-        this.wId = wId;
+    public void setDate_of_birth(Date date_of_birth) {
+        this.date_of_birth = date_of_birth;
     }
 
-    public String getwName() {
-        return wName;
+    public Integer getDress_size() {
+        return dress_size;
     }
 
-    public void setwName(String wName) {
-        this.wName = wName;
+    public void setDress_size(Integer dress_size) {
+        this.dress_size = dress_size;
     }
 
-    public String getwSurname() {
-        return wSurname;
+    public Integer getShoe_size() {
+        return shoe_size;
     }
 
-    public void setwSurname(String wSurname) {
-        this.wSurname = wSurname;
-    }
-
-    public Date getwDate_of_birth() {
-        return wDate_of_birth;
-    }
-
-    public void setwDate_of_birth(Date wDate_of_birth) {
-        this.wDate_of_birth = wDate_of_birth;
-    }
-
-    public Integer getwDress_size() {
-        return wDress_size;
-    }
-
-    public void setwDress_size(Integer wDress_size) {
-        this.wDress_size = wDress_size;
-    }
-
-    public Integer getwShoe_size() {
-        return wShoe_size;
-    }
-
-    public void setwShoe_size(Integer wShoe_size) {
-        this.wShoe_size = wShoe_size;
-    }
-
-    public String getwPassword() {
-        return wPassword;
-    }
-
-    public void setwPassword(String wPassword) {
-        this.wPassword = wPassword;
-    }
-
-    public String getwEmail() {
-        return wEmail;
-    }
-
-    public void setwEmail(String wEmail) {
-        this.wEmail = wEmail;
-    }
-
-    public User getWtype() {
-        return wtype;
+    public void setShoe_size(Integer shoe_size) {
+        this.shoe_size = shoe_size;
     }
 }
