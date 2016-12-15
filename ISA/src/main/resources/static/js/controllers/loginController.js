@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.LoginController',[])
-       .controller('LoginController', function ($scope, LoginFactory) {
+       .controller('LoginController', function ($scope, $location, LoginFactory) {
            function init() {
                console.log("logovo se");
            }
@@ -14,6 +14,15 @@ angular.module('restaurantApp.LoginController',[])
                 LoginFactory.getUser(user).success(function(data){
                    if(data){
                        $scope.logged = data;
+                       if($scope.logged.type == 'BARTENDER'){
+                           $location.path('/bartender');
+                       }else if($scope.logged.type == 'COOK'){
+                           $location.path('/cook');
+                       }else if($scope.logged.type == 'GUEST'){
+                           $location.path('/guest');
+                       }else if($scope.logged.type == 'WAITER'){
+                           $location.path('/waiter');
+                       }
                    }
                 });
            };
