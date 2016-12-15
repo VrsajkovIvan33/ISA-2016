@@ -1,2 +1,2 @@
-INSERT INTO user(name, surname, password, email, type) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "GUEST")
+INSERT INTO user(name, surname, password, email, type) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER")
 INSERT INTO waiter(date_of_birth, dress_size, shoe_size, id) VALUES ("1960-10-16 00:00:00", 30, 40, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"))
