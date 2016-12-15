@@ -17,5 +17,4 @@ public interface CookService {
 
     Cook delete(Long id);
 
-    Cook findByEmail(String email);
 }

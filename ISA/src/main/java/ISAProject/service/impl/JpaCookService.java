@@ -48,11 +48,4 @@ public class JpaCookService implements CookService {
         cookRepository.delete(cook);
         return cook;
     }
-
-    @Override
-    public Cook findByEmail(String email) {
-        List<Cook> listCook = cookRepository.findByCEmail(email);
-        Cook cook = listCook.get(0);
-        return cook;
-    }
 }

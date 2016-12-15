@@ -48,11 +48,4 @@ public class JpaWaiterService implements WaiterService{
         waiterRepository.delete(waiter);
         return waiter;
     }
-
-    @Override
-    public Waiter findByEmail(String email) {
-        List<Waiter> waiterList = waiterRepository.findByWEmail(email);
-        Waiter waiter = waiterList.get(0);
-        return waiter;
-    }
 }

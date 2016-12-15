@@ -48,11 +48,4 @@ public class JpaBartenderService implements BartenderService{
         bartenderRepository.delete(bartender);
         return bartender;
     }
-
-    @Override
-    public Bartender findByEmail(String email) {
-        List<Bartender> listBartender = bartenderRepository.findByBEmail(email);
-        Bartender bartender = listBartender.get(0);
-        return bartender;
-    }
 }

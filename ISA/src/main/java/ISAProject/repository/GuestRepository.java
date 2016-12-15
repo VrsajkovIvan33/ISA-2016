@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface GuestRepository extends JpaRepository<Guest, Long> {
 
-    List<Guest> findByGId(Long gid);
+    List<Guest> findById(Long gid);
 
-    List<Guest> findByGEmail(String gemail);
 }

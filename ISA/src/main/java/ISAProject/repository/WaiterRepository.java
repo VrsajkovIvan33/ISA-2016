@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface WaiterRepository extends JpaRepository<Waiter, Long>{
 
-    List<Waiter> findByWId(Long wid);
+    List<Waiter> findById(Long wid);
 
-    List<Waiter> findByWEmail(String wemail);
 }

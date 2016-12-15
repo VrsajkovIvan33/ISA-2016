@@ -49,13 +49,4 @@ public class JpaGuestService implements GuestService{
         return guest;
 
     }
-
-    @Override
-    public Guest findByEmail(String email) {
-        List<Guest> listGuest = guestRepository.findByGEmail(email);
-        Guest ret = listGuest.get(0);
-        return ret;
-    }
-
-
 }

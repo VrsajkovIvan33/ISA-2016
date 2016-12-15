@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface CookRepository extends JpaRepository<Cook, Long>{
 
-    List<Cook> findByCId(Long cid);
+    List<Cook> findById(Long cid);
 
-    List<Cook> findByCEmail(String cemail);
 }

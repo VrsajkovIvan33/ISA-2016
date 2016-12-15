@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "guest")
-public class Guest implements Serializable{
+public class Guest extends User implements Serializable{
 
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id")

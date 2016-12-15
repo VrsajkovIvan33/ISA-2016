@@ -17,5 +17,4 @@ public interface BartenderService {
 
     Bartender delete(Long id);
 
-    Bartender findByEmail(String email);
 }

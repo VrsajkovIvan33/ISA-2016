@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface BartenderRepository extends JpaRepository<Bartender, Long>{
 
-    List<Bartender> findByBId(Long bid);
+    List<Bartender> findById(Long bid);
 
-    List<Bartender> findByBEmail(String bemail);
 }

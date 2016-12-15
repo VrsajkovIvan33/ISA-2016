@@ -22,9 +22,9 @@ public class UserController {
     @Autowired
     private GuestService guestService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
+    /*@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<?> login(@RequestBody TempUser user){
         Guest guest = guestService.findByEmail(user.getEmail());
         return new ResponseEntity<Guest>(guest, HttpStatus.OK);
-    }
+    }*/
 }

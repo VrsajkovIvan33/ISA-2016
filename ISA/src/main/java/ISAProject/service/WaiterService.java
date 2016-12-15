@@ -17,5 +17,4 @@ public interface WaiterService {
 
     Waiter delete(Long id);
 
-    Waiter findByEmail(String email);
 }

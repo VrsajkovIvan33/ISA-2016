@@ -17,5 +17,4 @@ public interface GuestService {
 
     Guest delete(Long id);
 
-    Guest findByEmail(String email);
 }
