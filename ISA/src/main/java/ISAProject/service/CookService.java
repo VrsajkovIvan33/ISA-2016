@@ -1,6 +1,6 @@
 package ISAProject.service;
 
-import ISAProject.model.Cook;
+import ISAProject.model.users.Cook;
 
 import java.util.List;
 

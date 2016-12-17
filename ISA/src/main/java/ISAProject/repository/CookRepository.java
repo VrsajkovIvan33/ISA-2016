@@ -1,6 +1,6 @@
 package ISAProject.repository;
 
-import ISAProject.model.Cook;
+import ISAProject.model.users.Cook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

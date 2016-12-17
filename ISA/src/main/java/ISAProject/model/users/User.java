@@ -1,4 +1,6 @@
-package ISAProject.model;
+package ISAProject.model.users;
+
+import ISAProject.model.users.UserType;
 
 import javax.persistence.*;
 
@@ -29,6 +31,17 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserType type;
+
+    @Version
+    private int version;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public UserType getType() {
         return type;

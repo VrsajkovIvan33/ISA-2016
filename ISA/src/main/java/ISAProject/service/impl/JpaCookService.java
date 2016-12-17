@@ -1,6 +1,6 @@
 package ISAProject.service.impl;
 
-import ISAProject.model.Cook;
+import ISAProject.model.users.Cook;
 import ISAProject.repository.CookRepository;
 import ISAProject.service.CookService;
 import org.springframework.beans.factory.annotation.Autowired;

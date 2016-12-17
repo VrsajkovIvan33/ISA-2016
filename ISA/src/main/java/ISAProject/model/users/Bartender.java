@@ -1,4 +1,4 @@
-package ISAProject.model;
+package ISAProject.model.users;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,10 +8,10 @@ import java.util.Date;
  * Created by Marko on 11/17/2016.
  */
 @Entity
-@Table(name = "waiter")
-public class Waiter extends User implements Serializable {
+@Table(name = "bartender")
+public class Bartender extends User implements Serializable {
 
-    public Waiter(){
+    public Bartender(){
     }
 
     @Column(name = "date_of_birth")
@@ -46,4 +46,5 @@ public class Waiter extends User implements Serializable {
     public void setShoe_size(Integer shoe_size) {
         this.shoe_size = shoe_size;
     }
+
 }

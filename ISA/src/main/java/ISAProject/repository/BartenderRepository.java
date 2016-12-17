@@ -1,6 +1,6 @@
 package ISAProject.repository;
 
-import ISAProject.model.Bartender;
+import ISAProject.model.users.Bartender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package ISAProject.service.impl;
 
-import ISAProject.model.User;
+import ISAProject.model.users.User;
 import ISAProject.repository.UserRepository;
 import ISAProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

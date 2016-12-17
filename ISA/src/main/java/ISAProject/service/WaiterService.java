@@ -1,6 +1,6 @@
 package ISAProject.service;
 
-import ISAProject.model.Waiter;
+import ISAProject.model.users.Waiter;
 
 import java.util.List;
 

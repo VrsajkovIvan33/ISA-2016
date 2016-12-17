@@ -1,6 +1,6 @@
 package ISAProject.service;
 
-import ISAProject.model.Bartender;
+import ISAProject.model.users.Bartender;
 
 import java.util.List;
 

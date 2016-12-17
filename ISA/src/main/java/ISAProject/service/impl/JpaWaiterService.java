@@ -1,6 +1,6 @@
 package ISAProject.service.impl;
 
-import ISAProject.model.Waiter;
+import ISAProject.model.users.Waiter;
 import ISAProject.repository.WaiterRepository;
 import ISAProject.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;

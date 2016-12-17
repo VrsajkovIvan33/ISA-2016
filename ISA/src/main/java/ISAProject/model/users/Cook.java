@@ -1,4 +1,4 @@
-package ISAProject.model;
+package ISAProject.model.users;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,10 +8,10 @@ import java.util.Date;
  * Created by Marko on 11/17/2016.
  */
 @Entity
-@Table(name = "bartender")
-public class Bartender extends User implements Serializable {
+@Table(name = "cook")
+public class Cook extends User implements Serializable {
 
-    public Bartender(){
+    public Cook(){
     }
 
     @Column(name = "date_of_birth")
@@ -22,6 +22,13 @@ public class Bartender extends User implements Serializable {
 
     @Column(name = "shoe_size")
     private Integer shoe_size;
+
+    //TODO provera
+    /*@Column(name = "ctype", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CookType cType;*/
+    @Column(name = "typecook", nullable = false)
+    private String typeCook;
 
     public Date getDate_of_birth() {
         return date_of_birth;
@@ -45,5 +52,13 @@ public class Bartender extends User implements Serializable {
 
     public void setShoe_size(Integer shoe_size) {
         this.shoe_size = shoe_size;
+    }
+
+    public String getTypeCook() {
+        return typeCook;
+    }
+
+    public void setTypeCook(String typeCook) {
+        this.typeCook = typeCook;
     }
 }

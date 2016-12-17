@@ -1,6 +1,6 @@
 package ISAProject.service.impl;
 
-import ISAProject.model.Bartender;
+import ISAProject.model.users.Bartender;
 import ISAProject.repository.BartenderRepository;
 import ISAProject.service.BartenderService;
 import org.springframework.beans.factory.annotation.Autowired;
