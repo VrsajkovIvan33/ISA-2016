@@ -25,5 +25,8 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/login', {
             templateUrl : 'html/login.html'
+        })
+        .when('/systemmanager', {
+            templateUrl : 'html/systemmanager.html'
         });
 }]);
