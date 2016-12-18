@@ -35,7 +35,15 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        if(user instanceof Guest){
+            if(((Guest) user).isActive())
+                return new ResponseEntity<User>(user, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        else
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+
     }
 
     @RequestMapping(
@@ -45,6 +53,7 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User newUser) throws Exception {
         newUser.setType(UserType.GUEST);
         Guest guest = new Guest(newUser);
+        guest.setActive(false);
         Guest saved = guestService.save(guest);
         mailManager.sendMail(guest);
         return new ResponseEntity<User>(guest, HttpStatus.CREATED);
