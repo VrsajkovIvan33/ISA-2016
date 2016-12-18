@@ -27,6 +27,19 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/login.html'
         })
         .when('/systemmanager', {
-            templateUrl : 'html/systemmanager.html'
+            templateUrl : 'html/systemmanager.html',
+            controller: 'SystemmanagerController'
+        })
+        .when('/systemmanagers', {
+            templateUrl : 'html/systemmanagers.html',
+            controller: 'SystemmanagerController'
+        })
+        .when('/restaurantmanagers', {
+            templateUrl : 'html/restaurantmanagers.html',
+            controller: 'RestaurantmanagerController'
+        })
+        .when('/restaurants', {
+            templateUrl : 'html/restaurants.html',
+            controller: 'RestaurantsController'
         });
 }]);

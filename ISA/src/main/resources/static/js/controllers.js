@@ -4,5 +4,8 @@
 
 angular.module('restaurantApp.controllers',[
     'restaurantApp.LoginController',
-    'restaurantApp.GuestRegisterController'
+    'restaurantApp.GuestRegisterController',
+    'restaurantApp.SystemmanagerController',
+    'restaurantApp.RestaurantmanagerController',
+    'restaurantApp.RestaurantController'
 ]);

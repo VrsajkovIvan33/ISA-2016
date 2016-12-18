@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Created by Marko on 12/18/2016.
  */
-
 @Service
 @Transactional
 public class JpaSystemmanagerService implements SystemmanagerService {
@@ -39,7 +38,7 @@ public class JpaSystemmanagerService implements SystemmanagerService {
         SystemManager systemManager = systemmanagerRepository.findOne(id);
         if(systemManager == null){
             try{
-                throw new Exception("Waiter cannot be found");
+                throw new Exception("System Manager cannot be found");
             }catch (Exception e){
                 e.printStackTrace();
             }
