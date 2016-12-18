@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.GuestRegisterController',[])
-    .controller('GuestRegisterController', function ($scope, GuestRegisterFactory) {
+    .controller('GuestRegisterController', function ($scope, $location, GuestRegisterFactory) {
         function init() {
             console.log("Kao neko registrovanje");
         }
@@ -15,7 +15,7 @@ angular.module('restaurantApp.GuestRegisterController',[])
             if(re.test(guest.gEmail)) {
                 if (guest.gPassword === repeatedPassword) {
                     GuestRegisterFactory.postGuest(guest).success(function (data) {
-                        console.log("Pokusao da registruje!")
+                        $location.path('/');
                     });
                 } else {
                     alert("Wrong password");
