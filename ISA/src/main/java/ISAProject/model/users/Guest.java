@@ -27,6 +27,10 @@ public class Guest extends User implements Serializable{
     public Guest() {
     }
 
+    public Guest(User user) {
+        super(user);
+    }
+
     public List<Guest> getFriendList() {
         return friendList;
     }
