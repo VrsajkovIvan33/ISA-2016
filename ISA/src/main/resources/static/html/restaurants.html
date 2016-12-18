@@ -1,4 +1,4 @@
-<div ng-cloak>
+<div ng-cloak ng-controller="RestaurantController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -15,7 +15,27 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h1>RESTAURANTI</h1>
+            <h3>Restaurants</h3>
+
+            <a href="#/addNewRestaurant">Add Restaurant</a>
+
+            <table style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Restaurant name:</th>
+                        <th>Restaurant type:</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in restaurants">
+                        <td><input ng-model="r.rName" type="text" class="form-control form-control-lg" placeholder="Enter restaurant name"></td>
+                        <td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>
+                        <td><button ng-click="updateRestaurant(r)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                        <td><button ng-click="removeRestaurant(r)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

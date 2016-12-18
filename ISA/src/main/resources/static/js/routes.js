@@ -27,19 +27,18 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/login.html'
         })
         .when('/systemmanager', {
-            templateUrl : 'html/systemmanager.html',
-            controller: 'SystemmanagerController'
+            templateUrl : 'html/systemmanager.html'
         })
         .when('/systemmanagers', {
-            templateUrl : 'html/systemmanagers.html',
-            controller: 'SystemmanagerController'
+            templateUrl : 'html/systemmanagers.html'
         })
         .when('/restaurantmanagers', {
-            templateUrl : 'html/restaurantmanagers.html',
-            controller: 'RestaurantmanagerController'
+            templateUrl : 'html/restaurantmanagers.html'
         })
         .when('/restaurants', {
-            templateUrl : 'html/restaurants.html',
-            controller: 'RestaurantsController'
+            templateUrl : 'html/restaurants.html'
+        })
+        .when('/addNewRestaurant', {
+            templateUrl : 'html/addNewRestaurant.html'
         });
 }]);

@@ -16,7 +16,7 @@ public class Restaurant implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "rid")
     private Long id;
 
     @Version

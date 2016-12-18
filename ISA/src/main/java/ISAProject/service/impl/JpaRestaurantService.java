@@ -34,16 +34,15 @@ public class JpaRestaurantService implements RestaurantService {
     }
 
     @Override
-    public Restaurant delete(Long id) {
-        Restaurant restaurant = restaurantRepository.findOne(id);
-        if(restaurant == null){
-            try{
-                throw new Exception("Restaurant cannot be found");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+    public void delete(Long id) { restaurantRepository.delete(id); }
+
+    /*@Override
+    public Restaurant create(Restaurant restaurant) throws Exception {
+        if (restaurant.getId() != null) {
+            throw new Exception(
+                    "Id mora biti null prilikom perzistencije novog entiteta.");
         }
-        restaurantRepository.delete(restaurant);
-        return restaurant;
-    }
+        Restaurant savedRestaurant = restaurantRepository.create(restaurant);
+        return savedRestaurant;
+    }*/
 }
