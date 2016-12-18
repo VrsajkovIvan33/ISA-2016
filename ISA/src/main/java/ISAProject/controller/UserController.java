@@ -1,5 +1,6 @@
 package ISAProject.controller;
 
+import ISAProject.model.MailManager;
 import ISAProject.model.users.Guest;
 import ISAProject.model.users.TempUser;
 import ISAProject.model.users.User;
@@ -28,6 +29,9 @@ public class UserController {
     @Autowired
     private GuestService guestService;
 
+    @Autowired
+    private MailManager mailManager;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
@@ -42,6 +46,7 @@ public class UserController {
         newUser.setType(UserType.GUEST);
         Guest guest = new Guest(newUser);
         Guest saved = guestService.save(guest);
+        mailManager.sendMail(guest);
         return new ResponseEntity<User>(guest, HttpStatus.CREATED);
     }
 }
