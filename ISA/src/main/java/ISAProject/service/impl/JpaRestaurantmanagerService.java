@@ -24,9 +24,7 @@ public class JpaRestaurantmanagerService implements RestaurantmanagerService {
     }
 
     @Override
-    public RestaurantManager findOne(Long id) {
-        return restaurantmanagerRepository.findOne(id);
-    }
+    public RestaurantManager findOne(Long id) { return restaurantmanagerRepository.findOne(id); }
 
     @Override
     public RestaurantManager save(RestaurantManager restaurantManager) {
@@ -34,16 +32,5 @@ public class JpaRestaurantmanagerService implements RestaurantmanagerService {
     }
 
     @Override
-    public RestaurantManager delete(Long id) {
-        RestaurantManager restaurantManager = restaurantmanagerRepository.findOne(id);
-        if(restaurantManager == null){
-            try{
-                throw new Exception("Restaurant Manager cannot be found");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        restaurantmanagerRepository.delete(restaurantManager);
-        return restaurantManager;
-    }
+    public void delete(Long id) { restaurantmanagerRepository.delete(id); }
 }

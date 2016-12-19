@@ -1,0 +1,27 @@
+<div ng-cloak ng-controller="RestaurantmanagerController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/restaurantmanagers">Back</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-left: 18%" class="carousel-caption col-xs-3">
+            <form role="form">
+                <p><input ng-model="newRestaurantManager.name" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager name"></p>
+                <p><input ng-model="newRestaurantManager.surname" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager surname">
+                <p><input ng-model="newRestaurantManager.email" type="email" class="form-control form-control-lg" placeholder="Enter restaurant manager email"></p>
+                <p><input ng-model="newRestaurantManager.password" type="password" class="form-control form-control-lg" placeholder="Enter restaurant manager password"></p>
+                <p><button ng-click="addRestaurantManager(newRestaurantManager)" type="submit" class="btn btn-primary btn-md">Add Restaurant Manager</button></p>
+            </form>
+        </div>
+    </div>
+</div>

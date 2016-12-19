@@ -12,4 +12,10 @@ import java.util.List;
 @Repository
 public interface RestaurantmanagerRepository extends JpaRepository<RestaurantManager, Long> {
     List<RestaurantManager> findById(Long id);
+
+    List<RestaurantManager> findAll();
+
+    void delete(Long id);
+
+    RestaurantManager save(RestaurantManager restaurantManager);
 }

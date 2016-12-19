@@ -24,9 +24,7 @@ public class JpaSystemmanagerService implements SystemmanagerService {
     }
 
     @Override
-    public SystemManager findOne(Long id) {
-        return systemmanagerRepository.findOne(id);
-    }
+    public SystemManager findOne(Long id) { return systemmanagerRepository.findOne(id); }
 
     @Override
     public SystemManager save(SystemManager systemManager) {
@@ -34,16 +32,5 @@ public class JpaSystemmanagerService implements SystemmanagerService {
     }
 
     @Override
-    public SystemManager delete(Long id) {
-        SystemManager systemManager = systemmanagerRepository.findOne(id);
-        if(systemManager == null){
-            try{
-                throw new Exception("System Manager cannot be found");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        systemmanagerRepository.delete(systemManager);
-        return systemManager;
-    }
+    public void delete(Long id) { systemmanagerRepository.delete(id); }
 }

@@ -14,5 +14,5 @@ public interface SystemmanagerService {
 
     SystemManager save(SystemManager systemManager);
 
-    SystemManager delete(Long id);
+    void delete(Long id);
 }

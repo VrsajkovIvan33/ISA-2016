@@ -1,0 +1,27 @@
+<div ng-cloak ng-controller="SystemmanagerController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/systemmanagers">Back</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-left: 18%" class="carousel-caption col-xs-3">
+            <form role="form">
+                <p><input ng-model="newSystemManager.name" type="text" class="form-control form-control-lg" placeholder="Enter system manager name"></p>
+                <p><input ng-model="newSystemManager.surname" type="text" class="form-control form-control-lg" placeholder="Enter system manager surname">
+                <p><input ng-model="newSystemManager.email" type="email" class="form-control form-control-lg" placeholder="Enter system manager email"></p>
+                <p><input ng-model="newSystemManager.password" type="password" class="form-control form-control-lg" placeholder="Enter system manager password"></p>
+                <p><button ng-click="addSystemManager(newSystemManager)" type="submit" class="btn btn-primary btn-md">Add System Manager</button></p>
+            </form>
+        </div>
+    </div>
+</div>

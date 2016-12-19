@@ -11,4 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SystemmanagerRepository extends JpaRepository<SystemManager, Long> {
     List<SystemManager> findById(Long id);
+
+    List<SystemManager> findAll();
+
+    void delete(Long id);
+
+    SystemManager save(SystemManager systemManager);
 }

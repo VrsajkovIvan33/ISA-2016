@@ -24,9 +24,7 @@ public class JpaRestaurantService implements RestaurantService {
     }
 
     @Override
-    public Restaurant findOne(Long id) {
-        return restaurantRepository.findOne(id);
-    }
+    public Restaurant findOne(Long id) { return restaurantRepository.findOne(id); }
 
     @Override
     public Restaurant save(Restaurant restaurant) {

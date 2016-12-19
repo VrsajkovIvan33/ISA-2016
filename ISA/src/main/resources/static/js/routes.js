@@ -40,5 +40,11 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/addNewRestaurant', {
             templateUrl : 'html/addNewRestaurant.html'
+        })
+        .when('/addNewRestaurantManager', {
+            templateUrl : 'html/addNewRestaurantManager.html'
+        })
+        .when('/addNewSystemManager', {
+            templateUrl : 'html/addNewSystemManager.html'
         });
 }]);

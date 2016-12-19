@@ -15,7 +15,32 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h1>RESTAURANT MANAGERI</h1>
+            <h3>Restaurant Managers</h3>
+
+            <a href="#/addNewRestaurantManager">Add Restaurant Manager</a>
+
+            <table style="width:100%;">
+                <thead>
+                <tr>
+                    <th>Restaurant Manager name:</th>
+                    <th>Restaurant Manager surname:</th>
+                    <th>Restaurant Manager email:</th>
+                    <th>Restaurant Manager password:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="rm in restaurantManagers">
+                    <td><input ng-model="rm.name" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager name"></td>
+                    <td><input ng-model="rm.surname" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager surname"></td>
+                    <td><input ng-model="rm.email" type="email" class="form-control form-control-lg" placeholder="Enter restaurant manager email"></td>
+                    <td><input ng-model="rm.password" type="password" class="form-control form-control-lg" placeholder="Enter restaurant manager password"></td>
+                    <td><button ng-click="updateRestaurantManager(rm)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                    <td><button ng-click="removeRestaurantManager(rm)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
