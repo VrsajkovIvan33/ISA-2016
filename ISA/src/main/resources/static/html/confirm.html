@@ -1,0 +1,14 @@
+<div ng-cloak ng-controller="ConfirmRegisterController">
+
+    <div class="container">
+        <div style="margin-left: 18%" class="carousel-caption col-xs-3">
+            <p>Enter Your email and password to finish registration on service.</p>
+
+            <form role="form">
+                <p><input ng-model="user.email" type="email" class="form-control form-control-lg" placeholder="Enter your email"></p>
+                <p><input ng-model="user.password" type="password" class="form-control form-control-lg" placeholder="Enter your password"></p>
+                <p><button ng-click="confirm(user)" type="submit" class="btn btn-primary btn-md">Confirm</button></p>
+            </form>
+        </div>
+    </div>
+</div>

@@ -58,4 +58,16 @@ public class UserController {
         mailManager.sendMail(guest);
         return new ResponseEntity<User>(guest, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/confirm", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<User> confirmRegistration(@RequestBody TempUser user) throws Exception{
+        User userRegistered = userService.findByEmail(user.getEmail());
+        if(userRegistered instanceof Guest){
+            ((Guest) userRegistered).setActive(true);
+            Guest saved = guestService.save((Guest)userRegistered);
+            return new ResponseEntity<User>(saved, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 }

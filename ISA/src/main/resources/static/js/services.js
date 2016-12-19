@@ -4,5 +4,6 @@
 
 angular.module('restaurantApp.services',[
                'restaurantApp.LoginFactory',
-               'restaurantApp.GuestRegisterFactory'
+               'restaurantApp.GuestRegisterFactory',
+               'restaurantApp.ConfirmFactory'
 ]);
