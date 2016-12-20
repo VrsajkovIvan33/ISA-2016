@@ -1,7 +1,11 @@
 package ISAProject.controller;
 
+import ISAProject.model.MailManager;
+import ISAProject.model.users.Guest;
 import ISAProject.model.users.TempUser;
 import ISAProject.model.users.User;
+import ISAProject.model.users.UserType;
+import ISAProject.service.GuestService;
 import ISAProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +26,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GuestService guestService;
+
+    @Autowired
+    private MailManager mailManager;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        if(user instanceof Guest){
+            if(((Guest) user).isActive())
+                return new ResponseEntity<User>(user, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        else
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+
     }
 
     @RequestMapping(
@@ -33,7 +51,23 @@ public class UserController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<User> registerUser(@RequestBody User newUser) throws Exception {
-        User registeredUser = userService.save(newUser);
-        return new ResponseEntity<User>(registeredUser, HttpStatus.CREATED);
+        newUser.setType(UserType.GUEST);
+        Guest guest = new Guest(newUser);
+        guest.setActive(false);
+        Guest saved = guestService.save(guest);
+        mailManager.sendMail(guest);
+        return new ResponseEntity<User>(guest, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/confirm", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<User> confirmRegistration(@RequestBody TempUser user) throws Exception{
+        User userRegistered = userService.findByEmail(user.getEmail());
+        if(userRegistered instanceof Guest){
+            ((Guest) userRegistered).setActive(true);
+            Guest saved = guestService.save((Guest)userRegistered);
+            return new ResponseEntity<User>(saved, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }

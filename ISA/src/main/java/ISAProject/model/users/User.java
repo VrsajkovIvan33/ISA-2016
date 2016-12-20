@@ -35,6 +35,24 @@ public class User {
     @Version
     private int version;
 
+    public User(String name, String surname, String password, String email, UserType type, int version) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.email = email;
+        this.type = type;
+        this.version = version;
+    }
+
+    public User(User user){
+        this.name = user.name;
+        this.surname = user.surname;
+        this.password = user.password;
+        this.email = user.email;
+        this.type = user.type;
+        this.version = user.version;
+    }
+
     public int getVersion() {
         return version;
     }
