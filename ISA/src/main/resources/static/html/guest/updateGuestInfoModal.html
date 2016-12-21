@@ -16,13 +16,14 @@
 <div class="modal-body">
     <form role="form">
         <label>Name</label>
-        <input type="text" class="form-control form-control-lg" ng-model="loggedUser.name">
+        <input type="text" class="form-control form-control-lg" ng-model="userToUpdate.name">
         <label>Surname</label>
-        <input type="text" class="form-control form-control-lg" ng-model="loggedUser.surname">
+        <input type="text" class="form-control form-control-lg" ng-model="userToUpdate.surname">
         <label>Email</label>
-        <input type="email" class="form-control form-control-lg" ng-model="loggedUser.email">
+        <input type="email" class="form-control form-control-lg" ng-model="userToUpdate.email">
     </form>
 </div>
 <div class="modal-footer">
+    <button type="submit" class="btn btn-default" ng-click="update(userToUpdate)">Update</button>
     <button type="button" class="btn btn-default" ng-click="close()">Close</button>
 </div>

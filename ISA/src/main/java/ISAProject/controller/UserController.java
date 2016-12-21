@@ -72,4 +72,20 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws Exception{
+        User userRegistered = userService.findOne(user.getId());
+        Guest saved = null;
+        if(userRegistered instanceof Guest){
+            userRegistered.setName(user.getName());
+            userRegistered.setSurname(user.getSurname());
+            userRegistered.setEmail(user.getEmail());
+            saved = guestService.save((Guest)userRegistered);
+        }
+        if(saved != null)
+            return new ResponseEntity<User>(saved, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 }

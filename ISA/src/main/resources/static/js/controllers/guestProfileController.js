@@ -18,12 +18,25 @@ angular.module('restaurantApp.GuestProfileController', [])
            }
 
        })
-       .controller('UpdateGuestProfileController', function ($localStorage, $scope, $uibModalInstance, GuestProfileFactory) {
+       .controller('UpdateGuestProfileController', function ($localStorage, $scope, $uibModalInstance, $location, GuestProfileFactory) {
            function init(){
-               $scope.loggedUser = $localStorage.logged;
+               $scope.userToUpdate = $localStorage.logged;
            };
 
            init();
+
+           $scope.update = function(user){
+                  GuestProfileFactory.updateGuest(user).success(function(data){
+                      if(data != null) {
+                          $localStorage.logged = data;
+                          $scope.userToUpdate = $localStorage.logged;
+                          $uibModalInstance.close();
+                          window.location.reload();
+                      }else{
+                          alert("It is not possible to change info");
+                      }
+                  });
+           };
 
            $scope.close = function(){
                $uibModalInstance.dismiss('cancel');
