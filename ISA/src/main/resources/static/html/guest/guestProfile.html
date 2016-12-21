@@ -18,11 +18,14 @@
         <div class="carousel-caption">
             <div class="row">
                 <div class="span3 well">
-                        <img src="https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/11873354_700863073377511_1380696414796455218_n.jpg?oh=3f5de243471754f6ff341dae29b69f14&oe=58ECF3F5" name="aboutme" width="140" height="140" class="img-circle">
-                        <h3>{{loggedUser.name}} {{loggedUser.surname}}</h3>
-                        <em>{{loggedUser.email}}</em>
+                    <img src="https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/11873354_700863073377511_1380696414796455218_n.jpg?oh=3f5de243471754f6ff341dae29b69f14&oe=58ECF3F5" name="aboutme" width="140" height="140" class="img-circle">
+                    <h3>{{loggedUser.name}} {{loggedUser.surname}}</h3>
+                    <em>{{loggedUser.email}}</em>
+                    <br><br><br>
+                    <button type="button" class="btn btn-default" ng-click="openUpdateModal()">Edit your info</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
