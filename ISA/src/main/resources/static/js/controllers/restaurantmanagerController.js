@@ -22,14 +22,17 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:1};
         $scope.addRestaurantManager = function (restaurantManager) {
             RestaurantmanagerService.addRestaurantManager(restaurantManager).success(function (data) {
-                $scope.restaurantManagers.push(data);
-                $location.path('/restaurantmanagers');
+                //$scope.restaurantManagers.push(data);
+                //$location.path('/systemmanager/restaurantmanagers');
+                $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:1};
+                getRestaurantManagers();
+                window.location.reload();
             });
         }
 
         $scope.updateRestaurantManager = function (restaurantManager) {
             RestaurantmanagerService.updateRestaurantManager(restaurantManager).success(function (data) {
-
+                getRestaurantManagers();
             });
         }
 

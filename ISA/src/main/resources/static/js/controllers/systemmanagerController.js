@@ -22,16 +22,26 @@ angular.module('restaurantApp.SystemmanagerController',[])
         $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:1};
         $scope.addSystemManager = function (systemManager) {
             SystemmanagerService.addSystemManager(systemManager).success(function (data) {
-                $scope.systemManagers.push(data);
-                $location.path('/systemmanagers');
+                //$scope.systemManagers.push(data);
+                //$location.path('/systemmanager/systemmanagers');
+                $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:1};
+                getSystemManagers();
+                window.location.reload();
             });
         }
 
         $scope.updateSystemManager = function (systemManager) {
             SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
-
+                getSystemManagers();
             });
         }
 
         getSystemManagers();
+
+        $scope.checkSystemManager = function(sm){
+            if(sm.email == "admin@gmail.com")
+                return false;
+            //fali za ulogovanog
+            return true;
+        }
     });

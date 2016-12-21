@@ -19,19 +19,22 @@ angular.module('restaurantApp.RestaurantController',[])
             });
         }
 
-        $scope.newRestaurant = {id:null, rName:'', rType:'', version:1};
+        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:1};
         $scope.addRestaurant = function (restaurant) {
             RestaurantService.addRestaurant(restaurant).success(function (data) {
-                $scope.restaurants.push(data);
-                $location.path('/restaurants');
+                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:1};
+                getRestaurants();
+                window.location.reload();
             });
         }
 
         $scope.updateRestaurant = function (restaurant) {
             RestaurantService.updateRestaurant(restaurant).success(function (data) {
-
+                getRestaurants();
             });
         }
 
         getRestaurants();
+
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
     });

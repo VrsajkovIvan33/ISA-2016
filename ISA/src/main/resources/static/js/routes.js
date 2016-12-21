@@ -29,22 +29,13 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/systemmanager', {
             templateUrl : 'html/systemmanager.html'
         })
-        .when('/systemmanagers', {
+        .when('/systemmanager/systemmanagers', {
             templateUrl : 'html/systemmanagers.html'
         })
-        .when('/restaurantmanagers', {
+        .when('/systemmanager/restaurantmanagers', {
             templateUrl : 'html/restaurantmanagers.html'
         })
-        .when('/restaurants', {
+        .when('/systemmanager/restaurants', {
             templateUrl : 'html/restaurants.html'
-        })
-        .when('/addNewRestaurant', {
-            templateUrl : 'html/addNewRestaurant.html'
-        })
-        .when('/addNewRestaurantManager', {
-            templateUrl : 'html/addNewRestaurantManager.html'
-        })
-        .when('/addNewSystemManager', {
-            templateUrl : 'html/addNewSystemManager.html'
         });
 }]);
