@@ -35,15 +35,17 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
-        if(user instanceof Guest){
-            if(((Guest) user).isActive())
+        if(user.getPassword().equals(tempUser.getPassword())) {
+            if (user instanceof Guest) {
+                if (((Guest) user).isActive())
+                    return new ResponseEntity<User>(user, HttpStatus.OK);
+                else
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            } else
                 return new ResponseEntity<User>(user, HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        else
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-
     }
 
     @RequestMapping(
