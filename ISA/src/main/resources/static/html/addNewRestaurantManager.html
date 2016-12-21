@@ -1,0 +1,28 @@
+<div ng-controller="RestaurantmanagerController">
+
+    <div class="modal fade" id="addNewRestaurantManager" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Restaurant</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <p><input ng-model="newRestaurantManager.name" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager name"></p>
+                        <p><input ng-model="newRestaurantManager.surname" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager surname">
+                        <p><input ng-model="newRestaurantManager.email" type="email" class="form-control form-control-lg" placeholder="Enter restaurant manager email"></p>
+                        <p><input ng-model="newRestaurantManager.password" type="password" class="form-control form-control-lg" placeholder="Enter restaurant manager password"></p>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="addRestaurantManager(newRestaurantManager)" type="button" class="btn btn-primary btn-md">Add Restaurant Manager</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

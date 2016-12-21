@@ -1,0 +1,47 @@
+<div ng-cloak ng-controller="RestaurantController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/systemmanager">Home</a></li>
+                    <li><a href="#/systemmanager/systemmanagers">Update System Managers</a></li>
+                    <li><a href="#/systemmanager/restaurantmanagers">Update Restaurant Managers</a></li>
+                    <li><a href="#/systemmanager/restaurants">Update Restaurants</a></li>
+                    <li><a href="#/">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Restaurants</h3>
+
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewRestaurant">Add Restaurant</button>
+
+            <table style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Restaurant name:</th>
+                        <th>Restaurant type:</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in restaurants">
+                        <td><input ng-model="r.rName" type="text" class="form-control form-control-lg" placeholder="Enter restaurant name"></td>
+                        <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
+                        <td><select ng-model="r.rType" ng-options="rt as rt for rt in restaurantTypes"></select></td>
+                        <td><button ng-click="updateRestaurant(r)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                        <td><button ng-click="removeRestaurant(r)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "ISA",
+  "homepage": "https://github.com/VrsajkovIvan33/ISA-2016",
+  "authors": [
+    "novicasarenac <nolesarenac@yahoo.com>",
+    "markovjestica <m.vjestica94@gmail.com>",
+    "VrsajkovIvan33 <vrsajkov.ivan@gmail.com>"
+  ],
+  "description": "Restautant scheduler",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-calendar": "^1.0.2",
+    "angular-dragdrop": "^1.0.13"
+  }
+}

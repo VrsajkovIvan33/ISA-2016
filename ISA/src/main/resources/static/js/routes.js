@@ -35,6 +35,18 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/login', {
             templateUrl : 'html/login.html'
         })
+        .when('/systemmanager', {
+            templateUrl : 'html/systemmanager.html'
+        })
+        .when('/systemmanager/systemmanagers', {
+            templateUrl : 'html/systemmanagers.html'
+        })
+        .when('/systemmanager/restaurantmanagers', {
+            templateUrl : 'html/restaurantmanagers.html'
+        })
+        .when('/systemmanager/restaurants', {
+            templateUrl: 'html/restaurants.html'
+        })
         .when('/confirm', {
             templateUrl : 'html/confirm.html'
         });

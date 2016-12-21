@@ -1,0 +1,50 @@
+<div ng-cloak ng-controller="SystemmanagerController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/systemmanager">Home</a></li>
+                    <li><a href="#/systemmanager/systemmanagers">Update System Managers</a></li>
+                    <li><a href="#/systemmanager/restaurantmanagers">Update Restaurant Managers</a></li>
+                    <li><a href="#/systemmanager/restaurants">Update Restaurants</a></li>
+                    <li><a href="#/">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>System Managers</h3>
+
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewSystemManager">Add System Manager</button>
+
+            <table style="width:100%;">
+                <thead>
+                <tr>
+                    <th>System Manager name:</th>
+                    <th>System Manager surname:</th>
+                    <th>System Manager email:</th>
+                    <th>System Manager password:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="sm in systemManagers">
+                    <td><input ng-model="sm.name" type="text" class="form-control form-control-lg" placeholder="Enter system manager name"></td>
+                    <td><input ng-model="sm.surname" type="text" class="form-control form-control-lg" placeholder="Enter system manager surname"></td>
+                    <td><input ng-model="sm.email" type="email" class="form-control form-control-lg" placeholder="Enter system manager email"></td>
+                    <td><input ng-model="sm.password" type="password" class="form-control form-control-lg" placeholder="Enter system manager password"></td>
+                    <td><button ng-if="checkSystemManager(sm)" ng-click="updateSystemManager(sm)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                    <td><button ng-if="checkSystemManager(sm)" ng-click="removeSystemManager(sm)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
