@@ -7,8 +7,7 @@
     <!--link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'-->
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.css'>
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap-theme.css'>
-    <link rel='stylesheet'
-          href='/webjars/bootstrap/css/bootstrap-theme.min.css'>
+    <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap-theme.min.css'>
     <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -17,7 +16,7 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-    <script src='/webjars/bootstrap/js/bootstrap.js'></script>
+    <!--<script src='/webjars/bootstrap/js/bootstrap.js'></script>-->
     <script src='/webjars/bootstrap/js/bootstrap.min.js'></script>
 
 
@@ -28,9 +27,6 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
     <script src="js/directives.js"></script>
-    <script src="js/controllers/loginController.js"></script>
-    <script src="js/services/loginService.js"></script>
-    <script src="js/routes.js"></script>
     <!--ovo izbaciti kad instaliramo sa bowerom-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.js"></script>
     <script src="js/routes.js"></script>
@@ -38,11 +34,18 @@
     <!-- Controllers -->
     <script src="js/controllers/loginController.js"></script>
     <script src="js/controllers/guestRegisterController.js"></script>
+    <script src="js/controllers/systemmanagerController.js"></script>
+    <script src="js/controllers/restaurantmanagerController.js"></script>
+    <script src="js/controllers/restaurantController.js"></script>
     <script src="js/controllers/waiterController.js"></script>
     <script src="js/controllers/confirmRegisterController.js"></script>
 
     <!-- Factories -->
     <script src="js/services/guestRegisterFactory.js"></script>
+    <script src="js/services/loginService.js"></script>
+    <script src="js/services/systemmanagerService.js"></script>
+    <script src="js/services/restaurantmanagerService.js"></script>
+    <script src="js/services/restaurantService.js"></script>
     <script src="js/services/confirmFactory.js"></script>
 
     <!-- Calendar -->
@@ -144,5 +147,11 @@
 </script>
 
 </div>
+
+
+<div ng-include="'html/addNewRestaurant.html'"></div>
+<div ng-include="'html/addNewRestaurantManager.html'"></div>
+<div ng-include="'html/addNewSystemManager.html'"></div>
+
 </body>
 </html>

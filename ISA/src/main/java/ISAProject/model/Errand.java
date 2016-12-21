@@ -7,10 +7,10 @@ import java.io.Serializable;
  * Created by Marko on 11/24/2016.
  */
 @Entity
-@Table(name = "order")
-public class Order implements Serializable {
+@Table(name = "errand")
+public class Errand implements Serializable {
 
-    public Order(){
+    public Errand(){
 
     }
 

@@ -5,6 +5,9 @@
 angular.module('restaurantApp.controllers',[
     'restaurantApp.LoginController',
     'restaurantApp.GuestRegisterController',
+    'restaurantApp.SystemmanagerController',
+    'restaurantApp.RestaurantmanagerController',
+    'restaurantApp.RestaurantController',
     'restaurantApp.WaiterController',
     'restaurantApp.ConfirmRegisterController'
 ]);

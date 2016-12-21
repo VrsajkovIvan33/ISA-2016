@@ -17,7 +17,7 @@ public class Restaurant implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "rid")
-    private Long rId;
+    private Long id;
 
     @Version
     private int version;
@@ -38,12 +38,12 @@ public class Restaurant implements Serializable {
     @JoinColumn(name = "mid")
     private Menu mmenu;*/
 
-    public Long getrId() {
-        return rId;
+    public Long getId() {
+        return id;
     }
 
-    public void setrId(Long rId) {
-        this.rId = rId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getVersion() {

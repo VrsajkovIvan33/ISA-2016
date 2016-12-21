@@ -5,5 +5,5 @@ package ISAProject.model;
  */
 public enum RestaurantType {
 
-    LOCALCUISINE, ITALIAN, CHINESE, VEGAN
+    Localcuisine, Italian, Chinese, Vegan
 }

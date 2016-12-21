@@ -1,0 +1,50 @@
+<div ng-cloak ng-controller="RestaurantmanagerController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/systemmanager">Home</a></li>
+                    <li><a href="#/systemmanager/systemmanagers">Update System Managers</a></li>
+                    <li><a href="#/systemmanager/restaurantmanagers">Update Restaurant Managers</a></li>
+                    <li><a href="#/systemmanager/restaurants">Update Restaurants</a></li>
+                    <li><a href="#/">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Restaurant Managers</h3>
+
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewRestaurantManager">Add Restaurant Manager</button>
+
+            <table style="width:100%;">
+                <thead>
+                <tr>
+                    <th>Restaurant Manager name:</th>
+                    <th>Restaurant Manager surname:</th>
+                    <th>Restaurant Manager email:</th>
+                    <th>Restaurant Manager password:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="rm in restaurantManagers">
+                    <td><input ng-model="rm.name" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager name"></td>
+                    <td><input ng-model="rm.surname" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager surname"></td>
+                    <td><input ng-model="rm.email" type="email" class="form-control form-control-lg" placeholder="Enter restaurant manager email"></td>
+                    <td><input ng-model="rm.password" type="password" class="form-control form-control-lg" placeholder="Enter restaurant manager password"></td>
+                    <td><button ng-click="updateRestaurantManager(rm)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                    <td><button ng-click="removeRestaurantManager(rm)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

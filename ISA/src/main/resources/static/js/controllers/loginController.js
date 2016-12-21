@@ -11,21 +11,21 @@ angular.module('restaurantApp.LoginController',[])
            init();
 
            $scope.login = function(user){
-                LoginFactory.getUser(user)
-                    .success(function(data){
-                       if(data){
-                           $localStorage.logged = data;
-                           if($localStorage.logged.type == 'BARTENDER'){
-                               $location.path('/bartender');
-                           }else if($localStorage.logged.type == 'COOK'){
-                               $location.path('/cook');
-                           }else if($localStorage.logged.type == 'GUEST'){
-                               $location.path('/guest');
-                           }else if($localStorage.logged.type == 'WAITER'){
-                               $location.path('/waiter');
-                           }
+                LoginFactory.getUser(user).success(function(data){
+                   if(data){
+                       $localStorage.logged = data;
+                       if($localStorage.logged.type == 'BARTENDER'){
+                           $location.path('/bartender');
+                       }else if($localStorage.logged.type == 'COOK'){
+                           $location.path('/cook');
+                       }else if($localStorage.logged.type == 'GUEST'){
+                           $location.path('/guest');
+                       }else if($localStorage.logged.type == 'WAITER'){
+                           $location.path('/waiter');
+                       }else if($localStorage.logged.type == 'SYSTEMMANAGER'){
+                           $location.path('/systemmanager');
                        }
-                    })
+                    }})
                     .error(function(data){
                         alert("Confirm your registration");
                     });
