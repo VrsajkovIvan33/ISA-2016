@@ -53,7 +53,10 @@ public class JpaUserService implements UserService{
     @Override
     public User findByEmail(String email) {
         List<User> userList = userRepository.findByEmail(email);
-        User user = userList.get(0);
-        return user;
+        if(!userList.isEmpty()) {
+            User user = userList.get(0);
+            return user;
+        }else
+            return null;
     }
 }

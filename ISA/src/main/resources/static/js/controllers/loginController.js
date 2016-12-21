@@ -29,7 +29,7 @@ angular.module('restaurantApp.LoginController',[])
                        }
                     }})
                     .error(function(data){
-                        alert("Confirm your registration");
+                        alert("Wrong mail address or password!");
                     });
            };
 

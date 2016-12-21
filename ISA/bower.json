@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-ui-calendar": "^1.0.2"
+    "angular-ui-calendar": "^1.0.2",
+    "angular-dragdrop": "^1.0.13"
   }
 }

@@ -18,7 +18,16 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/cook.html'
         })
         .when('/guest',{
-            templateUrl : 'html/guest.html'
+            templateUrl : 'html/guest/guestHome.html'
+        })
+        .when('/guest/profile',{
+            templateUrl : 'html/guest/guestProfile.html'
+        })
+        .when('/guest/friends',{
+            templateUrl : 'html/guest/guestFriends.html'
+        })
+        .when('/guest/restaurants',{
+            templateUrl : 'html/guest/guestRestaurants.html'
         })
         .when('/waiter',{
             templateUrl : 'html/waiter.html'
