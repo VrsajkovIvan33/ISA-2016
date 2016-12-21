@@ -8,5 +8,6 @@ angular.module('restaurantApp.services',[
                'restaurantApp.SystemmanagerService',
                'restaurantApp.RestaurantmanagerService',
                'restaurantApp.RestaurantService',
-               'restaurantApp.ConfirmFactory'
+               'restaurantApp.ConfirmFactory',
+               'restaurantApp.ProviderService'
 ]);
