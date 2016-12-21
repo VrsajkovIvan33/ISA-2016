@@ -24,7 +24,22 @@ public class Guest extends User implements Serializable{
     @JoinColumn(name = "id")
     private List<Guest> sentList = new ArrayList<Guest>();
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
     public Guest() {
+    }
+
+    public Guest(User user) {
+        super(user);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public List<Guest> getFriendList() {

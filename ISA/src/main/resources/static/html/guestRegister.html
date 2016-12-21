@@ -11,7 +11,10 @@
                 <p><input type="password" class="form-control form-control-lg" ng-model="newGuest.gPassword"
                           placeholder="Enter your password"></p>
                 <p>
-                    <button type="submit" class="btn btn-primary btn-md" ng-click="registerGuest()" Register</button>
+                <p><input type="password" class="form-control form-control-lg"
+                          placeholder="Repeat your password" ng-model="repeatedPassword"></p>
+                <p>
+                    <button type="submit" class="btn btn-primary btn-md" ng-click="registerGuest(newGuest, repeatedPassword)">Register</button>
                 </p>
             </form>
         </div>

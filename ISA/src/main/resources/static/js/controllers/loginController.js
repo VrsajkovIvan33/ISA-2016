@@ -25,8 +25,10 @@ angular.module('restaurantApp.LoginController',[])
                        }else if($localStorage.logged.type == 'SYSTEMMANAGER'){
                            $location.path('/systemmanager');
                        }
-                   }
-                });
+                    }})
+                    .error(function(data){
+                        alert("Confirm your registration");
+                    });
            };
 
        });

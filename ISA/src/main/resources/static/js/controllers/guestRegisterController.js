@@ -3,22 +3,24 @@
  */
 
 angular.module('restaurantApp.GuestRegisterController',[])
-    .controller('GuestRegisterController', function ($scope, GuestRegisterFactory) {
+    .controller('GuestRegisterController', function ($scope, $location, GuestRegisterFactory) {
         function init() {
             console.log("Kao neko registrovanje");
-            $scope.newGuest = new Object();
-            $scope.newGuest.gName = "";
-            $scope.newGuest.gSurname = "";
-            $scope.newGuest.gPassword = "";
-            $scope.newGuest.gEmail = "";
         }
 
         init();
 
-        $scope.registerGuest = function() {
-            GuestRegisterFactory.postGuest($scope.newGuest).success(function(data) {
-                console.log("Pokusao da registruje!")
-            });
+        $scope.registerGuest = function(guest, repeatedPassword) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(re.test(guest.gEmail)) {
+                if (guest.gPassword === repeatedPassword) {
+                    GuestRegisterFactory.postGuest(guest).success(function (data) {
+                        $location.path('/');
+                    });
+                } else {
+                    alert("Wrong password");
+                }
+            }
         }
 
     });

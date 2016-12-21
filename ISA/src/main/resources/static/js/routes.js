@@ -36,6 +36,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/restaurantmanagers.html'
         })
         .when('/systemmanager/restaurants', {
-            templateUrl : 'html/restaurants.html'
+            templateUrl: 'html/restaurants.html'
+        })
+        .when('/confirm', {
+            templateUrl : 'html/confirm.html'
         });
 }]);

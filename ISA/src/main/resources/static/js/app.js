@@ -5,4 +5,5 @@ var app = angular.module('restaurantApp', ['restaurantApp.routes',
                                            'restaurantApp.controllers',
                                            'restaurantApp.services',
                                            'restaurantApp.directives',
+                                           'ui.calendar',
                                            'ngStorage']);
