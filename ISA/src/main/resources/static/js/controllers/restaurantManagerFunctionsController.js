@@ -65,10 +65,18 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                 $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one
             ];
 
+            $scope.currentlyDragging = {title: "Unused"};
+
             $scope.tables = [{title: "0"}, {title: "1"}, {title: "2"}, {title: "3"}, {title: "4"},
                 {title: "5"}, {title: "6"}, {title: "7"}, {title: "8"}, {title: "9"}];
 
+            $scope.parrotDraggings = function (item) {
+                $scope.currentlyDragging.title = item.title;
+            }
 
+            $scope.parrotDroppings = function (item) {
+                item.title = $scope.currentlyDragging.title;
+            }
 
         }
 
