@@ -1,0 +1,31 @@
+<!-- Modal for user info update -->
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Update System Manager</h4>
+</div>
+<div class="modal-body">
+    <form role="form">
+        <label>Name</label>
+        <input type="text" class="form-control form-control-lg" ng-model="systemManagerToUpdate.name" placeholder="Enter system manager name">
+        <label>Surname</label>
+        <input type="text" class="form-control form-control-lg" ng-model="systemManagerToUpdate.surname" placeholder="Enter system manager surname">
+        <label>Email</label>
+        <input type="email" class="form-control form-control-lg" ng-model="systemManagerToUpdate.email" placeholder="Enter system manager email">
+        <label>Password</label>
+        <input type="password" class="form-control form-control-lg" ng-model="systemManagerToUpdate.password" placeholder="Enter system manager password">
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" ng-click="updateSystemManager(systemManagerToUpdate)">Update</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>

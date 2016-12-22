@@ -2,7 +2,7 @@
  * Created by Marko on 12/18/2016.
  */
 angular.module('restaurantApp.RestaurantController',[])
-    .controller('RestaurantController', function ($localStorage, $scope, $location, RestaurantService) {
+    .controller('RestaurantController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantService) {
 
         $scope.restaurants = [];
         function getRestaurants(){
@@ -19,22 +19,55 @@ angular.module('restaurantApp.RestaurantController',[])
             });
         }
 
-        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:1};
-        $scope.addRestaurant = function (restaurant) {
-            RestaurantService.addRestaurant(restaurant).success(function (data) {
-                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:1};
-                getRestaurants();
-                window.location.reload();
+        $scope.openAddModal = function () {
+            $uibModal.open({
+                templateUrl : 'html/systemManager/addNewRestaurant.html',
+                controller : 'NewRestaurantController'
             });
         }
 
-        $scope.updateRestaurant = function (restaurant) {
-            RestaurantService.updateRestaurant(restaurant).success(function (data) {
-                getRestaurants();
+        $scope.openUpdateModal = function (restaurant) {
+            $rootScope.updateRestaurant = restaurant;
+            $uibModal.open({
+                templateUrl : 'html/systemManager/updateRestaurant.html',
+                controller : 'UpdateRestaurantController'
             });
         }
 
         getRestaurants();
+
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
+    })
+    .controller('NewRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantService) {
+
+        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:0};
+        $scope.addRestaurant = function (restaurant) {
+            RestaurantService.addRestaurant(restaurant).success(function (data) {
+                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:0};
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
+    })
+    .controller('UpdateRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantService) {
+
+        $scope.restaurantToUpdate = $rootScope.updateRestaurant;
+        $scope.updateRestaurant = function (restaurant) {
+            RestaurantService.updateRestaurant(restaurant).success(function (data) {
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
 
         $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
     });

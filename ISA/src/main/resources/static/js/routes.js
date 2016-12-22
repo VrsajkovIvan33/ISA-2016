@@ -36,21 +36,21 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/login.html'
         })
         .when('/systemmanager', {
-            templateUrl : 'html/systemmanager.html'
+            templateUrl : 'html/systemManager/systemmanager.html'
         })
         .when('/systemmanager/systemmanagers', {
-            templateUrl : 'html/systemmanagers.html'
+            templateUrl : 'html/systemManager/systemmanagers.html'
         })
         .when('/systemmanager/restaurantmanagers', {
-            templateUrl : 'html/restaurantmanagers.html'
+            templateUrl : 'html/systemManager/restaurantmanagers.html'
         })
         .when('/systemmanager/restaurants', {
-            templateUrl: 'html/restaurants.html'
+            templateUrl: 'html/systemManager/restaurants.html'
         })
         .when('/confirm', {
             templateUrl : 'html/confirm.html'
         })
         .when('/provider', {
-            templateUrl : 'html/provider.html'
+            templateUrl : 'html/provider/provider.html'
         });
 }]);
