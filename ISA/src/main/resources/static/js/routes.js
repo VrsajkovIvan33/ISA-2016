@@ -18,7 +18,16 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/cook.html'
         })
         .when('/guest',{
-            templateUrl : 'html/guest.html'
+            templateUrl : 'html/guest/guestHome.html'
+        })
+        .when('/guest/profile',{
+            templateUrl : 'html/guest/guestProfile.html'
+        })
+        .when('/guest/friends',{
+            templateUrl : 'html/guest/guestFriends.html'
+        })
+        .when('/guest/restaurants',{
+            templateUrl : 'html/guest/guestRestaurants.html'
         })
 
         //routing for the restaurant manager
@@ -47,18 +56,21 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/login.html'
         })
         .when('/systemmanager', {
-            templateUrl : 'html/systemmanager.html'
+            templateUrl : 'html/systemManager/systemmanager.html'
         })
         .when('/systemmanager/systemmanagers', {
-            templateUrl : 'html/systemmanagers.html'
+            templateUrl : 'html/systemManager/systemmanagers.html'
         })
         .when('/systemmanager/restaurantmanagers', {
-            templateUrl : 'html/restaurantmanagers.html'
+            templateUrl : 'html/systemManager/restaurantmanagers.html'
         })
         .when('/systemmanager/restaurants', {
-            templateUrl: 'html/restaurants.html'
+            templateUrl: 'html/systemManager/restaurants.html'
         })
         .when('/confirm', {
             templateUrl : 'html/confirm.html'
+        })
+        .when('/provider', {
+            templateUrl : 'html/provider/provider.html'
         });
 }]);

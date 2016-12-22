@@ -26,10 +26,12 @@ angular.module('restaurantApp.LoginController',[])
                            $location.path('/systemmanager');
                        }else if($localStorage.logged.type == 'RESTAURANTMANAGER'){
                            $location.path('/restaurantManager');
+                       }else if($localStorage.logged.type == 'PROVIDER'){
+                           $location.path('/provider');
                        }
                     }})
                     .error(function(data){
-                        alert("Confirm your registration");
+                        alert("Wrong mail address or password!");
                     });
            };
 

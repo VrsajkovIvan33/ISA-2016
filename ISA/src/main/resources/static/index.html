@@ -16,12 +16,17 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 
+
     <!--<script src='/webjars/bootstrap/js/bootstrap.js'></script>-->
     <script src='/webjars/bootstrap/js/bootstrap.min.js'></script>
 
 
     <script src='/webjars/angularjs/angular.js'></script>
+    <script src='/webjars/angularjs/angular-animate.js'></script>
     <script src='/webjars/angularjs/angular-route.js'></script>
+
+    <script src='/webjars/angular-ui-bootstrap/ui-bootstrap.js'></script>
+    <script src='/webjars/angular-ui-bootstrap/ui-bootstrap-tpls.js'></script>
 
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
@@ -40,6 +45,8 @@
     <script src="js/controllers/waiterController.js"></script>
     <script src="js/controllers/confirmRegisterController.js"></script>
     <script src="js/controllers/restaurantManagerFunctionsController.js"></script>
+    <script src="js/controllers/providerController.js"></script>
+    <script src="js/controllers/guestProfileController.js"></script>
 
     <!-- Factories -->
     <script src="js/services/guestRegisterFactory.js"></script>
@@ -48,6 +55,8 @@
     <script src="js/services/restaurantmanagerService.js"></script>
     <script src="js/services/restaurantService.js"></script>
     <script src="js/services/confirmFactory.js"></script>
+    <script src="js/services/providerService.js"></script>
+    <script src="js/services/guestProfileFactory.js"></script>
 
     <!-- Calendar -->
     <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
@@ -148,11 +157,6 @@
 </script>
 
 </div>
-
-
-<div ng-include="'html/addNewRestaurant.html'"></div>
-<div ng-include="'html/addNewRestaurantManager.html'"></div>
-<div ng-include="'html/addNewSystemManager.html'"></div>
 
 </body>
 </html>

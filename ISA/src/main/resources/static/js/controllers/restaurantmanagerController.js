@@ -2,7 +2,7 @@
  * Created by Marko on 12/18/2016.
  */
 angular.module('restaurantApp.RestaurantmanagerController',[])
-    .controller('RestaurantmanagerController', function ($localStorage, $scope, $location, RestaurantmanagerService) {
+    .controller('RestaurantmanagerController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantmanagerService) {
 
         $scope.restaurantManagers = [];
         function getRestaurantManagers(){
@@ -19,22 +19,49 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
             });
         }
 
-        $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:1};
-        $scope.addRestaurantManager = function (restaurantManager) {
-            RestaurantmanagerService.addRestaurantManager(restaurantManager).success(function (data) {
-                //$scope.restaurantManagers.push(data);
-                //$location.path('/systemmanager/restaurantmanagers');
-                $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:1};
-                getRestaurantManagers();
-                window.location.reload();
+        $scope.openAddModal = function () {
+            $uibModal.open({
+                templateUrl : 'html/systemManager/addNewRestaurantManager.html',
+                controller : 'NewRestaurantmanagerController'
             });
         }
 
-        $scope.updateRestaurantManager = function (restaurantManager) {
-            RestaurantmanagerService.updateRestaurantManager(restaurantManager).success(function (data) {
-                getRestaurantManagers();
+        $scope.openUpdateModal = function (restaurantManager) {
+            $rootScope.updateRestaurantManager = restaurantManager;
+            $uibModal.open({
+                templateUrl : 'html/systemManager/updateRestaurantManager.html',
+                controller : 'UpdateRestaurantmanagerController'
             });
         }
 
         getRestaurantManagers();
+    })
+    .controller('NewRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantmanagerService) {
+
+        $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:0};
+        $scope.addRestaurantManager = function (restaurantManager) {
+            RestaurantmanagerService.addRestaurantManager(restaurantManager).success(function (data) {
+                $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:0};
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+    })
+    .controller('UpdateRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantmanagerService) {
+
+        $scope.restaurantManagerToUpdate = $rootScope.updateRestaurantManager;
+        $scope.updateRestaurantManager = function (restaurantManager) {
+            RestaurantmanagerService.updateRestaurantManager(restaurantManager).success(function (data) {
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
     });

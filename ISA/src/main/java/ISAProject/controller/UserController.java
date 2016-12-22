@@ -35,15 +35,20 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
-        if(user instanceof Guest){
-            if(((Guest) user).isActive())
-                return new ResponseEntity<User>(user, HttpStatus.OK);
-            else
+        if(user != null) {
+            if (user.getPassword().equals(tempUser.getPassword())) {
+                if (user instanceof Guest) {
+                    if (((Guest) user).isActive())
+                        return new ResponseEntity<User>(user, HttpStatus.OK);
+                    else
+                        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                } else
+                    return new ResponseEntity<User>(user, HttpStatus.OK);
+            } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        else
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-
+            }
+        }else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(
@@ -69,5 +74,21 @@ public class UserController {
         }else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws Exception{
+        User userRegistered = userService.findOne(user.getId());
+        Guest saved = null;
+        if(userRegistered instanceof Guest){
+            userRegistered.setName(user.getName());
+            userRegistered.setSurname(user.getSurname());
+            userRegistered.setEmail(user.getEmail());
+            saved = guestService.save((Guest)userRegistered);
+        }
+        if(saved != null)
+            return new ResponseEntity<User>(saved, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }

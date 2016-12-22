@@ -8,6 +8,7 @@
                         <li><a href="#restaurantManager">Home</a></li>
                         <li><a href="#restaurantManager/calendar">Calendar</a></li>
                         <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                        <li><a href="index.html">Log out</a></li>
                     </ul>
                 </div>
             </nav>
@@ -18,10 +19,14 @@
         <div class="carousel-caption">
             <div style="background-color:white">
                 <div class="row">
-                    <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{animate:true}" ng-hide="!list1.title">{{list1.title}}</div>>
+                    <div class="col-sm-1 col-md-offset-1 column">
+                        <div style="background-color: black !important; margin: 2px" data-drag="true" ng-repeat="r in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-model="tables[r]" jqyoui-draggable="{placeholder:true}" data-jqyoui-options>{{tables[r].title}}</div>
+                    </div>
 
-                    <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
-                        <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
+                    <div class="col-sm-10" >
+                        <div class="column" ng-repeat="r1 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+                            <span class="col-sm-1 thumbnail" style="background-color: black !important; margin: 5px" data-drop="true" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-model="places[r1*10 + r2]" jqyoui-draggable data-jqyoui-options>{{places[r1*10 + r2].title}}</span>
+                        </div>
                     </div>
                 </div>
             </div>

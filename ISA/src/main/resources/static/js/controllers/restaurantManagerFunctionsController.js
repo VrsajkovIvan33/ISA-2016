@@ -52,8 +52,23 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
 
-            $scope.list1 = {title: 'AngularJS - Drag Me'};
-            $scope.list2 = {};
+            $scope.one = {title: "X"};
+            $scope.places = [ $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one
+            ];
+
+            $scope.tables = [{title: "0"}, {title: "1"}, {title: "2"}, {title: "3"}, {title: "4"},
+                {title: "5"}, {title: "6"}, {title: "7"}, {title: "8"}, {title: "9"}];
+
+
 
         }
 

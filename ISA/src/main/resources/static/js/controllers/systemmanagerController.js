@@ -2,7 +2,7 @@
  * Created by Marko on 12/18/2016.
  */
 angular.module('restaurantApp.SystemmanagerController',[])
-    .controller('SystemmanagerController', function ($localStorage, $scope, $location, SystemmanagerService) {
+    .controller('SystemmanagerController', function ($localStorage, $scope, $location, $uibModal, $rootScope, SystemmanagerService) {
 
         $scope.systemManagers = [];
         function getSystemManagers(){
@@ -19,20 +19,18 @@ angular.module('restaurantApp.SystemmanagerController',[])
             });
         }
 
-        $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:1};
-        $scope.addSystemManager = function (systemManager) {
-            SystemmanagerService.addSystemManager(systemManager).success(function (data) {
-                //$scope.systemManagers.push(data);
-                //$location.path('/systemmanager/systemmanagers');
-                $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:1};
-                getSystemManagers();
-                window.location.reload();
+        $scope.openAddModal = function () {
+            $uibModal.open({
+                templateUrl : 'html/systemManager/addNewSystemManager.html',
+                controller : 'NewSystemmanagerController'
             });
         }
 
-        $scope.updateSystemManager = function (systemManager) {
-            SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
-                getSystemManagers();
+        $scope.openUpdateModal = function (systemManager) {
+            $rootScope.updateSystemManager = systemManager;
+            $uibModal.open({
+                templateUrl : 'html/systemManager/updateSystemManager.html',
+                controller : 'UpdateSystemmanagerController'
             });
         }
 
@@ -43,5 +41,34 @@ angular.module('restaurantApp.SystemmanagerController',[])
                 return false;
             //fali za ulogovanog
             return true;
+        }
+    })
+    .controller('NewSystemmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, SystemmanagerService) {
+
+        $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:0};
+        $scope.addSystemManager = function (systemManager) {
+            SystemmanagerService.addSystemManager(systemManager).success(function (data) {
+                $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:0};
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+    })
+    .controller('UpdateSystemmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, SystemmanagerService) {
+
+        $scope.systemManagerToUpdate = $rootScope.updateSystemManager;
+        $scope.updateSystemManager = function (systemManager) {
+            SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
         }
     });

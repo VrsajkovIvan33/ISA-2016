@@ -21,7 +21,7 @@
         <div class="carousel-caption">
             <h3>System Managers</h3>
 
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewSystemManager">Add System Manager</button>
+            <button ng-click="openAddModal()" type="button" class="btn btn-info btn-lg">Add System Manager</button>
 
             <table style="width:100%;">
                 <thead>
@@ -40,7 +40,7 @@
                     <td><input ng-model="sm.surname" type="text" class="form-control form-control-lg" placeholder="Enter system manager surname"></td>
                     <td><input ng-model="sm.email" type="email" class="form-control form-control-lg" placeholder="Enter system manager email"></td>
                     <td><input ng-model="sm.password" type="password" class="form-control form-control-lg" placeholder="Enter system manager password"></td>
-                    <td><button ng-if="checkSystemManager(sm)" ng-click="updateSystemManager(sm)" type="button" class="btn btn-primary btn-md">Update</button></td>
+                    <td><button ng-if="checkSystemManager(sm)" ng-click="openUpdateModal(sm)" type="button" class="btn btn-primary btn-md">Update</button></td>
                     <td><button ng-if="checkSystemManager(sm)" ng-click="removeSystemManager(sm)" type="button" class="btn btn-primary btn-md">Remove</button></td>
                 </tr>
                 </tbody>
