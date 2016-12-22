@@ -16,21 +16,21 @@ public class RestaurantTable implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "rtaid")
-    private Long rtaId;
+    @Column(name = "rtid")
+    private Long rtId;
 
     @Version
     private int version;
 
-    @Column(name = "rtanumber", nullable = false)
-    private int rtaNumber;
+    @Column(name = "rtnumber", nullable = false)
+    private int rtNumber;
 
-    public Long getRtaId() {
-        return rtaId;
+    public Long getRtId() {
+        return rtId;
     }
 
-    public void setRtaId(Long rtaId) {
-        this.rtaId = rtaId;
+    public void setRtId(Long rtId) {
+        this.rtId = rtId;
     }
 
     public int getVersion() {
@@ -41,11 +41,11 @@ public class RestaurantTable implements Serializable {
         this.version = version;
     }
 
-    public int getRtaNumber() {
-        return rtaNumber;
+    public int getRtNumber() {
+        return rtNumber;
     }
 
-    public void setRtaNumber(int rtaNumber) {
-        this.rtaNumber = rtaNumber;
+    public void setRtNumber(int rtNumber) {
+        this.rtNumber = rtNumber;
     }
 }

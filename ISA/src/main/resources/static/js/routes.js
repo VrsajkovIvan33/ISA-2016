@@ -23,7 +23,7 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
 
         //routing for the restaurant manager
         .when('/restaurantManager',{
-            templateUrl : 'html/waiter/home.html'
+            templateUrl : 'html/restaurantManager/home.html'
         })
         .when('/restaurantManager/calendar',{
             templateUrl : 'html/restaurantManager/calendar.html'
