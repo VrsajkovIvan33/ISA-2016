@@ -28,6 +28,15 @@ public class RestaurantmanagerController {
     }
 
     @RequestMapping(
+            value = "/getRestaurantManagers/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestaurantManager> getRestaurantManager(@PathVariable("id") Long managerId) {
+        RestaurantManager restaurantManager = restaurantmanagerService.findOne(managerId);
+        return new ResponseEntity<RestaurantManager>(restaurantManager, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/removeRestaurantManager/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<RestaurantManager> removeRestaurantManager(@PathVariable("id") Long id) {

@@ -1,5 +1,7 @@
 package ISAProject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,26 +13,36 @@ import java.io.Serializable;
 public class RestaurantTable implements Serializable {
 
     public RestaurantTable(){
-
     }
 
     @Id
     @GeneratedValue
     @Column(name = "rtid")
-    private Long rtId;
+    private Long id;
 
     @Version
     private int version;
 
-    @Column(name = "rtnumber", nullable = false)
+    @Column(name = "rtNumber", nullable = false)
     private int rtNumber;
 
-    public Long getRtId() {
-        return rtId;
+    @Column(name = "rtPosition", nullable = false)
+    private int rtPosition;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
+    @JsonManagedReference
+    private Restaurant restaurant;
+
+    @Column(name = "rtActive", nullable = false)
+    private Boolean rtActive;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRtId(Long rtId) {
-        this.rtId = rtId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getVersion() {
@@ -41,6 +53,14 @@ public class RestaurantTable implements Serializable {
         this.version = version;
     }
 
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
     public int getRtNumber() {
         return rtNumber;
     }
@@ -48,4 +68,12 @@ public class RestaurantTable implements Serializable {
     public void setRtNumber(int rtNumber) {
         this.rtNumber = rtNumber;
     }
+
+    public int getRtPosition() { return rtPosition; }
+
+    public void setRtPosition(int rtPosition) { this.rtPosition = rtPosition; }
+
+    public Boolean getRtActive() { return rtActive; }
+
+    public void setRtActive(Boolean rtActive) { this.rtActive = rtActive; }
 }

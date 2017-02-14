@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $localStorage, RestaurantTableFactory, RestaurantmanagerService) {
         function init() {
             console.log("Restaurant Manager init()");
             var date = new Date();
@@ -52,31 +52,54 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
 
-            $scope.one = {title: "X"};
-            $scope.places = [ $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
-                $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one
-            ];
+            RestaurantmanagerService.getRestaurantManager($localStorage.logged.id).success(function(data) {
+                $scope.restaurantManager = data;
+                RestaurantTableFactory.getTablesByRestaurant($scope.restaurantManager.restaurant).success(function(data) {
+                    $scope.tables = data;
+                    $scope.currentlySelectedTable = data[0];
+                })
+            })
 
-            $scope.currentlyDragging = {title: "Unused"};
-
-            $scope.tables = [{title: "0"}, {title: "1"}, {title: "2"}, {title: "3"}, {title: "4"},
-                {title: "5"}, {title: "6"}, {title: "7"}, {title: "8"}, {title: "9"}];
-
-            $scope.parrotDraggings = function (item) {
-                $scope.currentlyDragging.title = item.title;
+            $scope.tableClick = function(table) {
+                $scope.currentlySelectedTable = table;
             }
 
-            $scope.parrotDroppings = function (item) {
-                item.title = $scope.currentlyDragging.title;
+            $scope.saveChangesOnTables = function() {
+                RestaurantTableFactory.setTablesByRestaurant($scope.tables);
             }
+
+            //$scope.$on('$locationChangeStart', function(event) {
+            //    var answer = confirm("Save changes?")
+            //    if (answer) {
+            //        RestaurantTableFactory.setTablesByRestaurant($scope.tables);
+            //    }
+            //});
+
+            // $scope.one = {title: "X"};
+            // $scope.places = [ $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one,
+            //     $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one, $scope.one
+            // ];
+            //
+            // $scope.currentlyDragging = {title: "Unused"};
+            //
+            // $scope.tables = [{title: "0"}, {title: "1"}, {title: "2"}, {title: "3"}, {title: "4"},
+            //     {title: "5"}, {title: "6"}, {title: "7"}, {title: "8"}, {title: "9"}];
+            //
+            // $scope.parrotDraggings = function (item) {
+            //     $scope.currentlyDragging.title = item.title;
+            // }
+            //
+            // $scope.parrotDroppings = function (item) {
+            //     item.title = $scope.currentlyDragging.title;
+            // }
 
         }
 

@@ -57,6 +57,7 @@
     <script src="js/services/confirmFactory.js"></script>
     <script src="js/services/providerService.js"></script>
     <script src="js/services/guestProfileFactory.js"></script>
+    <script src="js/services/restaurantTableFactory.js"></script>
 
     <!-- Calendar -->
     <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
@@ -70,6 +71,14 @@
     <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
 
+    <style>
+        div.flex_container {
+            display: flex;                  /* establish flex container */
+            flex-direction: row;            /* default value; can be omitted */
+            flex-wrap: nowrap;              /* default value; can be omitted */
+            justify-content: space-between; /* switched from default (flex-start, see below) */
+        }
+    </style>
 </head>
 
 <body>

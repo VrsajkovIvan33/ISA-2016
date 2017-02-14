@@ -9,6 +9,10 @@ angular.module('restaurantApp.RestaurantmanagerService', [])
             return $http.get('/getRestaurantManagers');
         }
 
+        factory.getRestaurantManager = function(id) {
+            return $http.get('/getRestaurantManagers/' + id);
+        }
+
         factory.removeRestaurantManager = function (restaurantManager) {
             return $http.delete('/removeRestaurantManager/' + restaurantManager.id, {"id":restaurantManager.id});
         }
