@@ -2,7 +2,7 @@
  * Created by Marko on 12/21/2016.
  */
 angular.module('restaurantApp.ProviderController',[])
-    .controller('ProviderController', function ($localStorage, $scope, $location, ProviderService) {
+    .controller('ProviderController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService) {
 
         $scope.providers = [];
         function getProviders(){
@@ -34,7 +34,30 @@ angular.module('restaurantApp.ProviderController',[])
             });
         }
 
+        $scope.openChangeModal = function (provider) {
+            $uibModal.open({
+                templateUrl : 'html/provider/changeProvider.html',
+                controller : 'ChangeProviderController'
+            });
+        }
+
         $scope.currentProvider = $localStorage.logged;
 
-        //getRestaurants();
+        //getProviders();
+    })
+    .controller('ChangeProviderController', function ($localStorage, $scope, $location, $uibModalInstance, ProviderService) {
+
+        $scope.updateProvider = function (provider) {
+            ProviderService.updateProvider(provider).success(function (data) {
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.currentProvider = $localStorage.logged;
+
     });
