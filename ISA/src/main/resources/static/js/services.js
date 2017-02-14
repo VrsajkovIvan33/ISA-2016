@@ -11,5 +11,6 @@ angular.module('restaurantApp.services',[
                'restaurantApp.RestaurantmanagerService',
                'restaurantApp.RestaurantService',
                'restaurantApp.ConfirmFactory',
-               'restaurantApp.ProviderService'
+               'restaurantApp.ProviderService',
+               'restaurantApp.RestaurantTableFactory'
 ]);
