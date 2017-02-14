@@ -1,6 +1,7 @@
 package ISAProject.controller;
 
 import ISAProject.model.Restaurant;
+import ISAProject.model.RestaurantTable;
 import ISAProject.model.RestaurantTableArrangement;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,14 @@ public class RestaurantController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) throws Exception {
-        for (int pos = 0; pos < 100; pos++) {
-            RestaurantTableArrangement rta = new RestaurantTableArrangement();
-            rta.setRestaurant(restaurant);
-            rta.setRtaPosition(pos);
+        for (int pos = 0; pos < 50 ; pos++) {
+            RestaurantTable restaurantTable = new RestaurantTable();
+            restaurantTable.setRestaurant(restaurant);
+            restaurantTable.setRtActive(false);
+            restaurantTable.setRtPosition(pos);
+            restaurantTable.setRtNumber(pos+1);
             //save the table arrangement
-            restaurant.getRestaurantTableArrangements().add(rta);
+            restaurant.getRestaurantTables().add(restaurantTable);
         }
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         return new ResponseEntity<Restaurant>(savedRestaurant, HttpStatus.CREATED);
