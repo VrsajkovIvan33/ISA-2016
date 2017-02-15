@@ -1,0 +1,47 @@
+<div ng-cloak ng-controller="RestaurantManagerFunctionsController">
+
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+                <div class="menuBar">
+                    <ul>
+                        <li><a href="#restaurantManager">Home</a></li>
+                        <li><a href="#restaurantManager/calendar">Calendar</a></li>
+                        <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                        <li><a href="index.html">Log out</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption flex_container" >
+            <div style="background-color:white; min-width: 600px">
+                <div class="row">
+                    <p ng-style="{color: 'black'}">Raspored stolova</p>
+                    <div class="col-sm-10">
+                        <div class="column flex_container" ng-repeat="r1 in [0, 1, 2, 3, 4]">
+                            <span class="col-sm-1 thumbnail" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-style="{ backgroundColor: tables[r1*10+r2].rtActive == true ? 'black' : 'grey', margin: '5px'}"  ng-model="tables[r1*10 + r2]" ng-click="tableClick(tables[r1*10+r2])">{{tables[r1*10+r2].rtNumber}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button ng-click="saveChangesOnTables()" style="color: black">Save changes</button>
+                </div>
+            </div>
+            <div style="background-color: black; min-width: 250px" class="row">
+                <h3>Table {{currentlySelectedTable.rtNumber}}</h3>
+                <p>Position: {{currentlySelectedTable.rtPosition}}</p>
+                <div class="form-group">
+                    <label for="tableNumberInput">Table number:</label>
+                    <input type="text" class="form-control" style="margin: auto; width: 80%" ng-model="currentlySelectedTable.rtNumber" id="tableNumberInput">
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="currentlySelectedTable.rtActive">Table active</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

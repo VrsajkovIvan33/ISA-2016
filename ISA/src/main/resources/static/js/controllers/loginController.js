@@ -24,6 +24,8 @@ angular.module('restaurantApp.LoginController',[])
                            $location.path('/waiter');
                        }else if($localStorage.logged.type == 'SYSTEMMANAGER'){
                            $location.path('/systemmanager');
+                       }else if($localStorage.logged.type == 'RESTAURANTMANAGER'){
+                           $location.path('/restaurantManager');
                        }else if($localStorage.logged.type == 'PROVIDER'){
                            $location.path('/provider');
                        }

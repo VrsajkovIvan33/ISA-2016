@@ -29,9 +29,29 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/guest/restaurants',{
             templateUrl : 'html/guest/guestRestaurants.html'
         })
-        .when('/waiter',{
-            templateUrl : 'html/waiter.html'
+
+        //routing for the restaurant manager
+        .when('/restaurantManager',{
+            templateUrl : 'html/restaurantManager/home.html'
         })
+        .when('/restaurantManager/calendar',{
+            templateUrl : 'html/restaurantManager/calendar.html'
+        })
+        .when('/restaurantManager/tables',{
+            templateUrl : 'html/restaurantManager/tables.html'
+        })
+
+        //routing for the waiter
+        .when('/waiter',{
+            templateUrl : 'html/waiter/home.html'
+        })
+        .when('/waiter/calendar',{
+            templateUrl : 'html/waiter/calendar.html'
+        })
+        .when('/waiter/tables',{
+            templateUrl : 'html/waiter/tables.html'
+        })
+
         .when('/login', {
             templateUrl : 'html/login.html'
         })

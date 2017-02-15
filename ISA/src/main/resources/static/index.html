@@ -49,6 +49,7 @@
     <script src="js/controllers/restaurantController.js"></script>
     <script src="js/controllers/waiterController.js"></script>
     <script src="js/controllers/confirmRegisterController.js"></script>
+    <script src="js/controllers/restaurantManagerFunctionsController.js"></script>
     <script src="js/controllers/providerController.js"></script>
     <script src="js/controllers/guestProfileController.js"></script>
 
@@ -61,6 +62,7 @@
     <script src="js/services/confirmFactory.js"></script>
     <script src="js/services/providerService.js"></script>
     <script src="js/services/guestProfileFactory.js"></script>
+    <script src="js/services/restaurantTableFactory.js"></script>
 
     <!-- Calendar -->
     <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
@@ -70,6 +72,18 @@
     <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
     <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
 
+    <!-- DragDrop -->
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+
+    <style>
+        div.flex_container {
+            display: flex;                  /* establish flex container */
+            flex-direction: row;            /* default value; can be omitted */
+            flex-wrap: nowrap;              /* default value; can be omitted */
+            justify-content: space-between; /* switched from default (flex-start, see below) */
+        }
+    </style>
 </head>
 
 <body>
@@ -85,7 +99,9 @@
         </div>
     </header>
 
-    <section class="slider">
+    <!-- Kao pre, scroll prikazuje footer -->
+    <!-- <section class="slider boxess"> -->
+    <section class="slider boxess">
         <div id="myCarousel" class="carousel carousel-fade" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="item"><img alt="First slide" src="img/restaurant.jpg">

@@ -52,6 +52,9 @@ angular.module('restaurantApp.WaiterController',[])
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
 
+            $scope.list1 = {title: 'AngularJS - Drag Me'};
+            $scope.list2 = {};
+
         }
 
         init();

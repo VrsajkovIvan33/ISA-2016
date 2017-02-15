@@ -1,5 +1,7 @@
 package ISAProject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,26 +13,36 @@ import java.io.Serializable;
 public class RestaurantTable implements Serializable {
 
     public RestaurantTable(){
-
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "rtaid")
-    private Long rtaId;
+    @Column(name = "rtid")
+    private Long id;
 
     @Version
     private int version;
 
-    @Column(name = "rtanumber", nullable = false)
-    private int rtaNumber;
+    @Column(name = "rtNumber", nullable = false)
+    private int rtNumber;
 
-    public Long getRtaId() {
-        return rtaId;
+    @Column(name = "rtPosition", nullable = false)
+    private int rtPosition;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
+    @JsonManagedReference
+    private Restaurant restaurant;
+
+    @Column(name = "rtActive", nullable = false)
+    private Boolean rtActive;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRtaId(Long rtaId) {
-        this.rtaId = rtaId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getVersion() {
@@ -41,11 +53,27 @@ public class RestaurantTable implements Serializable {
         this.version = version;
     }
 
-    public int getRtaNumber() {
-        return rtaNumber;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRtaNumber(int rtaNumber) {
-        this.rtaNumber = rtaNumber;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
+
+    public int getRtNumber() {
+        return rtNumber;
+    }
+
+    public void setRtNumber(int rtNumber) {
+        this.rtNumber = rtNumber;
+    }
+
+    public int getRtPosition() { return rtPosition; }
+
+    public void setRtPosition(int rtPosition) { this.rtPosition = rtPosition; }
+
+    public Boolean getRtActive() { return rtActive; }
+
+    public void setRtActive(Boolean rtActive) { this.rtActive = rtActive; }
 }
