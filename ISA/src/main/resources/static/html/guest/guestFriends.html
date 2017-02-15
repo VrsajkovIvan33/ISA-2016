@@ -16,10 +16,90 @@
     </header>
 
     <div class="container">
-        <div style="margin-left: 18%" class="carousel-caption col-xs-3">
-            <form role="form">
-                <p><input ng-model="user.email" type="email" class="form-control form-control-lg" placeholder="Enter your email"></p>
-            </form>
+        <div class="carousel-caption">
+
+            <div class="span3 well">
+                <div class="header">
+                    <h3 class="text-muted prj-name">
+                        <span class="fa fa-users fa-2x principal-title"></span>
+                        <button type="button" class="btn btn-success btn-md">Add <span class="glyphicon glyphicon-plus"></span></button>
+                    </h3>
+                </div>
+
+                <div class="jumbotron list-content">
+                    <ul class="list-group">
+                        <li href="#" class="list-group-item title">
+                            FRIENDS
+                        </li>
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+                            <label class="name">
+                                Juan guillermo cuadrado<br>
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+                            <label class="name">
+                                James Rodriguez (10)
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left">
+                            <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
+                            <label class="name">
+                                Mariana pajon
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+    </div>
 </div>
+
+<style>
+    .list-content{
+        min-height:300px;
+    }
+    .list-content .list-group .title{
+        background:#5bc0de;
+        border:2px solid #DDDDDD;
+        font-weight:bold;
+        color:#FFFFFF;
+    }
+    .list-group-item img {
+        height:80px;
+        width:80px;
+    }
+
+    .jumbotron .btn {
+        padding: 5px 5px !important;
+        font-size: 12px !important;
+    }
+    .prj-name {
+        color:#5bc0de;
+    }
+    .break{
+        width:100%;
+        margin:20px;
+    }
+    .name {
+        color:#5bc0de;
+    }
+</style>
