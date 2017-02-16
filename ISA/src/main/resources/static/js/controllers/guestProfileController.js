@@ -20,7 +20,7 @@ angular.module('restaurantApp.GuestProfileController', [])
        })
        .controller('UpdateGuestProfileController', function ($localStorage, $scope, $uibModalInstance, $location, GuestProfileFactory) {
            function init(){
-               $scope.userToUpdate = $localStorage.logged;
+               $scope.userToUpdate = jQuery.extend(true, {}, $localStorage.logged);
            };
 
            init();
