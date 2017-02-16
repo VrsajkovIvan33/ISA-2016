@@ -31,9 +31,9 @@
             <div class="col-sm-4" style="margin-left: 90px">
                 <div id="imaginary_container">
                     <div class="input-group stylish-input-group">
-                        <input type="text" class="form-control"  placeholder="Search" >
+                        <input type="text" class="form-control"  placeholder="Search" ng-model="personForSearch">
                         <span class="input-group-addon">
-                        <button type="submit">
+                        <button type="submit" ng-click="search(personForSearch)">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </span>
@@ -41,6 +41,23 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="jumbotron list-content">
+        <ul class="list-group">
+            <li href="#" class="list-group-item title">
+                PERSONS
+            </li>
+            <li href="#" class="list-group-item text-left" ng-repeat="person in foundPersons">
+                <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
+                <label class="name">
+                    {{person.name}} {{person.surname}}<br>
+                </label>
+                <label class="pull-right">
+                    <a  class="btn btn-default btn-xs glyphicon glyphicon-user" title="Add friend"></a>
+                </label>
+                <div class="break"></div>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="modal-footer">

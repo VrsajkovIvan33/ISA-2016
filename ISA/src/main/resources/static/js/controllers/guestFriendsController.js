@@ -26,11 +26,35 @@ angular.module('restaurantApp.GuestFriendsController', [])
            init();
        })
 
-       .controller('SearchPeopleController', function($localStorage, $scope, $uibModalInstance, $location, GuestFriendsFactory){
+       .controller('SearchPeopleController', function($localStorage, $scope, $stomp, $uibModalInstance, $log, $location, GuestFriendsFactory){
             function init(){
-
+                $scope.foundPersons = [];
             };
 
+           var subscription = null;
+           init();
 
-            init();
+           $stomp.setDebug(function (args) {
+               $log.debug(args)
+           });
+
+           $stomp.connect('/stomp', {})
+                 .then(function(frame){
+                     subscription = $stomp.subscribe('/topic/persons', function(persons, headers, res){
+                         $scope.foundPersons = persons;
+                     }, {});
+                 });
+
+           $scope.search = function(personForSearch){
+                var message = { 'message' : personForSearch };
+                $stomp.send('/app/searchPersons', message);
+           };
+
+           $scope.close = function(){
+               subscription.unsubscribe();
+               $stomp.disconnect().then(function(){
+                   $log.info('disconnected');
+               })
+               $uibModalInstance.dismiss('cancel');
+           };
         });
