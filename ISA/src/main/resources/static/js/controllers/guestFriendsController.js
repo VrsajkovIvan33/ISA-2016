@@ -41,7 +41,9 @@ angular.module('restaurantApp.GuestFriendsController', [])
            $stomp.connect('/stomp', {})
                  .then(function(frame){
                      subscription = $stomp.subscribe('/topic/persons', function(persons, headers, res){
-                         $scope.foundPersons = persons;
+                         $scope.$apply(function(){
+                             $scope.foundPersons = persons;
+                         });
                      }, {});
                  });
 

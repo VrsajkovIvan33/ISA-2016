@@ -13,7 +13,9 @@ angular.module('restaurantApp.GuestProfileController', [])
            $scope.openUpdateModal = function () {
                $uibModal.open({
                    templateUrl : 'html/guest/updateGuestInfoModal.html',
-                   controller : 'UpdateGuestProfileController'
+                   controller : 'UpdateGuestProfileController',
+               }).result.then(function(updatedUser){
+                   $scope.loggedUser = updatedUser;
                });
            }
 
@@ -30,8 +32,7 @@ angular.module('restaurantApp.GuestProfileController', [])
                       if(data != null) {
                           $localStorage.logged = data;
                           $scope.userToUpdate = $localStorage.logged;
-                          $uibModalInstance.close();
-                          window.location.reload();
+                          $uibModalInstance.close($localStorage.logged);
                       }else{
                           alert("It is not possible to change info");
                       }
