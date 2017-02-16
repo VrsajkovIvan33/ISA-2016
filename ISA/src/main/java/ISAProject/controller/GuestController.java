@@ -6,6 +6,7 @@ import ISAProject.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
@@ -30,19 +31,38 @@ public class GuestController {
         return new ResponseEntity<List<Guest>>(ret, HttpStatus.OK);
     }
 
-    @MessageMapping("/searchPersons")
+    @MessageMapping("/searchPersons/{id}")
     @SendTo("/topic/persons")
-    public List<Guest> searchPersons(Message person){
+    public List<Guest> searchPersons(@DestinationVariable Long id, Message person){
         List<Guest> guestList = new ArrayList<Guest>();
+        Guest user = guestService.findOne(id);
         String[] splitNameSurname = person.getMessage().split(" ");
-        for(String nameSurname : splitNameSurname){
-            ArrayList<Guest> personsByName = (ArrayList<Guest>) guestService.findByName(nameSurname);
-            ArrayList<Guest> personsBySurname = (ArrayList<Guest>) guestService.findBySurname(nameSurname);
-            for(Guest guest : personsByName)
-                guestList.add(guest);
-            for(Guest guest : personsBySurname)
-                guestList.add(guest);
+        if(splitNameSurname.length != 2){
+            for(String nameSurname : splitNameSurname){
+                ArrayList<Guest> personsByName = (ArrayList<Guest>) guestService.findByName(nameSurname);
+                ArrayList<Guest> personsBySurname = (ArrayList<Guest>) guestService.findBySurname(nameSurname);
+                for(Guest guest : personsByName){
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                        guestList.add(guest);
+                }
+                for(Guest guest : personsBySurname){
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                        guestList.add(guest);
+                }
+            }
+        }else{
+            ArrayList<Guest> personsByNameAndSurname = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[0], splitNameSurname[1]);
+            ArrayList<Guest> personsBySurnameAndName = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[1], splitNameSurname[0]);
+            for(Guest guest : personsByNameAndSurname){
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                    guestList.add(guest);
+            }
+            for(Guest guest : personsBySurnameAndName){
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                    guestList.add(guest);
+            }
         }
+
         return guestList;
     }
 }

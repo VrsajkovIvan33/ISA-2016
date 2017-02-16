@@ -47,7 +47,7 @@ angular.module('restaurantApp.GuestFriendsController', [])
 
            $scope.search = function(personForSearch){
                 var message = { 'message' : personForSearch };
-                $stomp.send('/app/searchPersons', message);
+                $stomp.send('/app/searchPersons/' + $localStorage.logged.id, message);
            };
 
            $scope.close = function(){
