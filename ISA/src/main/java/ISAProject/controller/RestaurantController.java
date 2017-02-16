@@ -3,7 +3,10 @@ package ISAProject.controller;
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
 import ISAProject.model.RestaurantTableArrangement;
+import ISAProject.service.RestaurantSegmentService;
 import ISAProject.service.RestaurantService;
+import ISAProject.service.RestaurantTableService;
+import ISAProject.service.TableRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +22,15 @@ import java.util.List;
 public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private RestaurantTableService restaurantTableService;
+
+    @Autowired
+    private RestaurantSegmentService restaurantSegmentService;
+
+    @Autowired
+    private TableRegionService tableRegionService;
 
     @RequestMapping(
             value = "/getRestaurants",
@@ -49,8 +61,10 @@ public class RestaurantController {
             restaurantTable.setRtActive(false);
             restaurantTable.setRtPosition(pos);
             restaurantTable.setRtNumber(pos+1);
-            //save the table arrangement
-            restaurant.getRestaurantTables().add(restaurantTable);
+            restaurantTable.setRestaurantSegment(restaurantSegmentService.findByRsName("Indoors"));
+            restaurantTable.setTableRegion(tableRegionService.findByTrMark(1));
+            //save the table
+            restaurantTableService.save(restaurantTable);
         }
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         return new ResponseEntity<Restaurant>(savedRestaurant, HttpStatus.CREATED);

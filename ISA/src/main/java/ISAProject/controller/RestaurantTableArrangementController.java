@@ -51,8 +51,8 @@ public class RestaurantTableArrangementController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantTableArrangement>> updateRestaurantTableArrangements(@RequestBody List<RestaurantTableArrangement> restaurantTableArrangements) {
-        Long restaurantId = restaurantTableArrangements.get(0).getRestaurant().getId();
-        Restaurant restaurantById = restaurantService.findOne(restaurantId);
+        //Long restaurantId = restaurantTableArrangements.get(0).getRestaurant().getId();
+        //Restaurant restaurantById = restaurantService.findOne(restaurantId);
         // save the arrangements separately
         for (int i = 0; i < restaurantTableArrangements.size(); i++) {
             RestaurantTableArrangement restaurantTableArrangement = restaurantTableArrangementService.findById(
@@ -60,9 +60,6 @@ public class RestaurantTableArrangementController {
             restaurantTableArrangement.setRtaNumber(restaurantTableArrangements.get(i).getRtaNumber());
             restaurantTableArrangementService.save(restaurantTableArrangement);
         }
-        // is it necessary to update the list in the restaurant?
-        restaurantById.setRestaurantTableArrangements(restaurantTableArrangements);
-        restaurantService.save(restaurantById);
         return new ResponseEntity<List<RestaurantTableArrangement>>(restaurantTableArrangements, HttpStatus.OK);
     }
 

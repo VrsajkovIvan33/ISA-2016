@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope, $localStorage, RestaurantTableFactory, RestaurantmanagerService) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $localStorage, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory) {
         function init() {
             console.log("Restaurant Manager init()");
             var date = new Date();
@@ -67,6 +67,14 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
             $scope.saveChangesOnTables = function() {
                 RestaurantTableFactory.setTablesByRestaurant($scope.tables);
             }
+
+            RestaurantSegmentFactory.getRestaurantSegments().success(function(data) {
+                $scope.segments = data;
+            })
+
+            TableRegionFactory.getTableRegions().success(function(data) {
+                $scope.regions = data;
+            })
 
             //$scope.$on('$locationChangeStart', function(event) {
             //    var answer = confirm("Save changes?")
