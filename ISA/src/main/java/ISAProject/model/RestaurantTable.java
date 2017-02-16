@@ -31,8 +31,15 @@ public class RestaurantTable implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rid", referencedColumnName = "rid")
-    @JsonManagedReference
     private Restaurant restaurant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rsid", referencedColumnName = "rsid")
+    private RestaurantSegment restaurantSegment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trid", referencedColumnName = "trid")
+    private TableRegion tableRegion;
 
     @Column(name = "rtActive", nullable = false)
     private Boolean rtActive;
@@ -76,4 +83,20 @@ public class RestaurantTable implements Serializable {
     public Boolean getRtActive() { return rtActive; }
 
     public void setRtActive(Boolean rtActive) { this.rtActive = rtActive; }
+
+    public RestaurantSegment getRestaurantSegment() {
+        return restaurantSegment;
+    }
+
+    public void setRestaurantSegment(RestaurantSegment restaurantSegment) {
+        this.restaurantSegment = restaurantSegment;
+    }
+
+    public TableRegion getTableRegion() {
+        return tableRegion;
+    }
+
+    public void setTableRegion(TableRegion tableRegion) {
+        this.tableRegion = tableRegion;
+    }
 }

@@ -2,8 +2,10 @@ package ISAProject.controller;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
+import ISAProject.service.RestaurantSegmentService;
 import ISAProject.service.RestaurantService;
 import ISAProject.service.RestaurantTableService;
+import ISAProject.service.TableRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +26,12 @@ public class RestaurantTableController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private RestaurantSegmentService restaurantSegmentService;
+
+    @Autowired
+    private TableRegionService tableRegionService;
 
     @RequestMapping(
             value = "/RestaurantTablesByRestaurant/{id}",
@@ -50,19 +58,19 @@ public class RestaurantTableController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RestaurantTable>> updateRestaurantTableArrangements(@RequestBody List<RestaurantTable> restaurantTables) {
-        Long restaurantId = restaurantTables.get(0).getRestaurant().getId();
-        Restaurant restaurantById = restaurantService.findOne(restaurantId);
+        //Long restaurantId = restaurantTables.get(0).getRestaurant().getId();
+        //Restaurant restaurantById = restaurantService.findOne(restaurantId);
         // save the tables separately
         for (int i = 0; i < restaurantTables.size(); i++) {
             RestaurantTable restaurantTable = restaurantTableService.findById(
                     restaurantTables.get(i).getId());
             restaurantTable.setRtNumber(restaurantTables.get(i).getRtNumber());
             restaurantTable.setRtActive(restaurantTables.get(i).getRtActive());
+            restaurantTable.setRestaurantSegment(restaurantSegmentService.findByRsId(restaurantTables.get(i).getRestaurantSegment().getRsId()));
+            restaurantTable.setTableRegion(tableRegionService.findById(restaurantTables.get(i).getTableRegion().getId()));
             restaurantTableService.save(restaurantTable);
         }
-        // is it necessary to update the list in the restaurant?
-        restaurantById.setRestaurantTables(restaurantTables);
-        restaurantService.save(restaurantById);
+
         return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.OK);
     }
 

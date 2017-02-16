@@ -1,5 +1,7 @@
 package ISAProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "restaurantsegment")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RestaurantSegment implements Serializable {
 
     public RestaurantSegment(){
@@ -22,8 +25,11 @@ public class RestaurantSegment implements Serializable {
     @Version
     private int version;
 
-    @Column(name = "rsname", nullable = false)
+    @Column(name = "rsName", nullable = false)
     private String rsName;
+
+    @Column(name = "rsColor", nullable = false)
+    private String rsColor;
 
     public Long getRsId() {
         return rsId;
@@ -47,5 +53,13 @@ public class RestaurantSegment implements Serializable {
 
     public void setRsName(String rsName) {
         this.rsName = rsName;
+    }
+
+    public String getRsColor() {
+        return rsColor;
+    }
+
+    public void setRsColor(String rsColor) {
+        this.rsColor = rsColor;
     }
 }
