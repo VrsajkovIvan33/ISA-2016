@@ -5,6 +5,7 @@
 angular.module('restaurantApp.services',[
                'restaurantApp.LoginFactory',
                'restaurantApp.GuestRegisterFactory',
+               'restaurantApp.GuestFriendsFactory',
                'restaurantApp.ConfirmFactory',
                'restaurantApp.GuestProfileFactory',
                'restaurantApp.SystemmanagerService',

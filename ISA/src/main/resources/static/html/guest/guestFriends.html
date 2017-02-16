@@ -1,4 +1,4 @@
-<div ng-cloak>
+<div ng-cloak ng-controller="GuestFriendsController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -22,7 +22,7 @@
                 <div class="header">
                     <h3 class="text-muted prj-name">
                         <span class="fa fa-users fa-2x principal-title"></span>
-                        <button type="button" class="btn btn-success btn-md">Add <span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-success btn-md" ng-click="openSearchPeopleModal()">Add <span class="glyphicon glyphicon-plus"></span></button>
                     </h3>
                 </div>
 
@@ -31,10 +31,10 @@
                         <li href="#" class="list-group-item title">
                             FRIENDS
                         </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friends">
+                            <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
                             <label class="name">
-                                Juan guillermo cuadrado<br>
+                                {{friend.name}} {{friend.surname}}<br>
                             </label>
                             <label class="pull-right">
                                 <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
@@ -42,28 +42,7 @@
                             </label>
                             <div class="break"></div>
                         </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                            <label class="name">
-                                James Rodriguez (10)
-                            </label>
-                            <label class="pull-right">
-                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                            </label>
-                            <div class="break"></div>
-                        </li>
-                        <li href="#" class="list-group-item text-left">
-                            <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
-                            <label class="name">
-                                Mariana pajon
-                            </label>
-                            <label class="pull-right">
-                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                            </label>
-                            <div class="break"></div>
-                        </li>
+
 
                     </ul>
                 </div>
