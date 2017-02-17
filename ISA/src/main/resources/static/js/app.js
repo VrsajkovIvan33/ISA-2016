@@ -11,4 +11,5 @@ var app = angular.module('restaurantApp', ['restaurantApp.routes',
                                            'ngDragDrop',
                                            'ngStorage',
                                            'ngAnimate',
-                                           'ngStomp']);
+                                           'ngStomp',
+                                           'toastr']);

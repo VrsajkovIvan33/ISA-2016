@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.GuestFriendsController', [])
-       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal, GuestFriendsFactory){
+       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal, toastr, GuestFriendsFactory){
            function init(){
                $scope.loggedUser = $localStorage.logged;
                $scope.friends = [];
@@ -26,7 +26,7 @@ angular.module('restaurantApp.GuestFriendsController', [])
            init();
        })
 
-       .controller('SearchPeopleController', function($localStorage, $scope, $stomp, $uibModalInstance, $log, $location, GuestFriendsFactory){
+       .controller('SearchPeopleController', function($localStorage, $scope, $stomp, $uibModalInstance, $log, toastr, $location, GuestFriendsFactory){
             function init(){
                 $scope.foundPersons = [];
             };
@@ -60,6 +60,7 @@ angular.module('restaurantApp.GuestFriendsController', [])
                        temp.push($scope.foundPersons[i]);
                }
                $scope.foundPersons = temp;
+               toastr.success('Friend request sent!');
            };
 
            $scope.close = function(){
