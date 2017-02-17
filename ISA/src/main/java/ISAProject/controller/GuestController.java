@@ -42,11 +42,11 @@ public class GuestController {
                 ArrayList<Guest> personsByName = (ArrayList<Guest>) guestService.findByName(nameSurname);
                 ArrayList<Guest> personsBySurname = (ArrayList<Guest>) guestService.findBySurname(nameSurname);
                 for(Guest guest : personsByName){
-                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                         guestList.add(guest);
                 }
                 for(Guest guest : personsBySurname){
-                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                         guestList.add(guest);
                 }
             }
@@ -54,15 +54,23 @@ public class GuestController {
             ArrayList<Guest> personsByNameAndSurname = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[0], splitNameSurname[1]);
             ArrayList<Guest> personsBySurnameAndName = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[1], splitNameSurname[0]);
             for(Guest guest : personsByNameAndSurname){
-                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                     guestList.add(guest);
             }
             for(Guest guest : personsBySurnameAndName){
-                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest))
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                     guestList.add(guest);
             }
         }
 
         return guestList;
+    }
+
+    @MessageMapping("/addFriend/{id}/{friendId}")
+    public void addFriend(@DestinationVariable Long id, @DestinationVariable Long friendId){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+        user.getSentList().add(friend);
+        guestService.save((Guest)user);
     }
 }

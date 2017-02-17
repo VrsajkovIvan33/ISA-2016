@@ -48,8 +48,18 @@ angular.module('restaurantApp.GuestFriendsController', [])
                  });
 
            $scope.search = function(personForSearch){
-                var message = { 'message' : personForSearch };
-                $stomp.send('/app/searchPersons/' + $localStorage.logged.id, message);
+               var message = { 'message' : personForSearch };
+               $stomp.send('/app/searchPersons/' + $localStorage.logged.id, message);
+           };
+
+           $scope.addFriend = function(id){
+               $stomp.send('/app/addFriend/' + $localStorage.logged.id + '/' + id);
+               var temp = [];
+               for(i=0; i<$scope.foundPersons.length; i++){
+                   if($scope.foundPersons[i].id != id)
+                       temp.push($scope.foundPersons[i]);
+               }
+               $scope.foundPersons = temp;
            };
 
            $scope.close = function(){
