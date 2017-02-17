@@ -14,6 +14,8 @@ INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName", "proSurname", "pro", "pro@gmail.com", "PROVIDER", 0)
 INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro@gmail.com"))
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "man", "res", "res@gmail.com", "RESTAURANTMANAGER", 0)
+INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
 
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Indoors', 'blue')
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Smoking', 'red')

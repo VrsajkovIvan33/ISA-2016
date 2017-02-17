@@ -60,6 +60,7 @@ public class RestaurantTableArrangementController {
             restaurantTableArrangement.setRtaNumber(restaurantTableArrangements.get(i).getRtaNumber());
             restaurantTableArrangementService.save(restaurantTableArrangement);
         }
+
         return new ResponseEntity<List<RestaurantTableArrangement>>(restaurantTableArrangements, HttpStatus.OK);
     }
 

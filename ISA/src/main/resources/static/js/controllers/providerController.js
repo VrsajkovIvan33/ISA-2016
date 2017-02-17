@@ -28,25 +28,41 @@ angular.module('restaurantApp.ProviderController',[])
             });
         }
 
-        $scope.updateProvider = function (provider) {
-            ProviderService.updateProvider(provider).success(function (data) {
-                getProviders();
-            });
-        }
-
-        $scope.openChangeModal = function (provider) {
+        $scope.openAddModal = function () {
             $uibModal.open({
-                templateUrl : 'html/provider/changeProvider.html',
-                controller : 'ChangeProviderController'
+                templateUrl : 'html/provider/addNewProvider.html',
+                controller : 'NewProviderController'
             });
         }
 
-        $scope.currentProvider = $localStorage.logged;
+        $scope.openUpdateModal = function (provider) {
+            $rootScope.updateProvider = provider;
+            $uibModal.open({
+                templateUrl : 'html/provider/updateProvider.html',
+                controller : 'UpdateProviderController'
+            });
+        }
 
-        //getProviders();
+        getProviders();
     })
-    .controller('ChangeProviderController', function ($localStorage, $scope, $location, $uibModalInstance, ProviderService) {
+    .controller('NewProviderController', function ($localStorage, $scope, $location, $uibModalInstance, ProviderService) {
 
+        $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
+        $scope.addProvider = function (provider) {
+            ProviderService.addProvider(provider).success(function (data) {
+                $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+    })
+    .controller('UpdateProviderController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, ProviderService) {
+
+        $scope.providerToUpdate = jQuery.extend(true, {}, $rootScope.updateProvider);
         $scope.updateProvider = function (provider) {
             ProviderService.updateProvider(provider).success(function (data) {
                 $uibModalInstance.close();
@@ -57,7 +73,4 @@ angular.module('restaurantApp.ProviderController',[])
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
         }
-
-        $scope.currentProvider = $localStorage.logged;
-
     });

@@ -71,6 +71,7 @@ public class RestaurantTableController {
             restaurantTableService.save(restaurantTable);
         }
 
+
         return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.OK);
     }
 

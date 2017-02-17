@@ -36,7 +36,7 @@ angular.module('restaurantApp.RestaurantController',[])
 
         getRestaurants();
 
-        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
     })
     .controller('NewRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantService) {
 
@@ -53,11 +53,11 @@ angular.module('restaurantApp.RestaurantController',[])
             $uibModalInstance.dismiss('cancel');
         }
 
-        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
     })
     .controller('UpdateRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantService) {
 
-        $scope.restaurantToUpdate = $rootScope.updateRestaurant;
+        $scope.restaurantToUpdate = jQuery.extend(true, {}, $rootScope.updateRestaurant);
         $scope.updateRestaurant = function (restaurant) {
             RestaurantService.updateRestaurant(restaurant).success(function (data) {
                 $uibModalInstance.close();
@@ -69,5 +69,5 @@ angular.module('restaurantApp.RestaurantController',[])
             $uibModalInstance.dismiss('cancel');
         }
 
-        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan"];
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
     });

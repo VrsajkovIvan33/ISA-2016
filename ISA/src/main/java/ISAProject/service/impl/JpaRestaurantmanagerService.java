@@ -1,5 +1,6 @@
 package ISAProject.service.impl;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.RestaurantManager;
 import ISAProject.repository.RestaurantmanagerRepository;
 import ISAProject.service.RestaurantmanagerService;
@@ -33,4 +34,7 @@ public class JpaRestaurantmanagerService implements RestaurantmanagerService {
 
     @Override
     public void delete(Long id) { restaurantmanagerRepository.delete(id); }
+
+    @Override
+    public List<RestaurantManager> findByRestaurant(Restaurant restaurant) { return restaurantmanagerRepository.findByRestaurant(restaurant);}
 }

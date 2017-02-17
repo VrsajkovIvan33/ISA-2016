@@ -34,6 +34,7 @@ public class Restaurant implements Serializable {
     @Column(name = "rtype", nullable = false)
     private String rType;
 
+
     //TODO proveriti za ocenu
     /*@Column(name = "rreview")
     private float rreview;*/
