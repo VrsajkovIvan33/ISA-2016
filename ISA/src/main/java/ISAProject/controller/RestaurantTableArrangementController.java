@@ -61,7 +61,7 @@ public class RestaurantTableArrangementController {
             restaurantTableArrangementService.save(restaurantTableArrangement);
         }
         // is it necessary to update the list in the restaurant?
-        restaurantById.setRestaurantTableArrangements(restaurantTableArrangements);
+        //restaurantById.setRestaurantTableArrangements(restaurantTableArrangements);
         restaurantService.save(restaurantById);
         return new ResponseEntity<List<RestaurantTableArrangement>>(restaurantTableArrangements, HttpStatus.OK);
     }

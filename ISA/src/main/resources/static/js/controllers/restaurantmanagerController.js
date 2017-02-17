@@ -35,13 +35,15 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         }
 
         getRestaurantManagers();
-    })
-    .controller('NewRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantmanagerService) {
 
-        $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:0};
+
+    })
+    .controller('NewRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantmanagerService, RestaurantService) {
+
+        $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', date_of_birth:null, restaurant:null, version:0};
         $scope.addRestaurantManager = function (restaurantManager) {
             RestaurantmanagerService.addRestaurantManager(restaurantManager).success(function (data) {
-                $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', version:0};
+                $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', date_of_birth:null, restaurant:null, version:0};
                 $uibModalInstance.close();
                 window.location.reload();
             });
@@ -50,10 +52,24 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
         }
-    })
-    .controller('UpdateRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantmanagerService) {
 
-        $scope.restaurantManagerToUpdate = $rootScope.updateRestaurantManager;
+        $scope.restaurants = [];
+        function getRestaurants(){
+            RestaurantService.getRestaurants().success(function (data) {
+                $scope.restaurants = data;
+            });
+        }
+
+        getRestaurants();
+    })
+    .controller('UpdateRestaurantmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantmanagerService, RestaurantService) {
+
+        function getRestaurantManager(){
+            $scope.restaurantManagerToUpdate = jQuery.extend(true, {}, $rootScope.updateRestaurantManager);
+            $scope.restaurantManagerToUpdate.date_of_birth = new Date($scope.restaurantManagerToUpdate.date_of_birth);
+        }
+        getRestaurantManager();
+
         $scope.updateRestaurantManager = function (restaurantManager) {
             RestaurantmanagerService.updateRestaurantManager(restaurantManager).success(function (data) {
                 $uibModalInstance.close();
@@ -64,4 +80,13 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
         }
+
+        $scope.restaurants = [];
+        function getRestaurants(){
+            RestaurantService.getRestaurants().success(function (data) {
+                $scope.restaurants = data;
+            });
+        }
+
+        getRestaurants();
     });

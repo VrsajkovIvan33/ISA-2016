@@ -50,7 +50,7 @@ public class RestaurantController {
             restaurantTable.setRtPosition(pos);
             restaurantTable.setRtNumber(pos+1);
             //save the table arrangement
-            restaurant.getRestaurantTables().add(restaurantTable);
+            //restaurant.getRestaurantTables().add(restaurantTable);
         }
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         return new ResponseEntity<Restaurant>(savedRestaurant, HttpStatus.CREATED);
