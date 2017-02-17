@@ -1,20 +1,17 @@
 package ISAProject.controller;
 
 import ISAProject.model.MailManager;
-import ISAProject.model.users.Guest;
-import ISAProject.model.users.TempUser;
-import ISAProject.model.users.User;
-import ISAProject.model.users.UserType;
-import ISAProject.service.GuestService;
-import ISAProject.service.UserService;
+import ISAProject.model.Restaurant;
+import ISAProject.model.users.*;
+import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nole on 11/20/2016.
@@ -32,9 +29,22 @@ public class UserController {
     @Autowired
     private MailManager mailManager;
 
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private WaiterService waiterService;
+
+    @Autowired
+    private CookService cookService;
+
+    @Autowired
+    private BartenderService bartenderService;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
         User user = userService.findByEmail(tempUser.getEmail());
+        System.out.print(user);
         if(user != null) {
             if (user.getPassword().equals(tempUser.getPassword())) {
                 if (user instanceof Guest) {
@@ -90,5 +100,31 @@ public class UserController {
             return new ResponseEntity<User>(saved, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(
+            value = "/UsersByRestaurant/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<User>> getUsersByRestaurant(@PathVariable("id") Long restaurantId) {
+        Restaurant restaurantById = restaurantService.findOne(restaurantId);
+        List<User> usersByRestaurant = new ArrayList<User>();
+
+        List<Waiter> waitersInRestaurant = waiterService.findByRestaurant(restaurantById);
+        for (Waiter waiter : waitersInRestaurant) {
+            usersByRestaurant.add(userService.findOne(waiter.getId()));
+        }
+
+        List<Cook> cooksInRestaurant = cookService.findByRestaurant(restaurantById);
+        for (Cook cook : cooksInRestaurant) {
+            usersByRestaurant.add(userService.findOne(cook.getId()));
+        }
+
+        List<Bartender> bartendersInRestaurant = bartenderService.findByRestaurant(restaurantById);
+        for (Bartender bartender : bartendersInRestaurant) {
+            usersByRestaurant.add(userService.findOne(bartender.getId()));
+        }
+
+        return new ResponseEntity<List<User>>(usersByRestaurant, HttpStatus.OK);
     }
 }

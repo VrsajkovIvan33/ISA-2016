@@ -7,7 +7,7 @@ INSERT INTO systemmanager(id) VALUES ((SELECT id FROM user WHERE email="admin@gm
 INSERT INTO restaurant(rname, rtype, version) VALUES ("Bob's Country Bunker", "Country", 0)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"))
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dick", "Steele", "BiggusDickus", "dickeyMoose@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:00", (SELECT id FROM user WHERE email="dickeyMoose@gmail.com"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
