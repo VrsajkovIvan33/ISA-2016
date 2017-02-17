@@ -3,12 +3,31 @@
  */
 
 angular.module('restaurantApp.GuestProfileController', [])
-       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, GuestProfileFactory) {
+       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestProfileFactory) {
           function init(){
                 $scope.loggedUser = $localStorage.logged;
           };
 
-          init();
+           var friendRequestSubscription = null;
+           init();
+
+           $stomp.setDebug(function(args){
+               $log.debug(args);
+           });
+
+           $stomp.connect('/stomp', {})
+               .then(function(frame){
+                   friendRequestSubscription = $stomp.subscribe('/topic/friendRequest/' + $localStorage.logged.id, function(numberOfRequests, headers, res){
+                       toastr.info('You have new friend request!');
+                   });
+               });
+
+           $scope.disconnect = function(){
+               friendRequestSubscription.unsubscribe();
+               $stomp.disconnect().then(function(){
+                   $log.info('disconnected');
+               });
+           };
 
            $scope.openUpdateModal = function () {
                $uibModal.open({

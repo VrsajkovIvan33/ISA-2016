@@ -67,10 +67,15 @@ public class GuestController {
     }
 
     @MessageMapping("/addFriend/{id}/{friendId}")
-    public void addFriend(@DestinationVariable Long id, @DestinationVariable Long friendId){
+    @SendTo("/topic/friendRequest/{friendId}")
+    public int addFriend(@DestinationVariable Long id, @DestinationVariable Long friendId){
         Guest user = guestService.findOne(id);
         Guest friend = guestService.findOne(friendId);
         user.getSentList().add(friend);
+        friend.getPendingList().add(user);
         guestService.save((Guest)user);
+        guestService.save((Guest)friend);
+
+        return friend.getPendingList().size();
     }
 }

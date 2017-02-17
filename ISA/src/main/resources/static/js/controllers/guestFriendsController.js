@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.GuestFriendsController', [])
-       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal, toastr, GuestFriendsFactory){
+       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal, $stomp, $log,  toastr, GuestFriendsFactory){
            function init(){
                $scope.loggedUser = $localStorage.logged;
                $scope.friends = [];
@@ -16,14 +16,33 @@ angular.module('restaurantApp.GuestFriendsController', [])
                });
            };
 
-            $scope.openSearchPeopleModal = function(){
+           var friendRequestsSubscription = null;
+           init();
+
+           $stomp.setDebug(function(args){
+               $log.debug(args);
+           });
+
+           $stomp.connect('/stomp', {})
+                 .then(function(frame){
+                     friendRequestsSubscription = $stomp.subscribe('/topic/friendRequest/' + $localStorage.logged.id, function(numberOfRequests, headers, res){
+                         toastr.info('You have new friend request!');
+                     });
+                 });
+
+           $scope.disconnect = function(){
+               friendRequestsSubscription.unsubscribe();
+               $stomp.disconnect().then(function(){
+                   $log.info('disconnected');
+               });
+           };
+
+           $scope.openSearchPeopleModal = function(){
                 $uibModal.open({
                     templateUrl : 'html/guest/searchPeopleModal.html',
                     controller : 'SearchPeopleController'
                 });
             }
-
-           init();
        })
 
        .controller('SearchPeopleController', function($localStorage, $scope, $stomp, $uibModalInstance, $log, toastr, $location, GuestFriendsFactory){
