@@ -32,7 +32,7 @@ public class GuestController {
     }
 
     @MessageMapping("/searchPersons/{id}")
-    @SendTo("/topic/persons")
+    @SendTo("/topic/persons/{id}")
     public List<Guest> searchPersons(@DestinationVariable Long id, Message person){
         List<Guest> guestList = new ArrayList<Guest>();
         Guest user = guestService.findOne(id);

@@ -59,7 +59,7 @@ angular.module('restaurantApp.GuestFriendsController', [])
 
            $stomp.connect('/stomp', {})
                  .then(function(frame){
-                     subscription = $stomp.subscribe('/topic/persons', function(persons, headers, res){
+                     subscription = $stomp.subscribe('/topic/persons/' + $localStorage.logged.id, function(persons, headers, res){
                          $scope.$apply(function(){
                              $scope.foundPersons = persons;
                          });
