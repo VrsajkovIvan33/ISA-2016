@@ -1,5 +1,6 @@
 package ISAProject.service;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Waiter;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface WaiterService {
     List<Waiter> findAll();
 
     Waiter findOne(Long id);
+
+    List<Waiter> findByRestaurant(Restaurant restaurant);
 
     Waiter save(Waiter waiter);
 

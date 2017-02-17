@@ -1,5 +1,6 @@
 package ISAProject.service.impl;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Bartender;
 import ISAProject.repository.BartenderRepository;
 import ISAProject.service.BartenderService;
@@ -28,6 +29,11 @@ public class JpaBartenderService implements BartenderService{
     @Override
     public Bartender findOne(Long id) {
         return bartenderRepository.findOne(id);
+    }
+
+    @Override
+    public List<Bartender> findByRestaurant(Restaurant restaurant) {
+        return bartenderRepository.findByRestaurant(restaurant);
     }
 
     @Override

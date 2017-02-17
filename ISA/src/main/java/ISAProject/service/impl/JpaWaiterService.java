@@ -1,5 +1,6 @@
 package ISAProject.service.impl;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Waiter;
 import ISAProject.repository.WaiterRepository;
 import ISAProject.service.WaiterService;
@@ -28,6 +29,11 @@ public class JpaWaiterService implements WaiterService{
     @Override
     public Waiter findOne(Long id) {
         return waiterRepository.findOne(id);
+    }
+
+    @Override
+    public List<Waiter> findByRestaurant(Restaurant restaurant) {
+        return waiterRepository.findByRestaurant(restaurant);
     }
 
     @Override
