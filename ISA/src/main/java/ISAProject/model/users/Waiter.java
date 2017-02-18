@@ -29,7 +29,6 @@ public class Waiter extends User implements Serializable {
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Restaurant restaurant;
 
-    //TODO proveriti za ocenu
     @Column(name = "review")
     private float review;
 

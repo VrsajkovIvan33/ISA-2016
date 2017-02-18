@@ -106,6 +106,8 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
 
         init();
 
+        $scope.loggedManager = $localStorage.logged;
+
     })
     .controller('CreateEventController', function ($localStorage, $scope, $uibModalInstance, $location, RestaurantmanagerService, RestaurantUsersFactory, TableRegionFactory, CalendarEventFactory) {
         function init(){

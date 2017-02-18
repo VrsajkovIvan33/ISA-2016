@@ -19,15 +19,6 @@ angular.module('restaurantApp.ProviderController',[])
             });
         }
 
-        $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
-        $scope.addProvider = function (provider) {
-            ProviderService.addProvider(provider).success(function (data) {
-                $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
-                getProviders();
-                window.location.reload();
-            });
-        }
-
         $scope.openAddModal = function () {
             $uibModal.open({
                 templateUrl : 'html/provider/addNewProvider.html',
