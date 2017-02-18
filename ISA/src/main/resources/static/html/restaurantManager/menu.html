@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="CookController">
+<div ng-cloak ng-controller="MenuController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -24,37 +24,31 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Cooks</h3>
+            <h3>Menu</h3>
 
-            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Cook</a>
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Menu Item</a>
 
             <table class="responstable">
                 <thead>
                 <tr>
-                    <th>Cook name:</th>
-                    <th>Cook surname:</th>
-                    <th>Cook email:</th>
-                    <th>Cook date of birth:</th>
-                    <th>Cook dress size:</th>
-                    <th>Cook shoe size:</th>
-                    <!--<th>Cook restaurant:</th>-->
-                    <th>Cook type:</th>
+                    <th>Menu name:</th>
+                    <th>Menu type:</th>
+                    <th>Menu description:</th>
+                    <th>Menu price:</th>
+                    <th>Menu review:</th>
                     <th>Edit:</th>
                     <th>Delete:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="c in cooks">
-                    <td>{{c.name}}</td>
-                    <td>{{c.surname}}</td>
-                    <td>{{c.email}}</td>
-                    <td>{{c.date_of_birth | date}}</td>
-                    <td>{{c.dress_size}}</td>
-                    <td>{{c.shoe_size}}</td>
-                    <!--<td>{{c.restaurant.rName}}</td>-->
-                    <td>{{c.typeCook}}</td>
-                    <td><a ng-click="openUpdateModal(c)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a ng-click="removeCook(c)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <tr ng-repeat="m in menus">
+                    <td>{{m.mName}}</td>
+                    <td>{{m.mType}}</td>
+                    <td>{{m.mDescription}}</td>
+                    <td>{{m.mPrice}}</td>
+                    <td>{{m.mReview}}</td>
+                    <td><a ng-click="openUpdateModal(m)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a ng-click="removeMenu(m)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 </tbody>
             </table>

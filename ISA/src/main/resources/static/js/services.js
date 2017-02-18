@@ -19,5 +19,6 @@ angular.module('restaurantApp.services',[
                'restaurantApp.CalendarEventFactory',
                'restaurantApp.WaiterService',
                'restaurantApp.BartenderService',
-               'restaurantApp.CookService'
+               'restaurantApp.CookService',
+               'restaurantApp.MenuService'
 ]);

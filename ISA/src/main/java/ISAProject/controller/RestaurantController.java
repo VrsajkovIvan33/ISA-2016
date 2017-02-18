@@ -1,5 +1,6 @@
 package ISAProject.controller;
 
+import ISAProject.model.Menu;
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
 import ISAProject.model.RestaurantTableArrangement;
@@ -44,6 +45,9 @@ public class RestaurantController {
 
     @Autowired
     private BartenderService bartenderService;
+
+    @Autowired
+    private MenuService menuService;
 
     @RequestMapping(
             value = "/getRestaurants",
@@ -90,6 +94,11 @@ public class RestaurantController {
         for(Bartender b: bartenders){
             b.setRestaurant(null);
             bartenderService.save(b);
+        }
+
+        List<Menu> menus = menuService.findByMRestaurant(restaurant);
+        for(Menu m: menus){
+            menuService.delete(m.getmId());
         }
 
         restaurantService.delete(id);

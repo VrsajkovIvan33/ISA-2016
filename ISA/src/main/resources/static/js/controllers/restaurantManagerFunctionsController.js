@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope, $localStorage, $uibModal, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage, $uibModal, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
         function init() {
             console.log("Restaurant Manager init()");
             var date = new Date();
@@ -107,7 +107,13 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
         init();
 
         $scope.loggedManager = $localStorage.logged;
-
+        $scope.openUpdateModal = function () {
+            $rootScope.updateMyRestaurant = $scope.loggedManager.restaurant;
+            $uibModal.open({
+                templateUrl : 'html/systemManager/updateRestaurant.html',
+                controller : 'UpdateMyRestaurantController'
+            });
+        }
     })
     .controller('CreateEventController', function ($localStorage, $scope, $uibModalInstance, $location, RestaurantmanagerService, RestaurantUsersFactory, TableRegionFactory, CalendarEventFactory) {
         function init(){
@@ -167,5 +173,21 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                 }
             });
         };
+    })
+    .controller('UpdateMyRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantService) {
+
+        $scope.restaurantToUpdate = $rootScope.updateMyRestaurant;
+        $scope.updateRestaurant = function (restaurant) {
+            RestaurantService.updateRestaurant(restaurant).success(function (data) {
+                $uibModalInstance.close();
+                window.location.reload();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
     });
 
