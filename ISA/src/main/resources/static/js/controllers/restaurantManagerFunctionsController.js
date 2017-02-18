@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope, $localStorage, $uibModal, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage, $uibModal, uiCalendarConfig, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
         function init() {
             console.log("Restaurant Manager init()");
             var date = new Date();
@@ -52,10 +52,13 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };
 
+            $rootScope.$on('updateCalendar', function () {
+                window.calendar.fullCalendar('refetchEvents');
+            });
+
             $scope.combineNameAndSurname = function(name, surname) {
                 var blankSpace = " ";
-                blankSpace.concat(surname);
-                return name.concat(blankSpace);
+                return name.concat(blankSpace.concat(surname));
             }
 
             RestaurantmanagerService.getRestaurantManager($localStorage.logged.id).success(function(data) {
@@ -68,14 +71,18 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                     $scope.myEvents = [];
                     var i;
                     for (i = 0; i < data.length; i++) {
+                        console.log(new Date(data[i].start).toUTCString());
                         $scope.myEvents.push({
-                            title: $scope.combineNameAndSurname(date[i].user.name, date[i].user.surname),
-                            start: date[i].start,
-                            end: date[i].end,
+                            title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
+                            start: data[i].start,
+                            end: data[i].end,
                             allDay: false
                         })
                     }
+
                     $scope.eventSources = [$scope.myEvents];
+                    //JEBEM TI MAMU U PICKU DA TI JEBEM!
+                    uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
             })
 
@@ -118,13 +125,13 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
             $scope.unprocessedEvent.shiftEnd = "20:00";
 
             $scope.daysOfWeek = new Array();
-            $scope.daysOfWeek.push({num: 1, day: 'Monday'});
-            $scope.daysOfWeek.push({num: 2, day: 'Tuesday'});
-            $scope.daysOfWeek.push({num: 3, day: 'Wednesday'});
-            $scope.daysOfWeek.push({num: 4, day: 'Thursday'});
-            $scope.daysOfWeek.push({num: 5, day: 'Friday'});
-            $scope.daysOfWeek.push({num: 6, day: 'Saturday'});
-            $scope.daysOfWeek.push({num: 7, day: 'Sunday'});
+            $scope.daysOfWeek.push({num: 2, day: 'Monday'});
+            $scope.daysOfWeek.push({num: 3, day: 'Tuesday'});
+            $scope.daysOfWeek.push({num: 4, day: 'Wednesday'});
+            $scope.daysOfWeek.push({num: 5, day: 'Thursday'});
+            $scope.daysOfWeek.push({num: 6, day: 'Friday'});
+            $scope.daysOfWeek.push({num: 7, day: 'Saturday'});
+            $scope.daysOfWeek.push({num: 1, day: 'Sunday'});
 
             $scope.selectedDayOfWeek = $scope.daysOfWeek[0];
 

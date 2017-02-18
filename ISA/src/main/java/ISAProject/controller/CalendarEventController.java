@@ -104,11 +104,14 @@ public class CalendarEventController {
         String[] hourMinutesStart = unprocessedCalendarEvent.getShiftStart().split(":");
         calendarStart.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
                 Integer.parseInt(hourMinutesStart[0]), Integer.parseInt(hourMinutesStart[1]));
+
         // set the calendar to the shift end
         String[] hourMinutesEnd = unprocessedCalendarEvent.getShiftEnd().split(":");
         calendarEnd.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
                 Integer.parseInt(hourMinutesEnd[0]), Integer.parseInt(hourMinutesEnd[1]));
 
+        System.out.println("Calendar start: " + calendarStart.getTime());
+        System.out.println("Calendar end: " + calendarEnd.getTime());
         // create an event in every week until the ending date is passed
         List<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
         while (endingCalendar.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
