@@ -1,5 +1,6 @@
 package ISAProject.repository;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.RestaurantManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface RestaurantmanagerRepository extends JpaRepository<RestaurantMan
     void delete(Long id);
 
     RestaurantManager save(RestaurantManager restaurantManager);
+
+    List<RestaurantManager> findByRestaurant(Restaurant restaurant);
 }

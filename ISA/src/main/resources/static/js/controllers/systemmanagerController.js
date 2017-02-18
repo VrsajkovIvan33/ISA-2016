@@ -60,7 +60,7 @@ angular.module('restaurantApp.SystemmanagerController',[])
     })
     .controller('UpdateSystemmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, SystemmanagerService) {
 
-        $scope.systemManagerToUpdate = $rootScope.updateSystemManager;
+        $scope.systemManagerToUpdate = jQuery.extend(true, {}, $rootScope.updateSystemManager);
         $scope.updateSystemManager = function (systemManager) {
             SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
                 $uibModalInstance.close();

@@ -1,0 +1,50 @@
+<div ng-cloak ng-controller="ProviderController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#restaurantManager">Home</a></li>
+                    <li><a href="#/restaurantManager/providers">Update Providers</a></li>
+                    <li><a href="#/restaurantManager/waiters">Update Waiters</a></li>
+                    <li><a href="#/restaurantManager/bartenders">Update Bartenders</a></li>
+                    <li><a href="#/restaurantManager/cooks">Update Cooks</a></li>
+                    <li><a href="#restaurantManager/calendar">Calendar</a></li>
+                    <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                    <li><a href="index.html">Log out</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Providers</h3>
+
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
+
+            <table class="responstable">
+                <thead>
+                    <tr>
+                        <th>Provider name:</th>
+                        <th>Provider surname:</th>
+                        <th>Provider email:</th>
+                        <th>Edit:</th>
+                        <th>Delete:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="p in providers">
+                        <td>{{p.name}}</td>
+                        <td>{{p.surname}}</td>
+                        <td>{{p.email}}</td>
+                        <td><a ng-click="openUpdateModal(p)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

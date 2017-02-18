@@ -21,27 +21,29 @@
         <div class="carousel-caption">
             <h3>Restaurant Managers</h3>
 
-            <button ng-click="openAddModal()" type="button" class="btn btn-info btn-lg">Add Restaurant Manager</button>
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Restaurant Manager</a>
 
-            <table style="width:100%;">
+            <table class="responstable">
                 <thead>
                 <tr>
                     <th>Restaurant Manager name:</th>
                     <th>Restaurant Manager surname:</th>
                     <th>Restaurant Manager email:</th>
-                    <th>Restaurant Manager password:</th>
-                    <th></th>
-                    <th></th>
+                    <th>Restaurant Manager date of birth:</th>
+                    <th>Restaurant Manager restaurant:</th>
+                    <th>Edit:</th>
+                    <th>Delete:</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="rm in restaurantManagers">
-                    <td><input ng-model="rm.name" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager name"></td>
-                    <td><input ng-model="rm.surname" type="text" class="form-control form-control-lg" placeholder="Enter restaurant manager surname"></td>
-                    <td><input ng-model="rm.email" type="email" class="form-control form-control-lg" placeholder="Enter restaurant manager email"></td>
-                    <td><input ng-model="rm.password" type="password" class="form-control form-control-lg" placeholder="Enter restaurant manager password"></td>
-                    <td><button ng-click="openUpdateModal(rm)" type="button" class="btn btn-primary btn-md">Update</button></td>
-                    <td><button ng-click="removeRestaurantManager(rm)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                    <td>{{rm.name}}</td>
+                    <td>{{rm.surname}}</td>
+                    <td>{{rm.email}}</td>
+                    <td>{{rm.date_of_birth | date}}</td>
+                    <td>{{rm.restaurant.rName}}</td>
+                    <td><a ng-click="openUpdateModal(rm)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a ng-click="removeRestaurantManager(rm)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 </tbody>
             </table>

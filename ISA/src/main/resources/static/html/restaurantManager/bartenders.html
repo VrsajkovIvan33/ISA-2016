@@ -1,0 +1,59 @@
+<div ng-cloak ng-controller="BartenderController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#restaurantManager">Home</a></li>
+                    <li><a href="#/restaurantManager/providers">Update Providers</a></li>
+                    <li><a href="#/restaurantManager/waiters">Update Waiters</a></li>
+                    <li><a href="#/restaurantManager/bartenders">Update Bartenders</a></li>
+                    <li><a href="#/restaurantManager/cooks">Update Cooks</a></li>
+                    <li><a href="#restaurantManager/calendar">Calendar</a></li>
+                    <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                    <li><a href="index.html">Log out</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Bartenders</h3>
+
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Bartender</a>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Bartender name:</th>
+                    <th>Bartender surname:</th>
+                    <th>Bartender email:</th>
+                    <th>Bartender date of birth:</th>
+                    <th>Bartender dress size:</th>
+                    <th>Bartender shoe size:</th>
+                    <!--<th>Bartender restaurant:</th>-->
+                    <th>Edit:</th>
+                    <th>Delete:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="b in bartenders">
+                    <td>{{b.name}}</td>
+                    <td>{{b.surname}}</td>
+                    <td>{{b.email}}</td>
+                    <td>{{b.date_of_birth | date}}</td>
+                    <td>{{b.dress_size}}</td>
+                    <td>{{b.shoe_size}}</td>
+                    <!--<td>{{b.restaurant.rName}}</td>-->
+                    <td><a ng-click="openUpdateModal(b)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a ng-click="removeBartender(b)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
