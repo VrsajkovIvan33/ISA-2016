@@ -22,10 +22,12 @@
         <div class="carousel-caption">
             <div style="background-color:white">
                 <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
+                <div>
+                    <button type="button" class="btn btn-default" ng-click="openEventModal()">Add events</button>
+                    <button type="button" class="btn btn-default" ng-click="removeEvent()">Remove event</button>
+                </div>
+
             </div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-default" ng-click="openEventModal()">Add events</button>
         </div>
     </div>
 </div>

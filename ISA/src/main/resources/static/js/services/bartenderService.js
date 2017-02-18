@@ -9,6 +9,10 @@ angular.module('restaurantApp.BartenderService', [])
             return $http.get('/getBartenders');
         }
 
+        factory.getBartender = function(id) {
+            return $http.get('/getBartenders/' + id);
+        }
+
         factory.getBartendersByRestaurant = function (id) {
             return $http.get('/getBartendersByRestaurant/' + id, {"id":id});
         }

@@ -6,33 +6,12 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
     .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage, $uibModal, uiCalendarConfig, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
         function init() {
             console.log("Restaurant Manager init()");
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
 
-            // $scope.myEvents = [
-            //     {
-            //         title: 'All Day Test Event',
-            //         start: new Date(y, m, 1)
-            //     },
-            //     {
-            //         title: 'Long Test Event',
-            //         start: new Date(y, m, d - 5),
-            //         end: new Date(y, m, d - 2)
-            //     },
-            //     {
-            //         title: 'Test Birthday Party',
-            //         start: new Date(y, m, d + 1, 19, 0),
-            //         end: new Date(y, m, d + 1, 22, 30),
-            //         allDay: false
-            //     }
-            // ];
-            //
-            // $scope.eventSources = [$scope.myEvents];
+            $scope.selectedEvent = undefined;
 
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 console.log("Kliknut dogadjaj!");
+                $scope.selectedEvent = date;
             };
 
             $scope.uiConfig = {
@@ -45,6 +24,46 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                         right: 'today prev, next'
                     },
                     eventClick: $scope.alertOnEventClick
+                }
+            }
+
+            $scope.removeEvent = function() {
+                if ($scope.selectedEvent == undefined) {
+                    alert("No event selected!");
+                }
+                else {
+                    CalendarEventFactory.removeCalendarEvent($scope.selectedEvent.id).success(function(data) {
+                        CalendarEventFactory.getEventsByRestaurant($scope.restaurantManager.restaurant).success(function(data) {
+                            $scope.myEvents = [];
+                            var i;
+                            for (i = 0; i < data.length; i++) {
+                                if (data[i].user.type == "WAITER") {
+                                    $scope.myEvents.push({
+                                        title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname).concat(" - ".concat(data[i].tableRegion.trMark)),
+                                        start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                        end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                        allDay: false,
+                                        id: data[i].id
+                                    })
+                                }
+                                else {
+                                    $scope.myEvents.push({
+                                        title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
+                                        start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                        end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                        allDay: false,
+                                        id: data[i].id
+                                    })
+                                }
+                            }
+
+                            $scope.eventSources = [$scope.myEvents];
+                            //JEBEM TI MAMU U PICKU DA TI JEBEM!
+                            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
+                            uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
+                            $scope.selectedEvent = undefined;
+                        });
+                    });
                 }
             }
 
@@ -71,13 +90,24 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                     $scope.myEvents = [];
                     var i;
                     for (i = 0; i < data.length; i++) {
-                        console.log(new Date(data[i].start).toUTCString());
-                        $scope.myEvents.push({
-                            title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
-                            start: data[i].start,
-                            end: data[i].end,
-                            allDay: false
-                        })
+                        if (data[i].user.type == "WAITER") {
+                            $scope.myEvents.push({
+                                title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname).concat(" - ".concat(data[i].tableRegion.trMark)),
+                                start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                allDay: false,
+                                id: data[i].id
+                            })
+                        }
+                        else {
+                            $scope.myEvents.push({
+                                title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
+                                start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                allDay: false,
+                                id: data[i].id
+                            })
+                        }
                     }
 
                     $scope.eventSources = [$scope.myEvents];
@@ -152,8 +182,7 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
 
             $scope.combineNameAndSurname = function(name, surname) {
                 var blankSpace = " ";
-                blankSpace.concat(surname);
-                return name.concat(blankSpace);
+                return name.concat(blankSpace.concat(surname));
             }
         };
 

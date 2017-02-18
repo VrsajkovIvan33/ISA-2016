@@ -16,7 +16,7 @@
 <div class="modal-body">
     <form role="form">
         <label for="employeeSelect">Employee</label>
-        <select class="form-control form-control-lg" ng-model="unprocessedEvent.user" ng-options="emp.name for emp in restaurantEmployees track by emp.id" id="employeeSelect"></select>
+        <select class="form-control form-control-lg" ng-model="unprocessedEvent.user" ng-options="combineNameAndSurname(emp.name, emp.surname) for emp in restaurantEmployees track by emp.id" id="employeeSelect"></select>
         <label for="startingDate">Starting date</label>
         <input type="date" class="form-control form-control-lg" ng-model="unprocessedEvent.startDate" id="startingDate">
         <label for="endingDate">Ending date</label>
@@ -27,7 +27,7 @@
         <input type="text" class="form-control form-control-lg" ng-model="unprocessedEvent.shiftStart" id="shiftStartText">
         <label for="shiftEndText">Shift end</label>
         <input type="text" class="form-control form-control-lg" ng-model="unprocessedEvent.shiftEnd" id="shiftEndText">
-        <div>
+        <div ng-show="unprocessedEvent.user.type == 'WAITER'">
             <label for="regionSelect">Region</label>
             <select class="form-control form-control-lg" ng-model="unprocessedEvent.tableRegion" ng-options="reg.trMark for reg in regions track by reg.id" id="regionSelect"></select>
         </div>

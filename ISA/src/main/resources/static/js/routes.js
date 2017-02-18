@@ -11,12 +11,7 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/register',{
             templateUrl : 'html/guestRegister.html'
         })
-        .when('/bartender',{
-            templateUrl : 'html/bartender.html'
-        })
-        .when('/cook',{
-            templateUrl : 'html/cook.html'
-        })
+
         .when('/guest',{
             templateUrl : 'html/guest/guestHome.html'
         })
@@ -62,6 +57,22 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/waiter/tables',{
             templateUrl : 'html/waiter/tables.html'
+        })
+
+        //routing for the cook
+        .when('/cook',{
+            templateUrl : 'html/cook/home.html'
+        })
+        .when('/cook/calendar',{
+            templateUrl : 'html/cook/calendar.html'
+        })
+
+        //routing for the bartender
+        .when('/bartender',{
+            templateUrl : 'html/bartender/home.html'
+        })
+        .when('/bartender/calendar',{
+            templateUrl : 'html/bartender/calendar.html'
         })
 
         .when('/login', {

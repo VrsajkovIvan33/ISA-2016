@@ -33,6 +33,15 @@ public class CookController {
     }
 
     @RequestMapping(
+            value = "/getCooks/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Cook> getCookById(@PathVariable("id") Long cookId){
+        Cook cook = cookService.findOne(cookId);
+        return new ResponseEntity<Cook>(cook, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/getCooksByRestaurant/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

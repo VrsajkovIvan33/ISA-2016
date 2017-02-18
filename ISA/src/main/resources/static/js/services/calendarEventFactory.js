@@ -19,6 +19,10 @@ angular.module('restaurantApp.CalendarEventFactory',[])
             return $http.post('/CalendarEvents', unprocessedEvent);
         }
 
+        factory.removeCalendarEvent = function(id) {
+            return $http.delete('/CalendarEvents/' + id);
+        }
+
         return factory;
 
     });
