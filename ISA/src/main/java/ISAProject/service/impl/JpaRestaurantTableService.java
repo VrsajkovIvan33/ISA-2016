@@ -2,6 +2,7 @@ package ISAProject.service.impl;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
+import ISAProject.model.TableRegion;
 import ISAProject.repository.RestaurantTableRepository;
 import ISAProject.service.RestaurantTableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class JpaRestaurantTableService implements RestaurantTableService {
     @Override
     public RestaurantTable findById(Long id) {
         return restaurantTableRepository.findById(id);
+    }
+
+    @Override
+    public List<RestaurantTable> findByRestaurantAndTableRegion(Restaurant restaurant, TableRegion tableRegion) {
+        return restaurantTableRepository.findByRestaurantAndTableRegionOrderByRtPositionAsc(restaurant, tableRegion);
     }
 
     @Override

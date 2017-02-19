@@ -15,6 +15,10 @@ angular.module('restaurantApp.CalendarEventFactory',[])
             return $http.get('/CalendarEventsByUser/' + user.id);
         }
 
+        factory.getEventByUserAndShift = function(user) {
+            return $http.get('/CalendarEventsByUserAndShift/' + user.id);
+        }
+
         factory.addCalendarEvent = function(unprocessedEvent) {
             return $http.post('/CalendarEvents', unprocessedEvent);
         }

@@ -1,11 +1,15 @@
 package ISAProject.model.users;
 
+import ISAProject.model.Order;
 import ISAProject.model.Restaurant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Marko on 11/17/2016.
@@ -16,6 +20,7 @@ import java.util.Date;
 public class Waiter extends User implements Serializable {
 
     public Waiter(){
+        //orders = new ArrayList<Order>();
     }
 
     @Column(name = "date_of_birth")
@@ -33,6 +38,10 @@ public class Waiter extends User implements Serializable {
 
     @Column(name = "review")
     private float review;
+
+    //@ManyToMany(mappedBy = "waiters")
+    //@JsonIgnore
+    //private List<Order> orders;
 
     public Date getDate_of_birth() {
         return date_of_birth;
@@ -73,4 +82,12 @@ public class Waiter extends User implements Serializable {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 }

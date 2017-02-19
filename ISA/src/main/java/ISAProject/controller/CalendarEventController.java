@@ -53,6 +53,26 @@ public class CalendarEventController {
     }
 
     @RequestMapping(
+            value = "/CalendarEventsByUserAndShift/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CalendarEvent> getCalendarEventByUserAndShift(@PathVariable("id") Long userId) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        System.out.println(year);
+        System.out.println(month);
+        System.out.println(day);
+        System.out.println(hour);
+        System.out.println(calendar.getTime());
+        CalendarEvent calendarEvent = calendarEventService.findByUserAndShift(userId, year, month, day, hour);
+        return new ResponseEntity<CalendarEvent>(calendarEvent, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/CalendarEventsByRestaurant/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
