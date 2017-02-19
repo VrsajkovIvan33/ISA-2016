@@ -17,6 +17,8 @@ public interface CalendarEventService {
 
     List<CalendarEvent> findByUser(User user);
 
+    CalendarEvent findByUserAndShift(Long userID, int year, int month, int day, int hour);
+
     CalendarEvent save(CalendarEvent calendarEvent);
 
     void delete(Long id);

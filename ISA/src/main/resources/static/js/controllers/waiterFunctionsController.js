@@ -56,6 +56,9 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                     //JEBEM TI MAMU U PICKU DA TI JEBEM!
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
+                CalendarEventFactory.getEventByUserAndShift($scope.waiter).success(function(data) {
+                    $scope.currentEvent = data;
+                })
             })
 
         }

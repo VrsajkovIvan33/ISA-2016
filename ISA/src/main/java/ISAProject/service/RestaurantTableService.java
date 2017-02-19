@@ -2,6 +2,7 @@ package ISAProject.service;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
+import ISAProject.model.TableRegion;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface RestaurantTableService {
     List<RestaurantTable> findByRestaurant(Restaurant restaurant);
 
     RestaurantTable findById(Long id);
+
+    List<RestaurantTable> findByRestaurantAndTableRegion(Restaurant restaurant, TableRegion tableRegion);
 
     RestaurantTable save(RestaurantTable restaurantTable);
 

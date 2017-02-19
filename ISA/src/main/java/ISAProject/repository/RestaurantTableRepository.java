@@ -2,6 +2,7 @@ package ISAProject.repository;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
+import ISAProject.model.TableRegion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,8 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
     List<RestaurantTable> findAll();
 
     List<RestaurantTable> findByRestaurantOrderByRtPositionAsc(Restaurant restaurant);
+
+    List<RestaurantTable> findByRestaurantAndTableRegionOrderByRtPositionAsc(Restaurant restaurant, TableRegion tableRegion);
 
     RestaurantTable findById(Long id);
 
