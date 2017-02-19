@@ -10,6 +10,8 @@
                     <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/waiters">Update Waiters</a></li>
                     <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/bartenders">Update Bartenders</a></li>
                     <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/cooks">Update Cooks</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/menu">Update Menu</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/mapBeverage">Update Map Beverage</a></li>
                     <li ng-if="loggedManager.restaurant != null"><a href="#restaurantManager/calendar">Calendar</a></li>
                     <li ng-if="loggedManager.restaurant != null"><a href="#restaurantManager/tables">Table arrangement</a></li>
                     <li><a href="index.html">Log out</a></li>
@@ -21,9 +23,9 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <div style="background-color:black">
-                <h2>“I was at this restaurant. The sign said ‘Breakfast Anytime.’ So I ordered French Toast in the Renaissance.” – Steven Wright</h2>
-            </div>
+            <h2>“I was at this restaurant. The sign said ‘Breakfast Anytime.’ So I ordered French Toast in the Renaissance.” – Steven Wright</h2>
+
+            <a ng-if="loggedManager.restaurant != null" ng-click="openUpdateModal()" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Update Restaurant</a>
 
         </div>
     </div>

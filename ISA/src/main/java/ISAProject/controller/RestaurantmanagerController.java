@@ -28,7 +28,7 @@ public class RestaurantmanagerController {
     }
 
     @RequestMapping(
-            value = "/getRestaurantManagers/{id}",
+            value = "/getRestaurantManager/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantManager> getRestaurantManager(@PathVariable("id") Long managerId) {

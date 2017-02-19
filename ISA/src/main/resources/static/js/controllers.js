@@ -19,5 +19,7 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.CookController',
     'restaurantApp.WaiterFunctionsController',
     'restaurantApp.CookFunctionsController',
-    'restaurantApp.BartenderFunctionsController'
+    'restaurantApp.BartenderFunctionsController',
+    'restaurantApp.MenuController',
+    'restaurantApp.BeverageController'
 ]);

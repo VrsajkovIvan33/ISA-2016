@@ -87,3 +87,12 @@ INSERT INTO restauranttable (rt_Number, rt_Position, rid, rt_Active, version, rs
 INSERT INTO restauranttable (rt_Number, rt_Position, rid, rt_Active, version, rsid, trid) VALUES (48, 47, (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), True, 0, (SELECT rsid FROM restaurantsegment WHERE rs_Name="Indoors"), (SELECT trid FROM tableregion WHERE tr_Mark=1))
 INSERT INTO restauranttable (rt_Number, rt_Position, rid, rt_Active, version, rsid, trid) VALUES (49, 48, (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), True, 0, (SELECT rsid FROM restaurantsegment WHERE rs_Name="Indoors"), (SELECT trid FROM tableregion WHERE tr_Mark=1))
 INSERT INTO restauranttable (rt_Number, rt_Position, rid, rt_Active, version, rsid, trid) VALUES (50, 49, (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), True, 0, (SELECT rsid FROM restaurantsegment WHERE rs_Name="Indoors"), (SELECT trid FROM tableregion WHERE tr_Mark=1))
+
+
+
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (1, 'Whiskey', 'Drink', 'Alcohol', 150, 0, 1, 0);
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (2, 'Juice', 'Drink', 'Orange Juice', 100, 0, 1, 0);
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (3, 'Cabbage', 'Salad', '', 70, 0, 1, 0);
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (4, 'Stew', 'Cooked Meal', 'Stew with chicken meat', 300, 0, 1, 0);
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (5, 'Pljeskavica', 'Grilled Dish', 'Pork', 250, 0, 1, 0);
+INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (6, 'Cevapi', 'Grilled Dish', 'Pork', 300, 0, 1, 0);
