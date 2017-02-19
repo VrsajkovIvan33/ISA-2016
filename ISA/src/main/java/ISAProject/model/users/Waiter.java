@@ -1,6 +1,7 @@
 package ISAProject.model.users;
 
 import ISAProject.model.Restaurant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "waiter")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Waiter extends User implements Serializable {
 
     public Waiter(){
