@@ -9,6 +9,9 @@ INSERT INTO restaurant(rname, rtype, version) VALUES ("Bob's Country Bunker", "C
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
 INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
 
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("Branko", "Brankovic", "barek", "b.brankovic@gmail.com", "WAITER", 0)
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1975-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="b.brankovic@gmail.com" AND password="barek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
+
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dick", "Steele", "BiggusDickus", "dickeyMoose@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:00", (SELECT id FROM user WHERE email="dickeyMoose@gmail.com"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
 
@@ -20,6 +23,12 @@ INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("bar", "man", "bar", "bar@gmail.com", "BARTENDER", 0)
 INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1)
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("Novica", "Sarenac", "nov", "ns@gmail.com", "COOK", 0)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad Cook', (SELECT id FROM user WHERE email="ns@gmail.com"), 1)
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("Ivan", "Vrsajkov", "iva", "iv@gmail.com", "COOK", 0)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish Cook', (SELECT id FROM user WHERE email="iv@gmail.com"), 1)
 
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Indoors', 'blue')
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Smoking', 'red')
@@ -102,3 +111,15 @@ INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES 
 INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (3, 3, "2016-10-01 00:00:00", 3, 1, 0);
 INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (4, 5, "2016-11-08 00:00:00", 4, 1, 0);
 INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", 5, 1, 0);
+
+INSERT INTO waiterreview (wrid, wrreview, wrdate, wid, rid, version) VALUES (1, 5, "2016-05-16 00:00:00", (SELECT id FROM user WHERE email="m.vjestica94@gmail.com"), 1, 0);
+INSERT INTO waiterreview (wrid, wrreview, wrdate, wid, rid, version) VALUES (2, 4, "2016-01-25 00:00:00", (SELECT id FROM user WHERE email="m.vjestica94@gmail.com"), 1, 0);
+INSERT INTO waiterreview (wrid, wrreview, wrdate, wid, rid, version) VALUES (3, 3, "2016-10-01 00:00:00", (SELECT id FROM user WHERE email="b.brankovic@gmail.com"), 1, 0);
+INSERT INTO waiterreview (wrid, wrreview, wrdate, wid, rid, version) VALUES (4, 3, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="b.brankovic@gmail.com"), 1, 0);
+INSERT INTO waiterreview (wrid, wrreview, wrdate, wid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="b.brankovic@gmail.com"), 1, 0);
+
+INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (1, 5, "2016-05-16 00:00:00", (SELECT id FROM user WHERE email="iv@gmail.com"), 5, 1, 0);
+INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (2, 2, "2016-01-25 00:00:00", (SELECT id FROM user WHERE email="iv@gmail.com"), 6, 1, 0);
+INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (3, 3, "2016-10-01 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
+INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (4, 2, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
+INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);

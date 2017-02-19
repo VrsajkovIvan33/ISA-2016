@@ -36,8 +36,15 @@
                 <input type="date" ng-model="minDate" ng-change="changeDate()">
                 <label>   </label>
                 <label>Restaurant review end: </label>
-                <input type="date" ng-model="maxDate" ng-change="changeDate()">
+                <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br>
 
+                <label>Waiter: </label>
+                <select ng-model="waiter" ng-options="w as w.name for w in waiters" ng-change="changeWaiter()"></select>
+                <label> review: {{avgWaiterReview | number: 2}} </label></br>
+
+                <label>Menu item: </label>
+                <select ng-model="menu" ng-options="m as m.mName for m in menus" ng-change="changeMenu()"></select>
+                <label> review: {{avgMenuReview | number: 2}} </label></br>
             </div>
         </div>
     </div>
