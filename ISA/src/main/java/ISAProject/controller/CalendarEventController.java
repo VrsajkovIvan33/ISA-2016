@@ -107,7 +107,7 @@ public class CalendarEventController {
             consumes = "application/json")
     public ResponseEntity<List<CalendarEvent>> addCalendarEvents(@RequestBody UnprocessedCalendarEvent unprocessedCalendarEvent) throws Exception {
 
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
 
         Calendar calendarStart = Calendar.getInstance();
         Calendar calendarEnd = Calendar.getInstance();

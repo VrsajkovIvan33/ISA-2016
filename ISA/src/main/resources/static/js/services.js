@@ -20,5 +20,6 @@ angular.module('restaurantApp.services',[
                'restaurantApp.WaiterService',
                'restaurantApp.BartenderService',
                'restaurantApp.CookService',
-               'restaurantApp.MenuService'
+               'restaurantApp.MenuService',
+               'restaurantApp.RestaurantReviewService'
 ]);
