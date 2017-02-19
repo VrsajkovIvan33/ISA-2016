@@ -13,6 +13,10 @@ angular.module('restaurantApp.WaiterService', [])
             return $http.get('/getWaitersByRestaurant/' + id, {"id":id});
         }
 
+        factory.getWaiter = function (id) {
+            return $http.get('/getWaiters/' + id);
+        }
+
         factory.removeWaiter = function (waiter) {
             return $http.delete('/removeWaiter/' + waiter.id, {"id":waiter.id});
         }

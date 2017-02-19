@@ -33,6 +33,15 @@ public class BartenderController {
     }
 
     @RequestMapping(
+            value = "/getBartenders/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Bartender> getBartenderById(@PathVariable("id") Long bartenderId){
+        Bartender bartender = bartenderService.findOne(bartenderId);
+        return new ResponseEntity<Bartender>(bartender, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/getBartendersByRestaurant/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.InterceptingAsyncClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Verpsychoff on 2/16/2017.
@@ -89,6 +86,9 @@ public class CalendarEventController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<List<CalendarEvent>> addCalendarEvents(@RequestBody UnprocessedCalendarEvent unprocessedCalendarEvent) throws Exception {
+
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+
         Calendar calendarStart = Calendar.getInstance();
         Calendar calendarEnd = Calendar.getInstance();
         Calendar endingCalendar = Calendar.getInstance();
@@ -104,17 +104,39 @@ public class CalendarEventController {
         String[] hourMinutesStart = unprocessedCalendarEvent.getShiftStart().split(":");
         calendarStart.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
                 Integer.parseInt(hourMinutesStart[0]), Integer.parseInt(hourMinutesStart[1]));
+        //calendarStart.add(Calendar.HOUR, 1);
+
         // set the calendar to the shift end
         String[] hourMinutesEnd = unprocessedCalendarEvent.getShiftEnd().split(":");
         calendarEnd.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
                 Integer.parseInt(hourMinutesEnd[0]), Integer.parseInt(hourMinutesEnd[1]));
+        //calendarEnd.add(Calendar.HOUR, 1);
 
+        System.out.println("Calendar start: " + calendarStart.getTime());
+        System.out.println("Calendar end: " + calendarEnd.getTime());
         // create an event in every week until the ending date is passed
         List<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
         while (endingCalendar.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
             CalendarEvent calendarEvent = new CalendarEvent();
-            calendarEvent.setStart(calendarStart.getTime());
-            calendarEvent.setEnd(calendarEnd.getTime());
+            //calendarStart.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinutesStart[0]));
+            //calendarEnd.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinutesEnd[0]));
+            System.out.println(calendarStart.getTime());
+            System.out.println(calendarEnd.getTime());
+            System.out.println(calendarStart.get(Calendar.YEAR));
+            System.out.println(calendarStart.get(Calendar.MONTH));
+            System.out.println(calendarStart.get(Calendar.DAY_OF_MONTH));
+            System.out.println(calendarStart.get(Calendar.HOUR_OF_DAY));
+            System.out.println(calendarStart.get(Calendar.MINUTE));
+            //calendarEvent.setStart(calendarStart.getTime());
+            //calendarEvent.setEnd(calendarEnd.getTime());
+            calendarEvent.setYear(calendarStart.get(Calendar.YEAR));
+            calendarEvent.setMonth(calendarStart.get(Calendar.MONTH));
+            calendarEvent.setDay(calendarStart.get(Calendar.DAY_OF_MONTH));
+            calendarEvent.setStartHour(calendarStart.get(Calendar.HOUR_OF_DAY));
+            calendarEvent.setStartMinute(calendarStart.get(Calendar.MINUTE));
+            calendarEvent.setEndHour(calendarEnd.get(Calendar.HOUR_OF_DAY));
+            calendarEvent.setEndMinute(calendarEnd.get(Calendar.MINUTE));
+
             calendarEvent.setUser(unprocessedCalendarEvent.getUser());
             calendarEvent.setTableRegion(unprocessedCalendarEvent.getTableRegion());
             calendarEventService.save(calendarEvent);
@@ -124,6 +146,14 @@ public class CalendarEventController {
         }
 
         return new ResponseEntity<List<CalendarEvent>>(calendarEvents, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(
+            value = "/CalendarEvents/{id}",
+            method = RequestMethod.DELETE)
+    public ResponseEntity<CalendarEvent> removeCalendarEvent(@PathVariable("id") Long id) {
+        calendarEventService.delete(id);
+        return new ResponseEntity<CalendarEvent>(HttpStatus.NO_CONTENT);
     }
 
 }

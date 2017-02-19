@@ -48,6 +48,15 @@ angular.module('restaurantApp.WaiterController',[])
                 }
             }
 
+            $rootScope.$on('updateCalendar', function () {
+                window.calendar.fullCalendar('refetchEvents');
+            });
+
+            $scope.combineNameAndSurname = function(name, surname) {
+                var blankSpace = " ";
+                return name.concat(blankSpace.concat(surname));
+            }
+
             $scope.changeView = function(view,calendar) {
                 uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
             };

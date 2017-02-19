@@ -13,6 +13,10 @@ angular.module('restaurantApp.CookService', [])
             return $http.get('/getCooksByRestaurant/' + id, {"id":id});
         }
 
+        factory.getCook = function(id) {
+            return $http.get('/getCooks/' + id);
+        }
+
         factory.removeCook = function (cook) {
             return $http.delete('/removeCook/' + cook.id, {"id":cook.id});
         }

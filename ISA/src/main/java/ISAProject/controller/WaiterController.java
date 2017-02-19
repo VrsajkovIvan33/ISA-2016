@@ -43,6 +43,15 @@ public class WaiterController {
     }
 
     @RequestMapping(
+            value = "/getWaiters/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Waiter> getWaitersById(@PathVariable("id") Long waiterId){
+        Waiter waiter = waiterService.findOne(waiterId);
+        return new ResponseEntity<Waiter>(waiter, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/removeWaiter/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Waiter> removeWaiter(@PathVariable("id") Long id) {

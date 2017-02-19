@@ -21,13 +21,34 @@ public class CalendarEvent {
     @Version
     private int version;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ceStart")
-    private Date start;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "ceStart")
+//    private Date start;
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "ceEnd")
+//    private Date end;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ceEnd")
-    private Date end;
+    @Column(name = "ceYear")
+    private int year;
+
+    @Column(name = "ceMonth")
+    private int month;
+
+    @Column(name = "ceDay")
+    private int day;
+
+    @Column(name = "ceStartHour")
+    private int startHour;
+
+    @Column(name = "ceStartMinute")
+    private int startMinute;
+
+    @Column(name = "ceEndHour")
+    private int endHour;
+
+    @Column(name = "ceEndMinute")
+    private int endMinute;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", referencedColumnName = "id")
@@ -53,21 +74,77 @@ public class CalendarEvent {
         this.version = version;
     }
 
-    public Date getStart() {
-        return start;
+    public int getYear() {
+        return year;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public Date getEnd() {
-        return end;
+    public int getMonth() {
+        return month;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setMonth(int month) {
+        this.month = month;
     }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    public int getStartMinute() {
+        return startMinute;
+    }
+
+    public void setStartMinute(int startMinute) {
+        this.startMinute = startMinute;
+    }
+
+    public int getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(int endHour) {
+        this.endHour = endHour;
+    }
+
+    public int getEndMinute() {
+        return endMinute;
+    }
+
+    public void setEndMinute(int endMinute) {
+        this.endMinute = endMinute;
+    }
+
+    //    public Date getStart() {
+//        return start;
+//    }
+//
+//    public void setStart(Date start) {
+//        this.start = start;
+//    }
+//
+//    public Date getEnd() {
+//        return end;
+//    }
+//
+//    public void setEnd(Date end) {
+//        this.end = end;
+//    }
 
     public User getUser() {
         return user;
