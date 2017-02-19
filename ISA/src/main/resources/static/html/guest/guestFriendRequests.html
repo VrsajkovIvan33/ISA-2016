@@ -6,7 +6,7 @@
                     <li><a href="#/guest" ng-click="disconnect()">Home</a></li>
                     <li><a href="#/guest/profile" ng-click="disconnect()">Profile</a></li>
                     <li><a href="#/guest/friends" ng-click="disconnect()">Friends</a></li>
-                    <li class="active"><a href="#/guest/friendRequests">Friend Requests</a></li>
+                    <li class="active"><a href="#/guest/friendRequests">Friend Requests<span class="badge" ng-if="showRequests" style="background-color: red">{{friendRequestsNumber}}</span></a></li>
                     <li><a href="#/guest/restaurants" ng-click="disconnect()">Restaurants</a></li>
                     <li><a href="#/" ng-click="disconnect()">Log out</a></li>
                     </ul>

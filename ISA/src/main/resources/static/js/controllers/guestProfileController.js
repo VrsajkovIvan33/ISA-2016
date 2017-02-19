@@ -5,7 +5,14 @@
 angular.module('restaurantApp.GuestProfileController', [])
        .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestProfileFactory) {
           function init(){
-                $scope.loggedUser = $localStorage.logged;
+              $scope.loggedUser = $localStorage.logged;
+              $scope.friendRequestsNumber = 0;
+              $scope.showRequests = false;
+              GuestProfileFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
+                  $scope.friendRequestsNumber = data;
+                  if(data > 0)
+                      $scope.showRequests = true;
+              });
           };
 
            var friendRequestSubscription = null;
@@ -19,6 +26,9 @@ angular.module('restaurantApp.GuestProfileController', [])
                .then(function(frame){
                    friendRequestSubscription = $stomp.subscribe('/topic/friendRequest/' + $localStorage.logged.id, function(numberOfRequests, headers, res){
                        toastr.info('You have new friend request!');
+                       $scope.friendRequestsNumber = numberOfRequests;
+                       if(numberOfRequests > 0)
+                           $scope.showRequests = true;
                    });
                });
 

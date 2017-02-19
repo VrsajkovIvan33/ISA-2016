@@ -14,6 +14,13 @@ angular.module('restaurantApp.GuestFriendsController', [])
                        alert("Error, try again!");
                    }
                });
+               $scope.friendRequestsNumber = 0;
+               $scope.showRequests = false;
+               GuestFriendsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
+                   $scope.friendRequestsNumber = data;
+                   if(data > 0)
+                       $scope.showRequests = true;
+               });
            };
 
            var friendRequestsSubscription = null;
@@ -27,6 +34,9 @@ angular.module('restaurantApp.GuestFriendsController', [])
                  .then(function(frame){
                      friendRequestsSubscription = $stomp.subscribe('/topic/friendRequest/' + $localStorage.logged.id, function(numberOfRequests, headers, res){
                          toastr.info('You have new friend request!');
+                         $scope.friendRequestsNumber = numberOfRequests;
+                         if(numberOfRequests > 0)
+                             $scope.showRequests = true;
                      });
                  });
 

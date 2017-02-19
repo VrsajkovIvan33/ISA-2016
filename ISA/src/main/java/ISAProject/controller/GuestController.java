@@ -42,11 +42,11 @@ public class GuestController {
                 ArrayList<Guest> personsByName = (ArrayList<Guest>) guestService.findByName(nameSurname);
                 ArrayList<Guest> personsBySurname = (ArrayList<Guest>) guestService.findBySurname(nameSurname);
                 for(Guest guest : personsByName){
-                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !user.getPendingList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                         guestList.add(guest);
                 }
                 for(Guest guest : personsBySurname){
-                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
+                    if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !user.getPendingList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                         guestList.add(guest);
                 }
             }
@@ -54,11 +54,11 @@ public class GuestController {
             ArrayList<Guest> personsByNameAndSurname = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[0], splitNameSurname[1]);
             ArrayList<Guest> personsBySurnameAndName = (ArrayList<Guest>) guestService.findByNameAndSurname(splitNameSurname[1], splitNameSurname[0]);
             for(Guest guest : personsByNameAndSurname){
-                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !user.getPendingList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                     guestList.add(guest);
             }
             for(Guest guest : personsBySurnameAndName){
-                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
+                if(!user.getFriendList().contains(guest) && !user.getSentList().contains(guest) && !user.getPendingList().contains(guest) && !guestList.contains(guest) && (user.getId() != guest.getId()))
                     guestList.add(guest);
             }
         }
@@ -77,5 +77,11 @@ public class GuestController {
         guestService.save((Guest)friend);
 
         return friend.getPendingList().size();
+    }
+
+    @RequestMapping(value = "/getFriendRequestsNumber/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getFriendRequestsNumber(@PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        return new ResponseEntity<Integer>(user.getPendingList().size(), HttpStatus.OK);
     }
 }

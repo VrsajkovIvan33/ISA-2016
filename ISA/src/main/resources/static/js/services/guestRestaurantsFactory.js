@@ -6,6 +6,9 @@ angular.module('restaurantApp.GuestRestaurantsFactory', [])
        .factory('GuestRestaurantsFactory', function($http){
            var factory = [];
 
+           factory.getFriendRequestsNumber = function(id){
+               return $http.get('/getFriendRequestsNumber/' + id, {"id":id});
+           }
 
            return factory;
        });
