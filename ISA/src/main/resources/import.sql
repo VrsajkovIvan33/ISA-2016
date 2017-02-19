@@ -96,3 +96,9 @@ INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version
 INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (4, 'Stew', 'Cooked Meal', 'Stew with chicken meat', 300, 0, 1, 0);
 INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (5, 'Pljeskavica', 'Grilled Dish', 'Pork', 250, 0, 1, 0);
 INSERT INTO menu (mid, mname, mtype, mdescription, mprice, mreview, rid, version) VALUES (6, 'Cevapi', 'Grilled Dish', 'Pork', 300, 0, 1, 0);
+
+INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (1, 5, "2016-05-16 00:00:00", 1, 1, 0);
+INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (2, 4, "2016-01-25 00:00:00", 2, 1, 0);
+INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (3, 3, "2016-10-01 00:00:00", 3, 1, 0);
+INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (4, 5, "2016-11-08 00:00:00", 4, 1, 0);
+INSERT INTO restaurantreview (rrid, rrreview, rrdate, uid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", 5, 1, 0);

@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="ProviderController">
+<div ng-cloak ng-controller="StatementController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -24,30 +24,21 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Providers</h3>
+            <div style="background-color:white; color: black;">
+                <h3>Statement</h3>
 
-            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
+                <label>Manager name: {{loggedManager.name}} {{loggedManager.surname}}</label></br>
+                <label>Restaurant name: {{loggedManager.restaurant.rName}} </label></br>
+                <label>Restaurant type: {{loggedManager.restaurant.rType}} </label></br></br>
+                <label>Restaurant review: {{avgReview | number: 2}} </label></br></br>
 
-            <table class="responstable">
-                <thead>
-                    <tr>
-                        <th>Provider name:</th>
-                        <th>Provider surname:</th>
-                        <th>Provider email:</th>
-                        <th>Edit:</th>
-                        <th>Delete:</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="p in providers">
-                        <td>{{p.name}}</td>
-                        <td>{{p.surname}}</td>
-                        <td>{{p.email}}</td>
-                        <td><a ng-click="openUpdateModal(p)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
-                    </tr>
-                </tbody>
-            </table>
+                <label>Restaurant review start: </label>
+                <input type="date" ng-model="minDate" ng-change="changeDate()">
+                <label>   </label>
+                <label>Restaurant review end: </label>
+                <input type="date" ng-model="maxDate" ng-change="changeDate()">
+
+            </div>
         </div>
     </div>
 </div>
