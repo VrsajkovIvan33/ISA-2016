@@ -2,7 +2,7 @@
  * Created by Marko on 2/19/2017.
  */
 angular.module('restaurantApp.StatementController',[])
-    .controller('StatementController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantReviewService, MenuReviewService, WaiterReviewService, MenuService, WaiterService) {
+    .controller('StatementController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantReviewService, MenuReviewService, WaiterReviewService, MenuService, WaiterService, CookService) {
 
         $scope.loggedManager = $localStorage.logged;
 
@@ -80,6 +80,17 @@ angular.module('restaurantApp.StatementController',[])
         }
         getMenusByMRestaurantAndMType();
 
+        $scope.cooks = [];
+        $scope.cook = null;
+        function getCooksByRestaurant(){
+            CookService.getCooksByRestaurant($localStorage.logged.restaurant.id).success(function (data) {
+                $scope.cooks = data;
+            });
+        }
+        getCooksByRestaurant();
+
+
+
         $scope.avgWaiterReview = 0;
         $scope.waiterReviews = [];
         $scope.changeWaiter = function() {
@@ -93,8 +104,48 @@ angular.module('restaurantApp.StatementController',[])
 
                 if($scope.waiterReviews.length != 0)
                     $scope.avgWaiterReview = $scope.avgWaiterReview / $scope.waiterReviews.length;
+
+                $scope.minDateWaiter = null;
+                $scope.maxDateWaiter = null;
             });
         }
+
+        $scope.minDateWaiter = null;
+        $scope.maxDateWaiter = null;
+
+        $scope.changeDateWaiter = function() {
+            $scope.avgWaiterReview = 0;
+            var n = 0;
+
+            for(var i = 0; i < $scope.waiterReviews.length; i++) {
+                if($scope.minDateWaiter != null && $scope.maxDateWaiter != null){
+                    if($scope.waiterReviews[i].wrDate > $scope.minDateWaiter && $scope.waiterReviews[i].wrDate < $scope.maxDateWaiter){
+                        $scope.avgWaiterReview += $scope.waiterReviews[i].wrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.minDateWaiter != null){
+                    if($scope.waiterReviews[i].wrDate > $scope.minDateWaiter){
+                        $scope.avgWaiterReview += $scope.waiterReviews[i].wrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.maxDateWaiter != null){
+                    if($scope.waiterReviews[i].wrDate < $scope.maxDateWaiter){
+                        $scope.avgWaiterReview += $scope.waiterReviews[i].wrReview;
+                        n = n + 1;
+                    }
+                }else{
+                    for(var i = 0; i < $scope.waiterReviews.length; i++) {
+                        $scope.avgWaiterReview += $scope.waiterReviews[i].wrReview;
+                        n = n + 1;
+                    }
+                }
+            }
+
+            if(n != 0)
+                $scope.avgWaiterReview = $scope.avgWaiterReview / n;
+        }
+
+
 
         $scope.avgMenuReview = 0;
         $scope.menuReviews = [];
@@ -109,6 +160,101 @@ angular.module('restaurantApp.StatementController',[])
 
                 if($scope.menuReviews.length != 0)
                     $scope.avgMenuReview = $scope.avgMenuReview / $scope.menuReviews.length;
+
+                $scope.minDateMenu = null;
+                $scope.maxDateMenu = null;
             });
         }
+
+        $scope.minDateMenu = null;
+        $scope.maxDateMenu = null;
+
+        $scope.changeDateMenu = function() {
+            $scope.avgMenuReview = 0;
+            var n = 0;
+
+            for(var i = 0; i < $scope.menuReviews.length; i++) {
+                if($scope.minDateMenu != null && $scope.maxDateMenu != null){
+                    if($scope.menuReviews[i].mrDate > $scope.minDateMenu && $scope.menuReviews[i].mrDate < $scope.maxDateMenu){
+                        $scope.avgMenuReview += $scope.menuReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.minDateMenu != null){
+                    if($scope.menuReviews[i].mrDate > $scope.minDateMenu){
+                        $scope.avgMenuReview += $scope.menuReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.maxDateMenu != null){
+                    if($scope.menuReviews[i].mrDate < $scope.maxDateMenu){
+                        $scope.avgMenuReview += $scope.menuReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else{
+                    for(var i = 0; i < $scope.menuReviews.length; i++) {
+                        $scope.avgMenuReview += $scope.menuReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }
+            }
+
+            if(n != 0)
+                $scope.avgMenuReview = $scope.avgMenuReview / n;
+        }
+
+
+
+        $scope.avgCookReview = 0;
+        $scope.cookReviews = [];
+        $scope.changeCook = function() {
+            MenuReviewService.getMenuReviewsByMrUser($scope.cook.id).success(function (data) {
+                $scope.avgCookReview = 0;
+                $scope.cookReviews = data;
+
+                for(var i = 0; i < $scope.cookReviews.length; i++) {
+                    $scope.avgCookReview += $scope.cookReviews[i].mrReview;
+                }
+
+                if($scope.cookReviews.length != 0)
+                    $scope.avgCookReview = $scope.avgCookReview / $scope.cookReviews.length;
+
+                $scope.minDateCook = null;
+                $scope.maxDateCook = null;
+            });
+        }
+
+        $scope.minDateCook = null;
+        $scope.maxDateCook = null;
+
+        $scope.changeDateCook = function() {
+            $scope.avgCookReview = 0;
+            var n = 0;
+
+            for(var i = 0; i < $scope.cookReviews.length; i++) {
+                if($scope.minDateCook != null && $scope.maxDateCook != null){
+                    if($scope.cookReviews[i].mrDate > $scope.minDateCook && $scope.cookReviews[i].mrDate < $scope.maxDateCook){
+                        $scope.avgCookReview += $scope.cookReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.minDateCook != null){
+                    if($scope.cookReviews[i].mrDate > $scope.minDateCook){
+                        $scope.avgCookReview += $scope.cookReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else if($scope.maxDateCook != null){
+                    if($scope.cookReviews[i].mrDate < $scope.maxDateCook){
+                        $scope.avgCookReview += $scope.cookReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }else{
+                    for(var i = 0; i < $scope.cookReviews.length; i++) {
+                        $scope.avgCookReview += $scope.cookReviews[i].mrReview;
+                        n = n + 1;
+                    }
+                }
+            }
+
+            if(n != 0)
+                $scope.avgCookReview = $scope.avgCookReview / n;
+        }
+
     });
