@@ -49,6 +49,12 @@ public class RestaurantController {
     @Autowired
     private RestaurantReviewService restaurantReviewService;
 
+    @Autowired
+    private WaiterReviewService waiterReviewService;
+
+    @Autowired
+    private MenuReviewService menuReviewService;
+
     @RequestMapping(
             value = "/getRestaurants",
             method = RequestMethod.GET,
@@ -77,6 +83,24 @@ public class RestaurantController {
             restaurantmanagerService.save(rm);
         }
 
+
+        //delete reviews
+        List<RestaurantReview> restaurantReviews = restaurantReviewService.findByRrRestaurant(restaurant);
+        for(RestaurantReview rr: restaurantReviews){
+            restaurantReviewService.delete(rr.getRrId());
+        }
+
+        List<WaiterReview> waiterReviews = waiterReviewService.findByWrRestaurant(restaurant);
+        for(WaiterReview wr: waiterReviews){
+            waiterReviewService.delete(wr.getWrId());
+        }
+
+        List<MenuReview> menuReviews = menuReviewService.findByMrRestaurant(restaurant);
+        for(MenuReview mr: menuReviews){
+            menuReviewService.delete(mr.getMrId());
+        }
+
+
         //delete restaurants from employee
         List<Waiter> waiters = waiterService.findByRestaurant(restaurant);
         for(Waiter w: waiters){
@@ -99,11 +123,6 @@ public class RestaurantController {
         List<Menu> menus = menuService.findByMRestaurant(restaurant);
         for(Menu m: menus){
             menuService.delete(m.getmId());
-        }
-
-        List<RestaurantReview> restaurantReviews = restaurantReviewService.findByRrRestaurant(restaurant);
-        for(RestaurantReview rr: restaurantReviews){
-            restaurantReviewService.delete(rr.getRrId());
         }
 
         restaurantService.delete(id);
