@@ -26,5 +26,4 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
     RestaurantTable save(RestaurantTable restaurantTable);
 
     void delete(Long id);
-
 }

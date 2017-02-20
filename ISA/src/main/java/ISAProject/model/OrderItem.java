@@ -47,7 +47,7 @@ public class OrderItem {
     @JoinColumn(name = "staffid", referencedColumnName = "id")
     private User staff;
 
-    //"Waiting", "Currently making", "Ready"
+    //"Waiting for waiter", "Waiting", "Currently making", "Ready"
     @Column(name = "oiStatus", nullable = false)
     private String oiStatus;
 

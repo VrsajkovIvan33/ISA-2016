@@ -67,6 +67,12 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/waiter/tables',{
             templateUrl : 'html/waiter/tables.html'
         })
+        .when('/waiter/unassignedOrders', {
+            templateUrl : 'html/waiter/unassignedOrders.html'
+        })
+        .when('/waiter/waitersOrders', {
+            templateUrl : 'html/waiter/waitersOrders.html'
+        })
 
         //routing for the cook
         .when('/cook',{

@@ -1,0 +1,42 @@
+<div ng-cloak ng-controller="WaiterFunctionsController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+                <div class="menuBar">
+                    <li><a href="#/waiter">Home</a></li>
+                    <li><a href="#/waiter/calendar">Calendar</a></li>
+                    <li><a href="#/waiter/tables">Table arrangement</a></li>
+                    <li><a href="#/waiter/waitersOrders">My orders</a></li>
+                    <li><a href="#/waiter/unassignedOrders">Unassigned orders</a></li>
+                    <li><a href="index.html">Log out</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Unassigned orders</h3>
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Table number:</th>
+                    <th>Order status:</th>
+                    <th>Time of arrival:</th>
+                    <th>Order items:</th>
+                    <th>Take order:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="un in unassigned">
+                    <td>{{un.restaurantTable.rtNumber}}</td>
+                    <td>{{un.oStatus}}</td>
+                    <td>{{un.hourOfArrival.concat(":".concat(un.minuteOfArrival))}}</td>
+                    <td><button ng-click="openShowOrderItemsModal(un)" class="btn btn-primary">See items</button></td>
+                    <td><button class="btn btn-danger">Take order</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.WaiterFunctionsController',[])
-    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory) {
+    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
         function init() {
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 console.log("Kliknut dogadjaj!");
@@ -51,17 +51,35 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                             allDay: false
                         })
                     }
-
                     $scope.eventSources = [$scope.myEvents];
                     //JEBEM TI MAMU U PICKU DA TI JEBEM!
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
                 CalendarEventFactory.getEventByUserAndShift($scope.waiter).success(function(data) {
                     $scope.currentEvent = data;
+                });
+                OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                    $scope.unassigned = data;
                 })
             })
+
+            $scope.openShowOrderItemsModal = function(order) {
+                $rootScope.orderToShowUnassigned = order;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/showOrderItemsModal.html',
+                    controller : 'ShowOrderItemsForUnassignedController'
+                });
+            }
 
         }
 
         init();
+    })
+    .controller('ShowOrderItemsForUnassignedController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope) {
+
+        $scope.orderToShow = $rootScope.orderToShowUnassigned;
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
     });
