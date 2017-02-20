@@ -13,6 +13,14 @@ angular.module('restaurantApp.GuestFriendRequestsController', [])
                    if(data > 0)
                        $scope.showRequests = true;
                });
+               $scope.friendRequests = [];
+               GuestFriendRequestsFactory.getFriendRequests($scope.loggedUser.id).success(function(data){
+                   if(data != null) {
+                       $scope.friendRequests = data;
+                   }else{
+                       alert("Error, try again!");
+                   }
+               });
            };
 
            var friendRequestSubscription = null;
@@ -29,6 +37,13 @@ angular.module('restaurantApp.GuestFriendRequestsController', [])
                        $scope.friendRequestsNumber = numberOfRequests;
                        if(numberOfRequests > 0)
                            $scope.showRequests = true;
+                       GuestFriendRequestsFactory.getFriendRequests($scope.loggedUser.id).success(function(data){
+                           if(data != null) {
+                               $scope.friendRequests = data;
+                           }else{
+                               alert("Error, try again!");
+                           }
+                       });
                    });
                });
 

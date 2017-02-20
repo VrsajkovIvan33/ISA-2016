@@ -84,4 +84,11 @@ public class GuestController {
         Guest user = guestService.findOne(id);
         return new ResponseEntity<Integer>(user.getPendingList().size(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getFriendRequests/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Guest>> getFriendRequests(@PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        List<Guest> friendRequests = user.getPendingList();
+        return new ResponseEntity<List<Guest>>(friendRequests, HttpStatus.OK);
+    }
 }

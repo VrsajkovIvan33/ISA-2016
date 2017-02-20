@@ -17,7 +17,60 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <p>Zahtjevi za prijateljstvo</p>
+
+            <div class="span3 well">
+
+                <div class="jumbotron list-content">
+                    <ul class="list-group">
+                        <li href="#" class="list-group-item title">
+                            FRIEND REQUESTS
+                        </li>
+                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friendRequests">
+                            <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
+                            <label class="name">
+                                {{friend.name}} {{friend.surname}}<br>
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" title="Accept"></a>
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" title="Ignore"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>
+
+<style>
+    .list-content{
+        min-height:300px;
+    }
+    .list-content .list-group .title{
+        background:#5bc0de;
+        border:2px solid #DDDDDD;
+        font-weight:bold;
+        color:#FFFFFF;
+    }
+    .list-group-item img {
+        height:80px;
+        width:80px;
+    }
+
+    .jumbotron .btn {
+        padding: 5px 5px !important;
+        font-size: 12px !important;
+    }
+    .prj-name {
+        color:#5bc0de;
+    }
+    .break{
+        width:100%;
+        margin:20px;
+    }
+    .name {
+        color:#5bc0de;
+    }
+</style>
