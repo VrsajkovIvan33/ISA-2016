@@ -14,5 +14,9 @@ angular.module('restaurantApp.GuestFriendRequestsFactory', [])
                return $http.get('/getFriendRequests/' + id, {"id" : id});
            }
 
+           factory.acceptFriendRequest = function(id){
+
+           }
+
            return factory;
        });

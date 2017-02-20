@@ -24,6 +24,7 @@ angular.module('restaurantApp.GuestFriendRequestsController', [])
            };
 
            var friendRequestSubscription = null;
+           var acceptedFriendRequestSubscription = null;
            init();
 
            $stomp.setDebug(function(args){
@@ -45,12 +46,32 @@ angular.module('restaurantApp.GuestFriendRequestsController', [])
                            }
                        });
                    });
+
+                   acceptedFriendRequestSubscription = $stomp.subscribe('/topic/friendAcceptedRequest/' + $localStorage.logged.id, function(friend, headers, res){
+                       toastr.info(friend.name + ' ' + friend.surname + ' accepted friend request.');
+                   });
                });
 
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();
+               acceptedFriendRequestSubscription.unsubscribe();
                $stomp.disconnect().then(function(){
                    $log.info('disconnected');
                });
            };
+
+           $scope.accept = function(id){
+               $stomp.send('/app/acceptFriendRequest/' + $scope.loggedUser.id + '/' + id);
+               var temp = [];
+               for(i = 0; i<$scope.friendRequests.length; i++){
+                   if($scope.friendRequests[i].id != id)
+                       temp.push($scope.friendRequests[i]);
+               }
+               $scope.friendRequests = temp;
+               $scope.friendRequestsNumber -= 1;
+               if($scope.friendRequestsNumber > 0)
+                   $scope.showRequests = true;
+               else
+                   $scope.showRequests = false;
+           }
        });

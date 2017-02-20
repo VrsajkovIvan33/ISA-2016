@@ -79,6 +79,22 @@ public class GuestController {
         return friend.getPendingList().size();
     }
 
+    @MessageMapping("/acceptFriendRequest/{friendId}/{id}")
+    @SendTo("/topic/friendAcceptedRequest/{id}")
+    public Guest acceptFriendRequest(@DestinationVariable Long friendId, @DestinationVariable Long id){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getSentList().remove(friend);
+        user.getFriendList().add(friend);
+        friend.getPendingList().remove(user);
+        friend.getFriendList().add(user);
+        guestService.save((Guest)user);
+        guestService.save((Guest)friend);
+
+        return friend;
+    }
+
     @RequestMapping(value = "/getFriendRequestsNumber/{id}", method = RequestMethod.GET)
     public ResponseEntity<Integer> getFriendRequestsNumber(@PathVariable("id") Long id){
         Guest user = guestService.findOne(id);
