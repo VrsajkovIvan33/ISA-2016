@@ -95,6 +95,33 @@ public class GuestController {
         return friend;
     }
 
+    @MessageMapping("/deleteFriend/{id}/{friendId}")
+    @SendTo("/topic/deleteFriend/{friendId}")
+    public Guest deleteFriend(@DestinationVariable Long id, @DestinationVariable Long friendId){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getFriendList().remove(friend);
+        friend.getFriendList().remove(user);
+        guestService.save(user);
+        guestService.save(friend);
+
+        return user;
+    }
+
+    @RequestMapping(value = "/ignoreFriendRequest/{friendId}/{id}")
+    public ResponseEntity<Long> ignoreFriendRequest(@PathVariable("friendId") Long friendId, @PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getSentList().remove(friend);
+        friend.getPendingList().remove(user);
+        guestService.save((Guest)user);
+        guestService.save((Guest)friend);
+
+        return new ResponseEntity<Long>(user.getId(), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getFriendRequestsNumber/{id}", method = RequestMethod.GET)
     public ResponseEntity<Integer> getFriendRequestsNumber(@PathVariable("id") Long id){
         Guest user = guestService.findOne(id);

@@ -74,4 +74,20 @@ angular.module('restaurantApp.GuestFriendRequestsController', [])
                else
                    $scope.showRequests = false;
            }
+
+           $scope.ignore = function(id){
+               GuestFriendRequestsFactory.ignoreFriendRequest($scope.loggedUser.id, id).success(function(data){
+                   var temp = [];
+                   for(i = 0; i<$scope.friendRequests.length; i++){
+                       if($scope.friendRequests[i].id != id)
+                           temp.push($scope.friendRequests[i]);
+                   }
+                   $scope.friendRequests = temp;
+                   $scope.friendRequestsNumber -= 1;
+                   if($scope.friendRequestsNumber > 0)
+                       $scope.showRequests = true;
+                   else
+                       $scope.showRequests = false;
+               });
+           }
        });
