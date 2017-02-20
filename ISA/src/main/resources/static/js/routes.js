@@ -45,6 +45,27 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/restaurantManager/tables',{
             templateUrl : 'html/restaurantManager/tables.html'
         })
+        .when('/restaurantManager/providers',{
+            templateUrl : 'html/provider/providers.html'
+        })
+        .when('/restaurantManager/waiters',{
+            templateUrl : 'html/restaurantManager/waiters.html'
+        })
+        .when('/restaurantManager/bartenders',{
+            templateUrl : 'html/restaurantManager/bartenders.html'
+        })
+        .when('/restaurantManager/cooks',{
+            templateUrl : 'html/restaurantManager/cooks.html'
+        })
+        .when('/restaurantManager/menu',{
+            templateUrl : 'html/restaurantManager/menu.html'
+        })
+        .when('/restaurantManager/mapBeverage',{
+            templateUrl : 'html/restaurantManager/mapBeverage.html'
+        })
+        .when('/restaurantManager/statement',{
+            templateUrl : 'html/restaurantManager/statement.html'
+        })
 
         //routing for the waiter
         .when('/waiter',{
@@ -55,6 +76,22 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/waiter/tables',{
             templateUrl : 'html/waiter/tables.html'
+        })
+
+        //routing for the cook
+        .when('/cook',{
+            templateUrl : 'html/cook/home.html'
+        })
+        .when('/cook/calendar',{
+            templateUrl : 'html/cook/calendar.html'
+        })
+
+        //routing for the bartender
+        .when('/bartender',{
+            templateUrl : 'html/bartender/home.html'
+        })
+        .when('/bartender/calendar',{
+            templateUrl : 'html/bartender/calendar.html'
         })
 
         .when('/login', {

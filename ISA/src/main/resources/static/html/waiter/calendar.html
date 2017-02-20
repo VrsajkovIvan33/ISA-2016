@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="WaiterController">
+<div ng-cloak ng-controller="WaiterFunctionsController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -18,9 +18,8 @@
     <div class="container">
         <div class="carousel-caption">
             <div style="background-color:white">
-                <div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+                <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"></div>
             </div>
-
         </div>
     </div>
 </div>

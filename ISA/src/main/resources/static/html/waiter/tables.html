@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="WaiterController">
+<div ng-cloak ng-controller="WaiterFunctionsController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -16,17 +16,41 @@
     </header>
 
     <div class="container">
-        <div class="carousel-caption">
-            <div style="background-color:white">
+        <div class="carousel-caption flex_container">
+            <div style="background-color:white; min-width: 800px; min-height: 600px">
                 <div class="row">
-                    <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{animate:true}" ng-hide="!list1.title">{{list1.title}}</div>>
-
-                    <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
-                        <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
+                    <p ng-style="{color: 'black'}">Raspored stolova</p>
+                    <div class=" flex_container">
+                        <div style="min-width: 50px"></div>
+                        <div class="col-sm-10">
+                            <div class="column flex_container" ng-repeat="r1 in [0, 1, 2, 3, 4]">
+                                <span class="col-sm-1 thumbnail" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-style="{backgroundColor: tables[r1*10+r2].rtActive == true ? tables[r1*10+r2].tableRegion.trColor : 'black', margin: '5px', borderStyle: 'solid', borderWidth: 'medium', borderColor: tables[r1*10+r2].rtActive == true ? tables[r1*10+r2].restaurantSegment.rsColor : 'white' }"  ng-model="tables[r1*10 + r2]">{{tables[r1*10+r2].rtNumber}}</span>
+                            </div>
+                        </div>
+                        <div style="min-width: 50px"></div>
                     </div>
+                    <h3 ng-style="{color: 'black'}">Regions:</h3>
+                    <div class=" flex_container">
+                        <div style="min-width: 50px"></div>
+                        <div class=" flex_container">
+                            <div style="min-width: 40px; min-height: 30px; background-color: red; margin: 5px; border-style: solid; border-width: medium; border-color: black">1</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: blue; margin: 5px; border-style: solid; border-width: medium; border-color: black">2</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: yellow; margin: 5px; border-style: solid; border-width: medium; border-color: black">3</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: green; margin: 5px; border-style: solid; border-width: medium; border-color: black">4</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: purple; margin: 5px; border-style: solid; border-width: medium; border-color: black">5</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: orange; margin: 5px; border-style: solid; border-width: medium; border-color: black">6</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: brown; margin: 5px; border-style: solid; border-width: medium; border-color: black">7</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: darkblue; margin: 5px; border-style: solid; border-width: medium; border-color: black">8</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: lightgreen; margin: 5px; border-style: solid; border-width: medium; border-color: black">9</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: maroon; margin: 5px; border-style: solid; border-width: medium; border-color: black">10</div>
+                            <div style="min-width: 40px; min-height: 30px; background-color: black; margin: 5px; border-style: solid; border-width: medium; border-color: black">Nije aktivan</div>
+                        </div>
+                        <div style="min-width: 50px"></div>
+                    </div>
+                    <h3 ng-style="{color: 'black'}" ng-hide="currentEvent==''">Region assigned to me now: {{currentEvent.tableRegion.trMark}}</h3>
+
                 </div>
             </div>
-
         </div>
     </div>
 </div>

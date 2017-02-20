@@ -1,0 +1,55 @@
+<div ng-cloak ng-controller="BeverageController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#restaurantManager">Home</a></li>
+                    <li><a href="#/restaurantManager/providers">Providers</a></li>
+                    <li><a href="#/restaurantManager/waiters">Waiters</a></li>
+                    <li><a href="#/restaurantManager/bartenders">Bartenders</a></li>
+                    <li><a href="#/restaurantManager/cooks">Cooks</a></li>
+                    <li><a href="#/restaurantManager/menu">Menu</a></li>
+                    <li><a href="#/restaurantManager/mapBeverage">Map Beverage</a></li>
+                    <li><a href="#restaurantManager/calendar">Calendar</a></li>
+                    <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                    <li><a href="#restaurantManager/statement">Statement</a></li>
+                    <li><a href="#/">Log out</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Map Beverage</h3>
+
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Map Beverage Item</a>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Beverage name:</th>
+                    <th>Beverage description:</th>
+                    <th>Beverage price:</th>
+                    <th>Beverage review:</th>
+                    <th>Edit:</th>
+                    <th>Delete:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="b in beverages">
+                    <td>{{b.mName}}</td>
+                    <td>{{b.mDescription}}</td>
+                    <td>{{b.mPrice}}</td>
+                    <td>{{b.mReview}}</td>
+                    <td><a ng-click="openUpdateModal(b)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a ng-click="removeMenu(b)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

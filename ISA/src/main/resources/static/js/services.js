@@ -15,5 +15,17 @@ angular.module('restaurantApp.services',[
                'restaurantApp.RestaurantmanagerService',
                'restaurantApp.RestaurantService',
                'restaurantApp.ConfirmFactory',
-               'restaurantApp.ProviderService'
+               'restaurantApp.ProviderService',
+               'restaurantApp.RestaurantTableFactory',
+               'restaurantApp.RestaurantSegmentFactory',
+               'restaurantApp.TableRegionFactory',
+               'restaurantApp.RestaurantUsersFactory',
+               'restaurantApp.CalendarEventFactory',
+               'restaurantApp.WaiterService',
+               'restaurantApp.BartenderService',
+               'restaurantApp.CookService',
+               'restaurantApp.MenuService',
+               'restaurantApp.RestaurantReviewService',
+               'restaurantApp.WaiterReviewService',
+               'restaurantApp.MenuReviewService'
 ]);

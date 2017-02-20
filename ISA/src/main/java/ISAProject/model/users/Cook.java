@@ -1,5 +1,7 @@
 package ISAProject.model.users;
 
+import ISAProject.model.Restaurant;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +24,10 @@ public class Cook extends User implements Serializable {
 
     @Column(name = "shoe_size")
     private Integer shoe_size;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
+    private Restaurant restaurant;
 
     //TODO provera
     /*@Column(name = "ctype", nullable = false)
@@ -60,5 +66,13 @@ public class Cook extends User implements Serializable {
 
     public void setTypeCook(String typeCook) {
         this.typeCook = typeCook;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

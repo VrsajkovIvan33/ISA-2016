@@ -1,0 +1,51 @@
+<div ng-cloak ng-controller="StatementController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#restaurantManager">Home</a></li>
+                    <li><a href="#/restaurantManager/providers">Providers</a></li>
+                    <li><a href="#/restaurantManager/waiters">Waiters</a></li>
+                    <li><a href="#/restaurantManager/bartenders">Bartenders</a></li>
+                    <li><a href="#/restaurantManager/cooks">Cooks</a></li>
+                    <li><a href="#/restaurantManager/menu">Menu</a></li>
+                    <li><a href="#/restaurantManager/mapBeverage">Map Beverage</a></li>
+                    <li><a href="#restaurantManager/calendar">Calendar</a></li>
+                    <li><a href="#restaurantManager/tables">Table arrangement</a></li>
+                    <li><a href="#restaurantManager/statement">Statement</a></li>
+                    <li><a href="#/">Log out</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <div style="background-color:white; color: black;">
+                <h3>Statement</h3>
+
+                <label>Manager name: {{loggedManager.name}} {{loggedManager.surname}}</label></br>
+                <label>Restaurant name: {{loggedManager.restaurant.rName}} </label></br>
+                <label>Restaurant type: {{loggedManager.restaurant.rType}} </label></br></br>
+                <label>Restaurant review: {{avgReview | number: 2}} </label></br></br>
+
+                <label>Restaurant review start: </label>
+                <input type="date" ng-model="minDate" ng-change="changeDate()">
+                <label>   </label>
+                <label>Restaurant review end: </label>
+                <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br>
+
+                <label>Waiter: </label>
+                <select ng-model="waiter" ng-options="w as w.name for w in waiters" ng-change="changeWaiter()"></select>
+                <label> review: {{avgWaiterReview | number: 2}} </label></br>
+
+                <label>Menu item: </label>
+                <select ng-model="menu" ng-options="m as m.mName for m in menus" ng-change="changeMenu()"></select>
+                <label> review: {{avgMenuReview | number: 2}} </label></br>
+            </div>
+        </div>
+    </div>
+</div>

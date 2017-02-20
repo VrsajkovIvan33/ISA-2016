@@ -4,12 +4,18 @@
             <nav class="navbar navbar_default" role="navigation">
 
                 <div class="menuBar">
-                    <ul>
-                        <li><a href="#restaurantManager">Home</a></li>
-                        <li><a href="#restaurantManager/calendar">Calendar</a></li>
-                        <li><a href="#restaurantManager/tables">Table arrangement</a></li>
-                        <li><a href="index.html">Log out</a></li>
-                    </ul>
+
+                    <li><a href="#restaurantManager">Home</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/providers">Providers</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/waiters">Waiters</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/bartenders">Bartenders</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/cooks">Cooks</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/menu">Menu</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#/restaurantManager/mapBeverage">Map Beverage</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#restaurantManager/calendar">Calendar</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#restaurantManager/tables">Table arrangement</a></li>
+                    <li ng-if="loggedManager.restaurant != null"><a href="#restaurantManager/statement">Statement</a></li>
+                    <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
         </div>
@@ -17,9 +23,9 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <div style="background-color:black">
-                <h2>“I was at this restaurant. The sign said ‘Breakfast Anytime.’ So I ordered French Toast in the Renaissance.” – Steven Wright</h2>
-            </div>
+            <h2>“I was at this restaurant. The sign said ‘Breakfast Anytime.’ So I ordered French Toast in the Renaissance.” – Steven Wright</h2>
+
+            <a ng-if="loggedManager.restaurant != null" ng-click="openUpdateModal()" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Update Restaurant</a>
 
         </div>
     </div>

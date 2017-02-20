@@ -23,6 +23,10 @@
         <input type="email" class="form-control form-control-lg" ng-model="newRestaurantManager.email" placeholder="Enter restaurant manager email">
         <label>Password</label>
         <input type="password" class="form-control form-control-lg" ng-model="newRestaurantManager.password" placeholder="Enter restaurant manager password">
+        <label>Date of Birth</label>
+        <input type="date" class="form-control form-control-lg" ng-model="newRestaurantManager.date_of_birth">
+        <label>Restaurant</label>
+        <select class="form-control" ng-model="newRestaurantManager.restaurant" ng-options="res as res.rName for res in restaurants"></select>
     </form>
 </div>
 <div class="modal-footer">

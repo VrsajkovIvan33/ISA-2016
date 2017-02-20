@@ -1,5 +1,6 @@
 package ISAProject.service;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.RestaurantManager;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface RestaurantmanagerService {
     RestaurantManager save(RestaurantManager restaurantManager);
 
     void delete(Long id);
+
+    List<RestaurantManager> findByRestaurant(Restaurant restaurant);
 }

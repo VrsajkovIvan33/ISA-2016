@@ -1,5 +1,9 @@
 package ISAProject.model;
 
+import ISAProject.model.users.RestaurantManager;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,10 +14,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "restaurant")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Restaurant implements Serializable {
 
     public Restaurant(){
-        restaurantTableArrangements = new ArrayList<>();
     }
 
     @Id
@@ -30,8 +34,6 @@ public class Restaurant implements Serializable {
     @Column(name = "rtype", nullable = false)
     private String rType;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<RestaurantTableArrangement> restaurantTableArrangements;
 
     //TODO proveriti za ocenu
     /*@Column(name = "rreview")
@@ -72,13 +74,5 @@ public class Restaurant implements Serializable {
 
     public void setrType(String rType) {
         this.rType = rType;
-    }
-
-    public List<RestaurantTableArrangement> getRestaurantTableArrangements() {
-        return restaurantTableArrangements;
-    }
-
-    public void setRestaurantTableArrangements(List<RestaurantTableArrangement> restaurantTableArrangements) {
-        this.restaurantTableArrangements = restaurantTableArrangements;
     }
 }

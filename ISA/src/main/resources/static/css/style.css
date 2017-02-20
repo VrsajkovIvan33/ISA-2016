@@ -160,10 +160,10 @@ footer .seper {
 /*Buttons*/
 .btn-primary {
 	font-size: 14px;
-	width: 142px;
-	height: 42px;
-	line-height: 42px;
-	padding: 0;
+	/*width: 142px;*/
+	/*height: 42px;*/
+	/*line-height: 42px;*/
+	/*padding: 0;*/
 	text-transform: uppercase;
 	background-color: #6ccc42;
 	border-color: #6ccc42;
@@ -176,16 +176,16 @@ footer .seper {
 }
 .btn-info {
 	font-size: 12px;
-	font-weight: normal;
+	/*font-weight: normal;*/
 	color: #fff;
 	border-color: #333;
 	background: #333;
 	text-transform: uppercase;
-	width: 140px;
-	height: 40px;
-	line-height: 40px;
+	/*width: 140px;*/
+	/*height: 40px;*/
+	/*line-height: 40px;*/
 	border-width: 2px;
-	padding: 0;
+	/*padding: 0;*/
 }
 .btn-info:hover, .btn-info:focus, .btn-info:active {
 	background-color: #6ccc42;
@@ -209,22 +209,22 @@ footer .seper {
 button.btn-primary:focus, .btn-default:focus, .btn-info:focus {
 	outline: none;
 }
-.btn-lg {
-	width: 180px;
-	height: 57px;
-	text-transform: uppercase;
-	line-height: 57px;
-	font-size: 14px;
-	padding: 0;
-}
-.btn-md {
-	font-size: 12px;
-	width: 140px;
-	height: 40px;
-	line-height: 40px;
-	padding: 0;
-	margin-top: -5px;
-}
+/*.btn-lg {*/
+	/*width: 180px;*/
+	/*height: 57px;*/
+	/*text-transform: uppercase;*/
+	/*line-height: 57px;*/
+	/*font-size: 14px;*/
+	/*padding: 0;*/
+/*}*/
+/*.btn-md {*/
+	/*font-size: 12px;*/
+	/*width: 140px;*/
+	/*height: 40px;*/
+	/*line-height: 40px;*/
+	/*padding: 0;*/
+	/*margin-top: -5px;*/
+/*}*/
 footer .btn-md, .recent-posts .btn-md {
 	margin-top: 0px;
 }

@@ -1,5 +1,8 @@
 package ISAProject.model.users;
 
+import ISAProject.model.Restaurant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "bartender")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Bartender extends User implements Serializable {
 
     public Bartender(){
@@ -22,6 +26,10 @@ public class Bartender extends User implements Serializable {
 
     @Column(name = "shoe_size")
     private Integer shoe_size;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
+    private Restaurant restaurant;
 
     public Date getDate_of_birth() {
         return date_of_birth;
@@ -47,4 +55,11 @@ public class Bartender extends User implements Serializable {
         this.shoe_size = shoe_size;
     }
 
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 }

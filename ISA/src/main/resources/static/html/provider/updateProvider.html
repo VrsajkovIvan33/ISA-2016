@@ -1,0 +1,31 @@
+<!-- Modal for user info update -->
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Update Provider</h4>
+</div>
+<div class="modal-body">
+    <form role="form">
+        <label>Name</label>
+        <input type="text" class="form-control form-control-lg" ng-model="providerToUpdate.name" placeholder="Enter provider name">
+        <label>Surname</label>
+        <input type="text" class="form-control form-control-lg" ng-model="providerToUpdate.surname" placeholder="Enter provider surname">
+        <label>Email</label>
+        <input type="email" class="form-control form-control-lg" ng-model="providerToUpdate.email" placeholder="Enter provider email">
+        <label>Password</label>
+        <input type="password" class="form-control form-control-lg" ng-model="providerToUpdate.password" placeholder="Enter provider password">
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" ng-click="updateProvider(providerToUpdate)">Update</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>

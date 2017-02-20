@@ -1,5 +1,6 @@
 package ISAProject.service.impl;
 
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Cook;
 import ISAProject.repository.CookRepository;
 import ISAProject.service.CookService;
@@ -28,6 +29,11 @@ public class JpaCookService implements CookService {
     @Override
     public Cook findOne(Long id) {
         return cookRepository.findOne(id);
+    }
+
+    @Override
+    public List<Cook> findByRestaurant(Restaurant restaurant) {
+        return cookRepository.findByRestaurant(restaurant);
     }
 
     @Override

@@ -1,0 +1,39 @@
+<!-- Modal for user info update -->
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Add New Bartender</h4>
+</div>
+<div class="modal-body">
+    <form role="form">
+        <label>Name</label>
+        <input type="text" class="form-control form-control-lg" ng-model="newBartender.name" placeholder="Enter bartender name">
+        <label>Surname</label>
+        <input type="text" class="form-control form-control-lg" ng-model="newBartender.surname" placeholder="Enter bartender surname">
+        <label>Email</label>
+        <input type="email" class="form-control form-control-lg" ng-model="newBartender.email" placeholder="Enter bartender email">
+        <label>Password</label>
+        <input type="password" class="form-control form-control-lg" ng-model="newBartender.password" placeholder="Enter bartender password">
+        <label>Date of Birth</label>
+        <input type="date" class="form-control form-control-lg" ng-model="newBartender.date_of_birth">
+        <label>Dress Size</label>
+        <input type="number" class="form-control form-control-lg" ng-model="newBartender.dress_size" placeholder="Enter bartender dress size">
+        <label>Shoe Size</label>
+        <input type="number" class="form-control form-control-lg" ng-model="newBartender.shoe_size" placeholder="Enter bartender shoe size">
+        <!--<label>Restaurant</label>-->
+        <!--<select class="form-control" ng-model="newBartender.restaurant" ng-options="res as res.rName for res in restaurants"></select>-->
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-default" ng-click="addBartender(newBartender)">Add</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>

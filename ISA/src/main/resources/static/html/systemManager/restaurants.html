@@ -7,11 +7,10 @@
                 <div class="menuBar">
 
                     <li><a href="#/systemmanager">Home</a></li>
-                    <li><a href="#/systemmanager/systemmanagers">Update System Managers</a></li>
-                    <li><a href="#/systemmanager/restaurantmanagers">Update Restaurant Managers</a></li>
-                    <li><a href="#/systemmanager/restaurants">Update Restaurants</a></li>
-                    <li><a href="#/">Logout</a></li>
-                    </ul>
+                    <li><a href="#/systemmanager/systemmanagers">System Managers</a></li>
+                    <li><a href="#/systemmanager/restaurantmanagers">Restaurant Managers</a></li>
+                    <li><a href="#/systemmanager/restaurants">Restaurants</a></li>
+                    <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
         </div>
@@ -21,24 +20,24 @@
         <div class="carousel-caption">
             <h3>Restaurants</h3>
 
-            <button ng-click="openAddModal()" type="button" class="btn btn-info btn-lg">Add Restaurant</button>
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Restaurant</a>
 
-            <table style="width:100%;">
+            <table class="responstable">
                 <thead>
                     <tr>
                         <th>Restaurant name:</th>
                         <th>Restaurant type:</th>
-                        <th></th>
-                        <th></th>
+                        <th>Edit:</th>
+                        <th>Delete:</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="r in restaurants">
-                        <td><input ng-model="r.rName" type="text" class="form-control form-control-lg" placeholder="Enter restaurant name"></td>
+                        <td>{{r.rName}}</td>
                         <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
-                        <td><select ng-model="r.rType" ng-options="rt as rt for rt in restaurantTypes"></select></td>
-                        <td><button ng-click="openUpdateModal(r)" type="button" class="btn btn-primary btn-md">Update</button></td>
-                        <td><button ng-click="removeRestaurant(r)" type="button" class="btn btn-primary btn-md">Remove</button></td>
+                        <td>{{r.rType}}</td>
+                        <td><a ng-click="openUpdateModal(r)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a ng-click="removeRestaurant(r)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                 </tbody>
             </table>
