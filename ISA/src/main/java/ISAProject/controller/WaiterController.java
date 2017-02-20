@@ -1,8 +1,12 @@
 package ISAProject.controller;
 
 import ISAProject.model.Restaurant;
+import ISAProject.model.RestaurantReview;
+import ISAProject.model.WaiterReview;
 import ISAProject.model.users.Waiter;
+import ISAProject.service.RestaurantReviewService;
 import ISAProject.service.RestaurantService;
+import ISAProject.service.WaiterReviewService;
 import ISAProject.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,12 @@ public class WaiterController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private WaiterReviewService waiterReviewService;
+
+    @Autowired
+    private RestaurantReviewService restaurantReviewService;
 
     @RequestMapping(
             value = "/getWaiters",
@@ -55,6 +65,23 @@ public class WaiterController {
             value = "/removeWaiter/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Waiter> removeWaiter(@PathVariable("id") Long id) {
+
+        //delete waiter reviews
+        Waiter waiter = waiterService.findOne(id);
+        List<WaiterReview> waiterReviews = waiterReviewService.findByWrWaiter(waiter);
+        for(WaiterReview wr: waiterReviews){
+            waiterReviewService.delete(wr.getWrId());
+        }
+
+        //delete restaurant reviews
+        //TODO OVO KASNIJE NECE TREBATI JER KONOBAR NE OCENJUJE RESTORAN
+        List<RestaurantReview> restaurantReviews = restaurantReviewService.findAll();
+        for(RestaurantReview rr: restaurantReviews){
+            if(rr.getRrUser().getId() == waiter.getId()) {
+                restaurantReviewService.delete(rr.getRrId());
+            }
+        }
+
         waiterService.delete(id);
         return new ResponseEntity<Waiter>(HttpStatus.NO_CONTENT);
     }

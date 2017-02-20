@@ -11,6 +11,12 @@ public interface GuestService {
 
     List<Guest> findAll();
 
+    List<Guest> findByName(String name);
+
+    List<Guest> findBySurname(String surname);
+
+    List<Guest> findByNameAndSurname(String name, String surname);
+
     Guest findOne(Long id);
 
     Guest save(Guest guest);

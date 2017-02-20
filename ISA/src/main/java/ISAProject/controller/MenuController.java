@@ -1,7 +1,9 @@
 package ISAProject.controller;
 
 import ISAProject.model.Menu;
+import ISAProject.model.MenuReview;
 import ISAProject.model.Restaurant;
+import ISAProject.service.MenuReviewService;
 import ISAProject.service.MenuService;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class MenuController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private MenuReviewService menuReviewService;
 
     @RequestMapping(
             value = "/getMenus",
@@ -77,6 +82,15 @@ public class MenuController {
             value = "/removeMenu/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Menu> removeMenu(@PathVariable("id") Long id) {
+
+        //set menu in menu reviews to null
+        Menu menu = menuService.findOne(id);
+        List<MenuReview> menuReviews = menuReviewService.findByMrMenu(menu);
+        for(MenuReview mr: menuReviews){
+            mr.setMrMenu(null);
+            menuReviewService.save(mr);
+        }
+
         menuService.delete(id);
         return new ResponseEntity<Menu>(HttpStatus.NO_CONTENT);
     }

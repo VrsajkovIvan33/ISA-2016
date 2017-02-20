@@ -1,8 +1,12 @@
 package ISAProject.controller;
 
+import ISAProject.model.MenuReview;
 import ISAProject.model.Restaurant;
+import ISAProject.model.RestaurantReview;
 import ISAProject.model.users.Cook;
 import ISAProject.service.CookService;
+import ISAProject.service.MenuReviewService;
+import ISAProject.service.RestaurantReviewService;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,12 @@ public class CookController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private MenuReviewService menuReviewService;
+
+    @Autowired
+    private RestaurantReviewService restaurantReviewService;
 
     @RequestMapping(
             value = "/getCooks",
@@ -55,6 +65,24 @@ public class CookController {
             value = "/removeCook/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Cook> removeCook(@PathVariable("id") Long id) {
+
+        //set user in menu review to null
+        Cook cook = cookService.findOne(id);
+        List<MenuReview> menuReviews = menuReviewService.findByMrUser(cook);
+        for(MenuReview mr: menuReviews){
+            mr.setMrUser(null);
+            menuReviewService.save(mr);
+        }
+
+        //delete restaurant reviews
+        //TODO OVO KASNIJE NECE TREBATI JER KUVAR NE OCENJUJE RESTORAN
+        List<RestaurantReview> restaurantReviews = restaurantReviewService.findAll();
+        for(RestaurantReview rr: restaurantReviews){
+            if(rr.getRrUser().getId() == cook.getId()) {
+                restaurantReviewService.delete(rr.getRrId());
+            }
+        }
+
         cookService.delete(id);
         return new ResponseEntity<Cook>(HttpStatus.NO_CONTENT);
     }

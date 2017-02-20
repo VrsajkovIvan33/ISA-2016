@@ -49,4 +49,22 @@ public class JpaGuestService implements GuestService{
         return guest;
 
     }
+
+    @Override
+    public List<Guest> findByName(String name) {
+        List<Guest> guestList = guestRepository.findByName(name);
+        return guestList;
+    }
+
+    @Override
+    public List<Guest> findBySurname(String surname) {
+        List<Guest> guestList = guestRepository.findBySurname(surname);
+        return guestList;
+    }
+
+    @Override
+    public List<Guest> findByNameAndSurname(String name, String surname) {
+        List<Guest> guestList = guestRepository.findByNameAndSurname(name, surname);
+        return guestList;
+    }
 }

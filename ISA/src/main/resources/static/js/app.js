@@ -10,4 +10,6 @@ var app = angular.module('restaurantApp', ['restaurantApp.routes',
                                            'ui.calendar',
                                            'ngDragDrop',
                                            'ngStorage',
-                                           'ngAnimate']);
+                                           'ngAnimate',
+                                           'ngStomp',
+                                           'toastr']);
