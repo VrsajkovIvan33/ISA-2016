@@ -3,24 +3,55 @@
  */
 
 angular.module('restaurantApp.GuestProfileController', [])
-       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, GuestProfileFactory) {
+       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestProfileFactory) {
           function init(){
-                $scope.loggedUser = $localStorage.logged;
+              $scope.loggedUser = $localStorage.logged;
+              $scope.friendRequestsNumber = 0;
+              $scope.showRequests = false;
+              GuestProfileFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
+                  $scope.friendRequestsNumber = data;
+                  if(data > 0)
+                      $scope.showRequests = true;
+              });
           };
 
-          init();
+           var friendRequestSubscription = null;
+           init();
+
+           $stomp.setDebug(function(args){
+               $log.debug(args);
+           });
+
+           $stomp.connect('/stomp', {})
+               .then(function(frame){
+                   friendRequestSubscription = $stomp.subscribe('/topic/friendRequest/' + $localStorage.logged.id, function(numberOfRequests, headers, res){
+                       toastr.info('You have new friend request!');
+                       $scope.friendRequestsNumber = numberOfRequests;
+                       if(numberOfRequests > 0)
+                           $scope.showRequests = true;
+                   });
+               });
+
+           $scope.disconnect = function(){
+               friendRequestSubscription.unsubscribe();
+               $stomp.disconnect().then(function(){
+                   $log.info('disconnected');
+               });
+           };
 
            $scope.openUpdateModal = function () {
                $uibModal.open({
                    templateUrl : 'html/guest/updateGuestInfoModal.html',
-                   controller : 'UpdateGuestProfileController'
+                   controller : 'UpdateGuestProfileController',
+               }).result.then(function(updatedUser){
+                   $scope.loggedUser = updatedUser;
                });
            }
 
        })
        .controller('UpdateGuestProfileController', function ($localStorage, $scope, $uibModalInstance, $location, GuestProfileFactory) {
            function init(){
-               $scope.userToUpdate = $localStorage.logged;
+               $scope.userToUpdate = jQuery.extend(true, {}, $localStorage.logged);
            };
 
            init();
@@ -30,8 +61,7 @@ angular.module('restaurantApp.GuestProfileController', [])
                       if(data != null) {
                           $localStorage.logged = data;
                           $scope.userToUpdate = $localStorage.logged;
-                          $uibModalInstance.close();
-                          window.location.reload();
+                          $uibModalInstance.close($localStorage.logged);
                       }else{
                           alert("It is not possible to change info");
                       }

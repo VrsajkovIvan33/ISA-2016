@@ -1,6 +1,10 @@
 <html ng-app="restaurantApp">
 <head>
     <title>Restaurant scheduler</title>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src='/webjars/jquery/2.1.1/jquery.js'></script>
+    <script src='/webjars/jquery/2.1.1/jquery.min.js'></script>
+
     <!-- Bootstrap -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/tables.css" rel="stylesheet">
@@ -26,6 +30,7 @@
 
     <script src='/webjars/angularjs/angular.js'></script>
     <script src='/webjars/angularjs/angular-animate.js'></script>
+    <script src='/webjars/angularjs/angular-animate.min.js'></script>
     <script src='/webjars/angularjs/angular-route.js'></script>
 
     <script src='/webjars/angular-ui-bootstrap/ui-bootstrap.js'></script>
@@ -50,6 +55,11 @@
     <script src="js/controllers/restaurantManagerFunctionsController.js"></script>
     <script src="js/controllers/providerController.js"></script>
     <script src="js/controllers/guestProfileController.js"></script>
+    <script src="js/controllers/guestFriendsController.js"></script>
+    <script src="js/controllers/guestHomeController.js"></script>
+    <script src="js/controllers/guestRestaurantsController.js"></script>
+    <script src="js/controllers/guestFriendRequestsController.js"></script>
+
     <script src="js/controllers/waiterController.js"></script>
     <script src="js/controllers/cookController.js"></script>
     <script src="js/controllers/bartenderController.js"></script>
@@ -69,6 +79,10 @@
     <script src="js/services/confirmFactory.js"></script>
     <script src="js/services/providerService.js"></script>
     <script src="js/services/guestProfileFactory.js"></script>
+    <script src="js/services/guestFriendsFactory.js"></script>
+    <script src="js/services/guestHomeFactory.js"></script>
+    <script src="js/services/guestRestaurantsFactory.js"></script>
+    <script src="js/services/guestFriendRequestsFactory.js"></script>
     <script src="js/services/restaurantTableFactory.js"></script>
     <script src="js/services/restaurantSegmentFactory.js"></script>
     <script src="js/services/tableRegionFactory.js"></script>
@@ -93,6 +107,17 @@
     <!-- DragDrop -->
     <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+
+    <!-- WebSockets -->
+    <script src="webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="bower_components/ng-stomp/dist/ng-stomp.standalone.min.js"></script>
+
+    <!-- Toastr -->
+    <!--script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.min.css"></script>-->
+    <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css"/>
 
     <style>
         div.flex_container {

@@ -1,5 +1,7 @@
 package ISAProject.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,16 +14,19 @@ import java.util.List;
 @Table(name = "guest")
 public class Guest extends User implements Serializable{
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
+    @JsonIgnore
     private List<Guest> friendList = new ArrayList<Guest>();
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
+    @JsonIgnore
     private List<Guest> pendingList = new ArrayList<Guest>();
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
+    @JsonIgnore
     private List<Guest> sentList = new ArrayList<Guest>();
 
     @Column(name = "active", nullable = false)

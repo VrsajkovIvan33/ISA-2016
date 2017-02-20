@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="GuestRestaurantsController">
+<div ng-cloak ng-controller="GuestFriendRequestsController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -6,8 +6,8 @@
                     <li><a href="#/guest" ng-click="disconnect()">Home</a></li>
                     <li><a href="#/guest/profile" ng-click="disconnect()">Profile</a></li>
                     <li><a href="#/guest/friends" ng-click="disconnect()">Friends</a></li>
-                    <li><a href="#/guest/friendRequests" ng-click="disconnect()">Friend Requests<span class="badge" ng-if="showRequests" style="background-color: red">{{friendRequestsNumber}}</span></a></li>
-                    <li class="active"><a href="#/guest/restaurants">Restaurants</a></li>
+                    <li class="active"><a href="#/guest/friendRequests">Friend Requests<span class="badge" ng-if="showRequests" style="background-color: red">{{friendRequestsNumber}}</span></a></li>
+                    <li><a href="#/guest/restaurants" ng-click="disconnect()">Restaurants</a></li>
                     <li><a href="#/" ng-click="disconnect()">Log out</a></li>
                     </ul>
                 </div>
@@ -17,7 +17,7 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <p>Restorani</p>
+            <p>Zahtjevi za prijateljstvo</p>
         </div>
     </div>
 </div>
