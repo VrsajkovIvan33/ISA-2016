@@ -1,6 +1,7 @@
 package ISAProject.controller;
 
 import ISAProject.model.Message;
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Guest;
 import ISAProject.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;

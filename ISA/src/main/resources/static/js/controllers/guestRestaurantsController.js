@@ -8,11 +8,16 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.loggedUser = $localStorage.logged;
                $scope.friendRequestsNumber = 0;
                $scope.showRequests = false;
+               $scope.restaurants = [];
                GuestRestaurantsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
                    $scope.friendRequestsNumber = data;
                    if(data > 0)
                        $scope.showRequests = true;
                });
+
+                GuestRestaurantsFactory.getRestaurants().success(function (data) {
+                    $scope.restaurants = data;
+                })
            };
 
            var friendRequestSubscription = null;
