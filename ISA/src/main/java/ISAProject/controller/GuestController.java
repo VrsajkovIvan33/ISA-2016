@@ -79,9 +79,59 @@ public class GuestController {
         return friend.getPendingList().size();
     }
 
+    @MessageMapping("/acceptFriendRequest/{friendId}/{id}")
+    @SendTo("/topic/friendAcceptedRequest/{id}")
+    public Guest acceptFriendRequest(@DestinationVariable Long friendId, @DestinationVariable Long id){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getSentList().remove(friend);
+        user.getFriendList().add(friend);
+        friend.getPendingList().remove(user);
+        friend.getFriendList().add(user);
+        guestService.save((Guest)user);
+        guestService.save((Guest)friend);
+
+        return friend;
+    }
+
+    @MessageMapping("/deleteFriend/{id}/{friendId}")
+    @SendTo("/topic/deleteFriend/{friendId}")
+    public Guest deleteFriend(@DestinationVariable Long id, @DestinationVariable Long friendId){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getFriendList().remove(friend);
+        friend.getFriendList().remove(user);
+        guestService.save(user);
+        guestService.save(friend);
+
+        return user;
+    }
+
+    @RequestMapping(value = "/ignoreFriendRequest/{friendId}/{id}")
+    public ResponseEntity<Long> ignoreFriendRequest(@PathVariable("friendId") Long friendId, @PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        Guest friend = guestService.findOne(friendId);
+
+        user.getSentList().remove(friend);
+        friend.getPendingList().remove(user);
+        guestService.save((Guest)user);
+        guestService.save((Guest)friend);
+
+        return new ResponseEntity<Long>(user.getId(), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getFriendRequestsNumber/{id}", method = RequestMethod.GET)
     public ResponseEntity<Integer> getFriendRequestsNumber(@PathVariable("id") Long id){
         Guest user = guestService.findOne(id);
         return new ResponseEntity<Integer>(user.getPendingList().size(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getFriendRequests/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Guest>> getFriendRequests(@PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        List<Guest> friendRequests = user.getPendingList();
+        return new ResponseEntity<List<Guest>>(friendRequests, HttpStatus.OK);
     }
 }

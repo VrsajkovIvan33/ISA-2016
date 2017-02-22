@@ -24,6 +24,8 @@ angular.module('restaurantApp.GuestFriendsController', [])
            };
 
            var friendRequestsSubscription = null;
+           var acceptedFriendRequestSubscription = null;
+           var deleteFriendSubscription = null;
            init();
 
            $stomp.setDebug(function(args){
@@ -38,10 +40,33 @@ angular.module('restaurantApp.GuestFriendsController', [])
                          if(numberOfRequests > 0)
                              $scope.showRequests = true;
                      });
+
+                     acceptedFriendRequestSubscription = $stomp.subscribe('/topic/friendAcceptedRequest/' + $localStorage.logged.id, function(friend, headers, res){
+                         toastr.info(friend.name + ' ' + friend.surname + ' accepted friend request.');
+                         GuestFriendsFactory.getFriends($scope.loggedUser.id).success(function(data){
+                             if(data != null){
+                                 $scope.friends = data;
+                             }else{
+                                 alert("Error, try again!");
+                             }
+                         });
+                     });
+
+                     deleteFriendSubscription = $stomp.subscribe('/topic/deleteFriend/' + $localStorage.logged.id, function(friend, headers, res){
+                         GuestFriendsFactory.getFriends($scope.loggedUser.id).success(function(data){
+                             if(data != null){
+                                 $scope.friends = data;
+                             }else{
+                                 alert("Error, try again!");
+                             }
+                         });
+                     });
                  });
 
            $scope.disconnect = function(){
                friendRequestsSubscription.unsubscribe();
+               acceptedFriendRequestSubscription.unsubscribe();
+               deleteFriendSubscription.unsubscribe();
                $stomp.disconnect().then(function(){
                    $log.info('disconnected');
                });
@@ -52,6 +77,16 @@ angular.module('restaurantApp.GuestFriendsController', [])
                     templateUrl : 'html/guest/searchPeopleModal.html',
                     controller : 'SearchPeopleController'
                 });
+            }
+
+            $scope.delete = function(friendId){
+                $stomp.send('/app/deleteFriend/' + $scope.loggedUser.id + '/' + friendId);
+                var temp = [];
+                for(i = 0; i<$scope.friends.length; i++){
+                    if($scope.friends[i].id != friendId)
+                        temp.push($scope.friends[i]);
+                }
+                $scope.friends = temp;
             }
        })
 
