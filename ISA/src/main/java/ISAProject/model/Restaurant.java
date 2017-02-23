@@ -36,7 +36,7 @@ public class Restaurant implements Serializable {
     private String rType;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "restaurantproviders", joinColumns = @JoinColumn(name = "restaurantid", referencedColumnName = "rid", nullable = false), inverseJoinColumns = @JoinColumn(name = "providerid", referencedColumnName = "id", nullable = false))
     private List<Provider> providers;
 
