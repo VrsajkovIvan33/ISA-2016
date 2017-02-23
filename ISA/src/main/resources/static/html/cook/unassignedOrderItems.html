@@ -1,0 +1,46 @@
+<div ng-cloak ng-controller="CookFunctionsController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+                <div class="menuBar">
+                    <ul>
+                        <li><a href="#cook">Home</a></li>
+                        <li><a href="#cook/calendar">Calendar</a></li>
+                        <li><a href="#cook/cooksOrderItems">My order items</a></li>
+                        <li><a href="#cook/unassignedOrderItems">Unassigned</a></li>
+                        <li><a href="index.html">Log out</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Unassigned order items</h3>
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Guest:</th>
+                    <th>Menu:</th>
+                    <th>Type:</th>
+                    <th>Status:</th>
+                    <th>Ready by arrival:</th>
+                    <th>Take</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="oi in inWaiting">
+                    <td>{{oi.user.name.concat(" ".concat(oi.user.surname))}}</td>
+                    <td>{{oi.menu.mName}}</td>
+                    <td>{{oi.menu.mType}}</td>
+                    <td>{{oi.oiStatus}}</td>
+                    <td>{{oi.oiReadyByArrival === true ? oi.hourOfArrival + ":" + oi.minuteOfArrival : "Nope"}}</td>
+                    <td><button class="btn btn-primary" ng-click="takeOrderItem(oi)">Take</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

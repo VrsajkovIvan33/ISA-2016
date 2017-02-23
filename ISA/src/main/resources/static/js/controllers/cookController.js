@@ -36,7 +36,7 @@ angular.module('restaurantApp.CookController',[])
 
         getCooksByRestaurant();
 
-        $scope.cookTypes = ["Salad Cook", "Cooked Meal Cook", "Grilled Dish Cook"];
+        $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
     })
     .controller('NewCookController', function ($localStorage, $scope, $location, $uibModalInstance, CookService, RestaurantService) {
 

@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.WaiterFunctionsController',[])
-    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory) {
+    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
         function init() {
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 console.log("Kliknut dogadjaj!");
@@ -51,17 +51,194 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                             allDay: false
                         })
                     }
-
                     $scope.eventSources = [$scope.myEvents];
                     //JEBEM TI MAMU U PICKU DA TI JEBEM!
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
                 CalendarEventFactory.getEventByUserAndShift($scope.waiter).success(function(data) {
                     $scope.currentEvent = data;
-                })
+                });
+                OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                    $scope.unassigned = data;
+                });
+                OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                    $scope.orders = data;
+                });
             })
+
+            $scope.openShowOrderItemsModal = function(order) {
+                $rootScope.orderToShowUnassigned = order;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/showOrderItemsModal.html',
+                    controller : 'ShowOrderItemsForUnassignedController'
+                });
+            }
+
+            $scope.openShowUpdateOrderItemsModal = function(order) {
+                $rootScope.waiterForOrder = $scope.waiter;
+                $rootScope.orderToShowUpdate = order;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/showUpdateOrderItemsModal.html',
+                    controller : 'ShowUpdateOrderItemsController'
+                }).result.then(function(){
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
+
+            $scope.openAddNewOrderModal = function() {
+                $rootScope.waiterForOrder = $scope.waiter;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/addNewOrder.html',
+                    controller : 'AddNewOrderController'
+                }).result.then(function(){
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
+
+            $scope.takeOrder = function(order) {
+                order.oAssigned = true;
+                order.currentWaiter = $scope.waiter;
+                order.waiters.push($scope.waiter);
+                order.oStatus = "Waiting";
+                var i = 0;
+                for (i = 0; i < order.orderItems.length; i++) {
+                    order.orderItems[i].oiStatus = "Waiting";
+                }
+                OrderFactory.updateOrder(order).success(function(data) {
+                    OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                        $scope.unassigned = data;
+                    });
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
+
+            $scope.unassignOrder = function(order) {
+                order.oAssigned = false;
+                order.currentWaiter = null;
+                OrderFactory.updateOrder(order).success(function(data) {
+                    OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                        $scope.unassigned = data;
+                    });
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
 
         }
 
         init();
-    });
+    })
+    .controller('ShowOrderItemsForUnassignedController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope) {
+
+        $scope.orderToShow = $rootScope.orderToShowUnassigned;
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+    })
+    .controller('ShowUpdateOrderItemsController', function ($localStorage, $scope, $location, $uibModal, $uibModalInstance, $rootScope, OrderFactory, OrderItemFactory)  {
+
+        $scope.orderToShow = $rootScope.orderToShowUpdate;
+
+        $scope.openAddOrderItemsModal = function() {
+            $rootScope.orderToShowUpdate = $scope.orderToShow;
+            $uibModal.open({
+                templateUrl : 'html/waiter/addNewOrderItem.html',
+                controller : 'AddOrderItemsController'
+            }).result.then(function(){
+                $scope.orderToShow = $rootScope.orderToShowUpdate;
+            });
+        }
+
+        $scope.removeItem = function(orderItem) {
+            OrderItemFactory.deleteOrderItem(orderItem).success(function(data) {
+                var index = $scope.orderToShow.orderItems.indexOf(orderItem);
+                $scope.orderToShow.orderItems.splice(index, 1);
+                OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
+                   $scope.orderToShow = data;
+                   $rootScope.orderToShowUpdate = data;
+                });
+            });
+        }
+
+        $scope.close = function(){
+            //$uibModalInstance.dismiss('cancel');
+            $uibModalInstance.close();
+        }
+
+        $scope.updateOrder = function(){
+            OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
+                if (data == null) {
+                    alert("Change not possible!")
+                }
+                $uibModalInstance.close();
+            });
+        };
+    })
+    .controller('AddOrderItemsController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, MenuService, OrderItemFactory) {
+
+        $scope.orderToShow = $rootScope.orderToShowUpdate;
+        $scope.waiter = $rootScope.waiterForOrder;
+
+        $scope.newOrderItem = new Object();
+        $scope.newOrderItem.oiStatus = "Waiting";
+        $scope.newOrderItem.oiReadyByArrival = false;
+        $scope.newOrderItem.user = null;
+        $scope.newOrderItem.order = null;
+        $scope.newOrderItem.hourOfArrival = 0;
+        $scope.newOrderItem.minuteOfArrival = 0;
+
+        MenuService.getMenusByMRestaurant($scope.waiter.restaurant.id).success(function(data) {
+           $scope.menus = data;
+           $scope.newOrderItem.menu = $scope.menus[0];
+        });
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.addOrderItem = function() {
+            $rootScope.orderToShowUpdate.orderItems.push($scope.newOrderItem);
+            $uibModalInstance.close();
+        }
+    })
+    .controller('AddNewOrderController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantTableFactory, OrderFactory) {
+
+        $scope.newOrder = new Object();
+        $scope.newOrder.orderItems = new Array();
+        $scope.newOrder.oStatus = "Waiting";
+        $scope.newOrder.oAssigned = true;
+        $scope.newOrder.currentWaiter = $rootScope.waiterForOrder;
+        $scope.newOrder.waiters = new Array();
+        $scope.newOrder.waiters.push($rootScope.waiterForOrder);
+        $scope.newOrder.year = 0;
+        $scope.newOrder.month = 0;
+        $scope.newOrder.day = 0;
+        $scope.newOrder.hourOfArrival = 0;
+        $scope.newOrder.minuteOfArrival = 0;
+
+        RestaurantTableFactory.getActiveTablesByRestaurant($rootScope.waiterForOrder.restaurant).success(function(data) {
+           $scope.tables = data;
+           $scope.newOrder.restaurantTable = data[0];
+        });
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.addOrder = function() {
+            OrderFactory.addOrder($scope.newOrder).success(function(data) {
+                $uibModalInstance.close();
+            });
+        }
+
+    })
+
+

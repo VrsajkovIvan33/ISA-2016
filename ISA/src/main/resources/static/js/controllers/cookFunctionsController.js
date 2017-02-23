@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.CookFunctionsController',[])
-    .controller('CookFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, $uibModal, CookService, CalendarEventFactory) {
+    .controller('CookFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, $uibModal, CookService, CalendarEventFactory, OrderItemFactory) {
 
         function init() {
             $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -54,7 +54,38 @@ angular.module('restaurantApp.CookFunctionsController',[])
                     //JEBEM TI MAMU U PICKU DA TI JEBEM!
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
-            })
+                OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                    $scope.inWaiting = data;
+                });
+                OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                    $scope.making = data;
+                });
+            });
+
+            $scope.takeOrderItem = function(orderItem) {
+                orderItem.oiStatus = "Currently making";
+                orderItem.staff = $localStorage.logged;
+                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                        $scope.inWaiting = data;
+                    });
+                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                        $scope.making = data;
+                    });
+                });
+            }
+
+            $scope.markAsFinished = function(orderItem) {
+                orderItem.oiStatus = "Ready";
+                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                        $scope.inWaiting = data;
+                    });
+                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                        $scope.making = data;
+                    });
+                });
+            }
         }
 
         init();
