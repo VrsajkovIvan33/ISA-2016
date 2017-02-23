@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.BartenderFunctionsController',[])
-    .controller('BartenderFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, $uibModal, BartenderService, CalendarEventFactory) {
+    .controller('BartenderFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, $uibModal, BartenderService, CalendarEventFactory, OrderItemFactory) {
 
         function init() {
             $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -54,7 +54,38 @@ angular.module('restaurantApp.BartenderFunctionsController',[])
                     //JEBEM TI MAMU U PICKU DA TI JEBEM!
                     uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
                 });
-            })
+                OrderItemFactory.getOrderItemsInWaitingByStaff($scope.bartender).success(function(data) {
+                    $scope.inWaiting = data;
+                });
+                OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.bartender).success(function(data) {
+                    $scope.making = data;
+                });
+            });
+
+            $scope.takeOrderItem = function(orderItem) {
+                orderItem.oiStatus = "Currently making";
+                orderItem.staff = $localStorage.logged;
+                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.bartender).success(function(data) {
+                        $scope.inWaiting = data;
+                    });
+                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.bartender).success(function(data) {
+                        $scope.making = data;
+                    });
+                });
+            }
+
+            $scope.markAsFinished = function(orderItem) {
+                orderItem.oiStatus = "Ready";
+                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.bartender).success(function(data) {
+                        $scope.inWaiting = data;
+                    });
+                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.bartender).success(function(data) {
+                        $scope.making = data;
+                    });
+                });
+            }
         }
 
         init();

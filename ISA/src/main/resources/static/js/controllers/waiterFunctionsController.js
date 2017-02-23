@@ -118,6 +118,19 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 });
             }
 
+            $scope.unassignOrder = function(order) {
+                order.oAssigned = false;
+                order.currentWaiter = null;
+                OrderFactory.updateOrder(order).success(function(data) {
+                    OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                        $scope.unassigned = data;
+                    });
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
+
         }
 
         init();
@@ -153,7 +166,6 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                    $rootScope.orderToShowUpdate = data;
                 });
             });
-
         }
 
         $scope.close = function(){
@@ -180,6 +192,8 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         $scope.newOrderItem.oiReadyByArrival = false;
         $scope.newOrderItem.user = null;
         $scope.newOrderItem.order = null;
+        $scope.newOrderItem.hourOfArrival = 0;
+        $scope.newOrderItem.minuteOfArrival = 0;
 
         MenuService.getMenusByMRestaurant($scope.waiter.restaurant.id).success(function(data) {
            $scope.menus = data;
@@ -202,13 +216,13 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         $scope.newOrder.oStatus = "Waiting";
         $scope.newOrder.oAssigned = true;
         $scope.newOrder.currentWaiter = $rootScope.waiterForOrder;
-        $scope.waiters = new Array();
-        $scope.waiters.push($rootScope.waiterForOrder);
-        $scope.year = 0;
-        $scope.month = 0;
-        $scope.day = 0;
-        $scope.hourOfArrival = 0;
-        $scope.minuteOfArrival = 0;
+        $scope.newOrder.waiters = new Array();
+        $scope.newOrder.waiters.push($rootScope.waiterForOrder);
+        $scope.newOrder.year = 0;
+        $scope.newOrder.month = 0;
+        $scope.newOrder.day = 0;
+        $scope.newOrder.hourOfArrival = 0;
+        $scope.newOrder.minuteOfArrival = 0;
 
         RestaurantTableFactory.getActiveTablesByRestaurant($rootScope.waiterForOrder.restaurant).success(function(data) {
            $scope.tables = data;

@@ -32,7 +32,7 @@
             <td>{{oi.menu.mType}}</td>
             <td>{{oi.oiStatus}}</td>
             <td>{{oi.oiReadyByArrival}}</td>
-            <td><button class="btn btn-primary" ng-click="removeItem(oi)">Remove</button></td>
+            <td><button class="btn btn-primary" ng-disabled="oi.oiStatus!='Waiting'" ng-click="removeItem(oi)">Remove</button></td>
         </tr>
         </tbody>
     </table>

@@ -8,6 +8,7 @@ import ISAProject.model.users.Cook;
 import ISAProject.model.users.User;
 import ISAProject.model.users.UserType;
 import ISAProject.service.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -101,6 +102,18 @@ public class OrderItemController {
         originalOrderItem.setOiStatus(orderItem.getOiStatus());
         originalOrderItem.setStaff(orderItem.getStaff());
         OrderItem newOrderItem = orderItemService.save(originalOrderItem);
+        //mark order as ready if all order
+        Order order = orderService.findById(originalOrderItem.getOrder().getId());
+        Boolean markAsReady = true;
+        for (OrderItem oi : order.getOrderItems()) {
+            if (!oi.getOiStatus().equals("Ready")) {
+                markAsReady = false;
+            }
+        }
+        if (markAsReady == true) {
+            order.setoStatus("Ready");
+            orderService.save(order);
+        }
         return new ResponseEntity<OrderItem>(orderItem, HttpStatus.OK);
     }
 

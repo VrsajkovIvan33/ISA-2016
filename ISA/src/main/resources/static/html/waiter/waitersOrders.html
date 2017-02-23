@@ -35,10 +35,10 @@
                 <tr ng-repeat="or in orders">
                     <td>{{or.restaurantTable.rtNumber}}</td>
                     <td>{{or.oStatus}}</td>
-                    <td>{{or.hourOfArrival.concat(":".concat(or.minuteOfArrival))}}</td>
-                    <td><button class="btn btn-primary" ng-click="openShowUpdateOrderItemsModal(or)">See/update items</button></td>
-                    <td><button class="btn btn-primary">Create bill</button></td>
-                    <td><button class="btn btn-primary">Unassign</button></td>
+                    <td>{{or.hourOfArrival + ":" + or.minuteOfArrival}}</td>
+                    <td><button class="btn btn-primary" ng-click="openShowUpdateOrderItemsModal(or)">Items</button></td>
+                    <td><button class="btn btn-primary">Bill</button></td>
+                    <td><button class="btn btn-primary" ng-click="unassignOrder(or)">Unassign</button></td>
                 </tr>
                 </tbody>
             </table>

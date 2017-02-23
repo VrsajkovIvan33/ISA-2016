@@ -52,10 +52,10 @@ public class OrderController {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        System.out.println(year);
-//        System.out.println(month);
-//        System.out.println(day);
-//        System.out.println(hour);
+        System.out.println(year);
+        System.out.println(month);
+        System.out.println(day);
+        System.out.println(hour);
         Waiter waiter = waiterService.findOne(userId);
         User user = userService.findOne(userId);
         //zbog smene i regiona dodeljene konobaru
@@ -132,6 +132,8 @@ public class OrderController {
         originalOrder.setOrderItems(order.getOrderItems());
         for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
+            orderItem.setHourOfArrival(order.getHourOfArrival());
+            orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
         }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
         System.out.println("Order put, current waiter: " + originalOrder.getCurrentWaiter().getId());

@@ -55,6 +55,12 @@ public class OrderItem {
     @Column(name = "oiReadybyarrival", nullable = false)
     private Boolean oiReadyByArrival;
 
+    @Column(name = "oiHour")
+    private int hourOfArrival;
+
+    @Column(name = "oiMinute")
+    private int minuteOfArrival;
+
     public Long getId() {
         return id;
     }
@@ -117,5 +123,21 @@ public class OrderItem {
 
     public void setStaff(User staff) {
         this.staff = staff;
+    }
+
+    public int getHourOfArrival() {
+        return hourOfArrival;
+    }
+
+    public void setHourOfArrival(int hourOfArrival) {
+        this.hourOfArrival = hourOfArrival;
+    }
+
+    public int getMinuteOfArrival() {
+        return minuteOfArrival;
+    }
+
+    public void setMinuteOfArrival(int minuteOfArrival) {
+        this.minuteOfArrival = minuteOfArrival;
     }
 }
