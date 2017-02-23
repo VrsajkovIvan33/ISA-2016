@@ -26,7 +26,7 @@
         <div class="carousel-caption">
             <h3>Restaurant Providers</h3>
 
-
+            <a ng-click="openSearchModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
 
             <table class="responstable">
                 <thead>
@@ -34,13 +34,15 @@
                     <th>Provider name:</th>
                     <th>Provider surname:</th>
                     <th>Provider email:</th>
+                    <th>Delete:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="p in providers">
+                <tr ng-repeat="p in restaurantProviders">
                     <td>{{p.name}}</td>
                     <td>{{p.surname}}</td>
                     <td>{{p.email}}</td>
+                    <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 </tbody>
             </table>

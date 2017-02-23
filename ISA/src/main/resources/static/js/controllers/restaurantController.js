@@ -40,10 +40,10 @@ angular.module('restaurantApp.RestaurantController',[])
     })
     .controller('NewRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantService) {
 
-        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:0};
+        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
         $scope.addRestaurant = function (restaurant) {
             RestaurantService.addRestaurant(restaurant).success(function (data) {
-                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', version:0};
+                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
                 $uibModalInstance.close();
                 window.location.reload();
             });

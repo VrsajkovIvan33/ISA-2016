@@ -33,4 +33,19 @@ public class JpaProviderService implements ProviderService {
 
     @Override
     public void delete(Long id) { providerRepository.delete(id); }
+
+    @Override
+    public List<Provider> findByName(String name) {
+        return providerRepository.findByName(name);
+    }
+
+    @Override
+    public List<Provider> findBySurname(String surname) {
+        return providerRepository.findBySurname(surname);
+    }
+
+    @Override
+    public List<Provider> findByNameAndSurname(String name, String surname) {
+        return providerRepository.findByNameAndSurname(name, surname);
+    }
 }
