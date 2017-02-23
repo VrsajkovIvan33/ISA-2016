@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="ProviderController">
+<div ng-cloak ng-controller="RestaurantProvidersController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -24,28 +24,24 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Providers</h3>
+            <h3>Restaurant Providers</h3>
 
-            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
+
 
             <table class="responstable">
                 <thead>
-                    <tr>
-                        <th>Provider name:</th>
-                        <th>Provider surname:</th>
-                        <th>Provider email:</th>
-                        <th>Edit:</th>
-                        <th>Delete:</th>
-                    </tr>
+                <tr>
+                    <th>Provider name:</th>
+                    <th>Provider surname:</th>
+                    <th>Provider email:</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="p in providers">
-                        <td>{{p.name}}</td>
-                        <td>{{p.surname}}</td>
-                        <td>{{p.email}}</td>
-                        <td><a ng-click="openUpdateModal(p)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
-                    </tr>
+                <tr ng-repeat="p in providers">
+                    <td>{{p.name}}</td>
+                    <td>{{p.surname}}</td>
+                    <td>{{p.email}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
