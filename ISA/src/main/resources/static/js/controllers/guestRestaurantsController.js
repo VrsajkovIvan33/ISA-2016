@@ -33,7 +33,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                    controller : 'GuestReservationController',
                    resolve: {
                        param : function(){
-                           return {'restaurant' : restaurant};
+                           return {'restaurant' : restaurant };
                        }
                    }
                });
@@ -99,7 +99,12 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
        .controller('GuestReservationController', function ($localStorage, $scope, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
            function init(){
                $scope.restaurant = param.restaurant;
+               $scope.modalMode = true;
            };
 
            init();
+
+           $scope.changeModalMode = function(mode){
+               $scope.modalMode += 1;
+           }
        });

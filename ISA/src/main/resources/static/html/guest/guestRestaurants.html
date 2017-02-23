@@ -11,6 +11,10 @@
         border:0;
         background:transparent;
     }
+    .responstable {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
 </style>
 
 <div ng-cloak ng-controller="GuestRestaurantsController">
@@ -56,9 +60,9 @@
                     </th>
                     <th>
                         <div class="dropdown">
-                            <button class="btn btn-primary" type="button">Type <span class="caret"></span></button>
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Type <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="type in restaurantTypes"><a ng-click="searchByType(type)">{{type}}</a></li>
+                                <li role="presentation" ng-repeat="type in restaurantTypes"><a role="menuitem" ng-click="searchByType(type)">{{type}}</a></li>
                             </ul>
                         </div>
                     </th>
