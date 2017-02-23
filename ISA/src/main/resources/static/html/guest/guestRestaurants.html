@@ -1,3 +1,18 @@
+<style>
+    .stylish-input-group .input-group-addon{
+        background: white !important;
+    }
+    .stylish-input-group .form-control{
+        border-right:0;
+        box-shadow:0 0 0;
+        border-color:#ccc;
+    }
+    .stylish-input-group button{
+        border:0;
+        background:transparent;
+    }
+</style>
+
 <div ng-cloak ng-controller="GuestRestaurantsController">
     <header class="main_header" style="top : 70px">
         <div class="container">
@@ -26,13 +41,38 @@
                     <th>Restaurant type:</th>
                     <th></th>
                 </tr>
+                <tr>
+                    <th>
+                        <div id="imaginary_container">
+                            <div class="input-group stylish-input-group">
+                                <input type="text" class="form-control"  placeholder="Search" ng-model="restaurantToSearch">
+                                <span class="input-group-addon">
+                                    <button type="submit" ng-click="searchByName(restaurantToSearch)">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="dropdown">
+                            <button class="btn btn-primary" type="button">Type <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="type in restaurantTypes"><a ng-click="searchByType(type)">{{type}}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th>
+                        <a class="btn btn-primary" ng-click="getRestaurants()">Reset</a>
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="r in restaurants">
                     <td>{{r.rName}}</td>
                     <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
                     <td>{{r.rType}}</td>
-                    <td><a class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>  Book now</a></td>
+                    <td><a class="btn btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-pencil"></span>  Book now</a></td>
                 </tr>
                 </tbody>
             </table>

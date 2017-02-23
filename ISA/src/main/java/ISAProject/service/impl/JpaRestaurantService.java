@@ -34,13 +34,13 @@ public class JpaRestaurantService implements RestaurantService {
     @Override
     public void delete(Long id) { restaurantRepository.delete(id); }
 
-    /*@Override
-    public Restaurant create(Restaurant restaurant) throws Exception {
-        if (restaurant.getId() != null) {
-            throw new Exception(
-                    "Id mora biti null prilikom perzistencije novog entiteta.");
-        }
-        Restaurant savedRestaurant = restaurantRepository.create(restaurant);
-        return savedRestaurant;
-    }*/
+    @Override
+    public List<Restaurant> findByName(String name){
+        return restaurantRepository.findByRName(name);
+    }
+
+    @Override
+    public List<Restaurant> findByType(String type) {
+        return restaurantRepository.findByRType(type);
+    }
 }

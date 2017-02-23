@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -161,6 +164,20 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant) throws Exception {
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         return new ResponseEntity<Restaurant>(savedRestaurant, HttpStatus.CREATED);
+    }
+
+    @MessageMapping("/searchRestaurantsByName/{id}")
+    @SendTo("/topic/restaurantsByName/{id}")
+    public List<Restaurant> searchRestaurantsByName(@DestinationVariable Long id, Message restaurant){
+        List<Restaurant> restaurants = restaurantService.findByName(restaurant.getMessage());
+        return restaurants;
+    }
+
+    @MessageMapping("/searchRestaurantsByType/{id}")
+    @SendTo("/topic/restaurantsByType/{id}")
+    public List<Restaurant> searchRestaurantsByType(@DestinationVariable Long id, Message type){
+        List<Restaurant> restaurants = restaurantService.findByType(type.getMessage());
+        return restaurants;
     }
 
     /*@RequestMapping(
