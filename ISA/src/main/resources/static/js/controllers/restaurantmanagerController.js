@@ -23,6 +23,8 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/addNewRestaurantManager.html',
                 controller : 'NewRestaurantmanagerController'
+            }).result.then(function(){
+                getRestaurantManagers();
             });
         }
 
@@ -31,6 +33,8 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/updateRestaurantManager.html',
                 controller : 'UpdateRestaurantmanagerController'
+            }).result.then(function(){
+                getRestaurantManagers();
             });
         }
 
@@ -45,7 +49,6 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
             RestaurantmanagerService.addRestaurantManager(restaurantManager).success(function (data) {
                 $scope.newRestaurantManager = {id:null, name:'', surname:'', email:'', password:'', type:'RESTAURANTMANAGER', date_of_birth:null, restaurant:null, version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -73,7 +76,6 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         $scope.updateRestaurantManager = function (restaurantManager) {
             RestaurantmanagerService.updateRestaurantManager(restaurantManager).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

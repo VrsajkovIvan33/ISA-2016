@@ -88,6 +88,8 @@ angular.module('restaurantApp.WaiterController',[])
             $uibModal.open({
                 templateUrl : 'html/waiter/addNewWaiter.html',
                 controller : 'NewWaiterController'
+            }).result.then(function(){
+                getWaitersByRestaurant();
             });
         }
 
@@ -96,6 +98,8 @@ angular.module('restaurantApp.WaiterController',[])
             $uibModal.open({
                 templateUrl : 'html/waiter/updateWaiter.html',
                 controller : 'UpdateWaiterController'
+            }).result.then(function(){
+                getWaitersByRestaurant();
             });
         }
 
@@ -108,7 +112,6 @@ angular.module('restaurantApp.WaiterController',[])
             WaiterService.addWaiter(waiter).success(function (data) {
                 $scope.newWaiter = {id:null, name:'', surname:'', email:'', password:'', type:'WAITER', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, review:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -136,7 +139,6 @@ angular.module('restaurantApp.WaiterController',[])
         $scope.updateWaiter = function (waiter) {
             WaiterService.updateWaiter(waiter).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

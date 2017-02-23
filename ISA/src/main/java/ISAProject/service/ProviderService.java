@@ -15,4 +15,10 @@ public interface ProviderService {
     Provider save(Provider provider);
 
     void delete(Long id);
+
+    List<Provider> findByName(String name);
+
+    List<Provider> findBySurname(String surname);
+
+    List<Provider> findByNameAndSurname(String name, String surname);
 }

@@ -31,7 +31,10 @@ public class SystemmanagerController {
             value = "/removeSystemManager/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<SystemManager> removeSystemManager(@PathVariable("id") Long id) {
-        systemmanagerService.delete(id);
+        SystemManager systemManager = systemmanagerService.findOne(id);
+        if(systemManager.getEmail() != "admin@gmail.com") {
+            systemmanagerService.delete(id);
+        }
         return new ResponseEntity<SystemManager>(HttpStatus.NO_CONTENT);
     }
 

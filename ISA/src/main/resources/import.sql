@@ -24,6 +24,12 @@ INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName", "proSurname", "pro", "pro@gmail.com", "PROVIDER", 0)
 INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro@gmail.com"))
 
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "proSurname2", "pro2", "pro2@gmail.com", "PROVIDER", 0)
+INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro2@gmail.com"))
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "Prezime", "pro3", "pro3@gmail.com", "PROVIDER", 0)
+INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro3@gmail.com"))
+
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "man", "res", "res@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
 
@@ -130,5 +136,8 @@ INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (4, 2, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 
+
 INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 23, 16, 0)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 5, 1, "Waiting for waiter", false, 16, 0)
+
+INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);
