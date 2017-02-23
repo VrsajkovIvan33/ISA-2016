@@ -26,6 +26,8 @@ angular.module('restaurantApp.MenuController',[])
             $uibModal.open({
                 templateUrl : 'html/menu/addNewMenu.html',
                 controller : 'NewMenuController'
+            }).result.then(function(){
+                getMenus();
             });
         }
 
@@ -34,6 +36,8 @@ angular.module('restaurantApp.MenuController',[])
             $uibModal.open({
                 templateUrl : 'html/menu/updateMenu.html',
                 controller : 'UpdateMenuController'
+            }).result.then(function(){
+                getMenus();
             });
         }
 
@@ -46,7 +50,6 @@ angular.module('restaurantApp.MenuController',[])
             MenuService.addMenu(menu).success(function (data) {
                 $scope.newMenu = {mId:null, mName:'', mType:'' , mDescription:'', mPrice:0, mReview:0, mRestaurant:$localStorage.logged.restaurant, version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -72,7 +75,6 @@ angular.module('restaurantApp.MenuController',[])
         $scope.updateMenu = function (menu) {
             MenuService.updateMenu(menu).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

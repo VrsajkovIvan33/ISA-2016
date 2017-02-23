@@ -23,6 +23,8 @@ angular.module('restaurantApp.RestaurantController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/addNewRestaurant.html',
                 controller : 'NewRestaurantController'
+            }).result.then(function(){
+                getRestaurants();
             });
         }
 
@@ -31,6 +33,8 @@ angular.module('restaurantApp.RestaurantController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/updateRestaurant.html',
                 controller : 'UpdateRestaurantController'
+            }).result.then(function(){
+                getRestaurants();
             });
         }
 
@@ -45,7 +49,6 @@ angular.module('restaurantApp.RestaurantController',[])
             RestaurantService.addRestaurant(restaurant).success(function (data) {
                 $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -61,7 +64,6 @@ angular.module('restaurantApp.RestaurantController',[])
         $scope.updateRestaurant = function (restaurant) {
             RestaurantService.updateRestaurant(restaurant).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

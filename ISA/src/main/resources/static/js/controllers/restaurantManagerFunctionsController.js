@@ -216,7 +216,6 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
         $scope.updateRestaurant = function (restaurant) {
             RestaurantService.updateRestaurant(restaurant).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
