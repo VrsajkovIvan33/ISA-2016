@@ -102,4 +102,20 @@ public class OrderItem {
     public void setOiReadyByArrival(Boolean oiReadyByArrival) {
         this.oiReadyByArrival = oiReadyByArrival;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public User getStaff() {
+        return staff;
+    }
+
+    public void setStaff(User staff) {
+        this.staff = staff;
+    }
 }

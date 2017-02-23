@@ -32,6 +32,11 @@ public class JpaRestaurantTableService implements RestaurantTableService {
     }
 
     @Override
+    public List<RestaurantTable> findByRestaurantAndActive(Restaurant restaurant, Boolean active) {
+        return restaurantTableRepository.findByRestaurantAndRtActiveOrderByRtPositionAsc(restaurant, active);
+    }
+
+    @Override
     public RestaurantTable findById(Long id) {
         return restaurantTableRepository.findById(id);
     }

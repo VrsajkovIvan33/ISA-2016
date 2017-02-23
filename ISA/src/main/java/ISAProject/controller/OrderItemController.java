@@ -1,14 +1,13 @@
 package ISAProject.controller;
 
+import ISAProject.model.Order;
 import ISAProject.model.OrderItem;
+import ISAProject.model.UnprocessedOrderItem;
 import ISAProject.model.users.Bartender;
 import ISAProject.model.users.Cook;
 import ISAProject.model.users.User;
 import ISAProject.model.users.UserType;
-import ISAProject.service.BartenderService;
-import ISAProject.service.CookService;
-import ISAProject.service.OrderItemService;
-import ISAProject.service.UserService;
+import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +35,9 @@ public class OrderItemController {
 
     @Autowired
     private BartenderService bartenderService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(
             value = "/OrderItemsInWaitingByStaff/{id}",
@@ -97,6 +99,7 @@ public class OrderItemController {
         originalOrderItem.setMenu(orderItem.getMenu());
         originalOrderItem.setOiReadyByArrival(orderItem.getOiReadyByArrival());
         originalOrderItem.setOiStatus(orderItem.getOiStatus());
+        originalOrderItem.setStaff(orderItem.getStaff());
         OrderItem newOrderItem = orderItemService.save(originalOrderItem);
         return new ResponseEntity<OrderItem>(orderItem, HttpStatus.OK);
     }

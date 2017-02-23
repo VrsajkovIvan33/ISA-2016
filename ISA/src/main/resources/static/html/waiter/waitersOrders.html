@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div ng-cloak ng-controller="WaiterFunctionsController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+                <div class="menuBar">
+                    <li><a href="#/waiter">Home</a></li>
+                    <li><a href="#/waiter/calendar">Calendar</a></li>
+                    <li><a href="#/waiter/tables">Table arrangement</a></li>
+                    <li><a href="#/waiter/waitersOrders">My orders</a></li>
+                    <li><a href="#/waiter/unassignedOrders">Unassigned orders</a></li>
+                    <li><a href="index.html">Log out</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-</body>
-</html>
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>My orders</h3>
+
+            <a ng-click="openAddNewOrderModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span>Add Order</a>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Table number:</th>
+                    <th>Order status:</th>
+                    <th>Time of arrival:</th>
+                    <th>Order items:</th>
+                    <th>Create bill</th>
+                    <th>Unassign</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="or in orders">
+                    <td>{{or.restaurantTable.rtNumber}}</td>
+                    <td>{{or.oStatus}}</td>
+                    <td>{{or.hourOfArrival.concat(":".concat(or.minuteOfArrival))}}</td>
+                    <td><button class="btn btn-primary" ng-click="openShowUpdateOrderItemsModal(or)">See/update items</button></td>
+                    <td><button class="btn btn-primary">Create bill</button></td>
+                    <td><button class="btn btn-primary">Unassign</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

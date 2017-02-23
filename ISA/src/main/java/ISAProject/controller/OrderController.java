@@ -4,6 +4,7 @@ import ISAProject.model.CalendarEvent;
 import ISAProject.model.Order;
 import ISAProject.model.OrderItem;
 import ISAProject.model.RestaurantTable;
+import ISAProject.model.users.User;
 import ISAProject.model.users.Waiter;
 import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class OrderController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(
             value = "/OrdersUnassignedByUser/{id}",
             method = RequestMethod.GET,
@@ -48,17 +52,29 @@ public class OrderController {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        System.out.println(year);
+//        System.out.println(month);
+//        System.out.println(day);
+//        System.out.println(hour);
         Waiter waiter = waiterService.findOne(userId);
+        User user = userService.findOne(userId);
         //zbog smene i regiona dodeljene konobaru
         CalendarEvent calendarEvent = calendarEventService.findByUserAndShift(userId, year, month, day, hour);
         List<Order> orders = new ArrayList<Order>();
         if (calendarEvent != null) {
+//            System.out.println("Calendar event is not null");
+//            System.out.println("Table Region: " + calendarEvent.getTableRegion().getId());
+//            System.out.println("Restaurant: " + waiter.getRestaurant().getId());
             //stolovi za koje je zaduzen u smeni
             List<RestaurantTable> restaurantTables = restaurantTableService.findByRestaurantAndTableRegion(waiter.getRestaurant(), calendarEvent.getTableRegion());
+//            System.out.println("Tables length: " + restaurantTables.size());
             if (!restaurantTables.isEmpty()) {
+//                System.out.println("Ima stolova!");
                 //vrati sve ordere za koje nema zaduzenog za sve stolove
                 for (RestaurantTable restaurantTable : restaurantTables) {
+//                    System.out.println("Za sto: " + restaurantTable.getId());
                     orders.addAll(orderService.findByAssignedAndRestaurantTableAndDate(false, restaurantTable, year, month, day));
+//                    System.out.println("Ima ih: " + orders.size());
                 }
             }
         }
@@ -72,8 +88,19 @@ public class OrderController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Order>> getOrdersByWaiter(@PathVariable("id") Long userId) {
         Waiter waiter = waiterService.findOne(userId);
+        System.out.println("GetOrdersByWaiter: " + userId);
         List<Order> orders = orderService.findByWaiter(waiter);
+        System.out.println("Orders size: " + orders.size());
         return new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
+    }
+
+    @RequestMapping(
+            value = "/Orders/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Order> getOrderById(@PathVariable("id") Long orderId) {
+        Order order = orderService.findById(orderId);
+        return new ResponseEntity<Order>(order, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -81,6 +108,14 @@ public class OrderController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<Order> addOrder(@RequestBody Order order) throws Exception {
+        if (order.getYear() == 0) {
+            Calendar calendar = Calendar.getInstance();
+            order.setYear(calendar.get(Calendar.YEAR));
+            order.setMonth(calendar.get(Calendar.MONTH));
+            order.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            order.setHourOfArrival(calendar.get(Calendar.HOUR_OF_DAY));
+            order.setMinuteOfArrival(calendar.get(Calendar.MINUTE));
+        }
         Order newOrder = orderService.save(order);
         return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
     }
@@ -91,8 +126,15 @@ public class OrderController {
             consumes = "application/json")
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) throws Exception {
         Order originalOrder = orderService.findById(order.getId());
+//        for (OrderItem orderItem : originalOrder.getOrderItems()) {
+//            orderItemService.delete(orderItem.getId());
+//        }
         originalOrder.setOrderItems(order.getOrderItems());
+        for (OrderItem orderItem : order.getOrderItems()) {
+            orderItem.setOrder(order);
+        }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
+        System.out.println("Order put, current waiter: " + originalOrder.getCurrentWaiter().getId());
         originalOrder.setoAssigned(order.getoAssigned());
         originalOrder.setoStatus(order.getoStatus());
         originalOrder.setRestaurantTable(order.getRestaurantTable());

@@ -15,6 +15,10 @@ angular.module('restaurantApp.RestaurantTableFactory',[])
             return $http.put('/RestaurantTables', restaurantTables);
         }
 
+        factory.getActiveTablesByRestaurant = function(restaurant) {
+            return $http.get('/RestaurantTablesActiveByRestaurant/' + restaurant.id);
+        }
+
         return factory;
 
     });

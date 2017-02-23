@@ -15,6 +15,10 @@ angular.module('restaurantApp.OrderFactory',[])
             return $http.get("/OrdersByWaiter/" + waiter.id);
         }
 
+        factory.getOrderById = function(orderId) {
+            return $http.get("/Orders/" + orderId);
+        }
+
         factory.addOrder = function(order) {
             return $http.post("/Orders", order);
         }

@@ -33,7 +33,7 @@
                     <td>{{un.oStatus}}</td>
                     <td>{{un.hourOfArrival.concat(":".concat(un.minuteOfArrival))}}</td>
                     <td><button ng-click="openShowOrderItemsModal(un)" class="btn btn-primary">See items</button></td>
-                    <td><button class="btn btn-danger">Take order</button></td>
+                    <td><button class="btn btn-danger" ng-click="takeOrder(un)">Take order</button></td>
                 </tr>
                 </tbody>
             </table>
