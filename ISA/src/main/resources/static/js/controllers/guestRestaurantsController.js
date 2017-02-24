@@ -102,9 +102,12 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.modalMode = 1;
                $scope.reservationHelper = new Object();
                $scope.tables = [];
+               $scope.foundFriends = [];
+               $scope.invitedFriends = [];
            };
 
            var subscription = null;
+           var searchSubscription = null;
            init();
 
            $stomp.setDebug(function (args) {
@@ -116,11 +119,47 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                      subscription = $stomp.subscribe('/topic/tables/' + $localStorage.logged.id, function(tables, headers, res){
                          $scope.tables = tables;
                      });
+
+                     searchSubscription = $stomp.subscribe('/topic/searchFriends/' + $localStorage.logged.id, function(friends, headers, res){
+                         $scope.$apply(function(){
+                             var temp = [];
+                             for(i = 0; i<friends.length; i++){
+                                 var found = false;
+                                 for(j = 0; j<$scope.invitedFriends.length; j++){
+                                     if(friends[i].id == $scope.invitedFriends[j].id)
+                                         found = true;
+                                 }
+                                 if(!found)
+                                     temp.push(friends[i]);
+                             }
+                             $scope.foundFriends = temp;
+                         });
+                     });
                  });
 
            $scope.getFreeTables = function(reservationHelper){
                $scope.modalMode += 1;
                $stomp.send('/app/getTables/' + $scope.restaurant.id + '/' + $localStorage.logged.id, reservationHelper);
+           }
+
+           $scope.selectTable = function(table){
+               table.selected = true;
+           }
+
+           $scope.search = function(friendForSearch){
+               var message = { 'message' : friendForSearch };
+               $stomp.send('/app/searchFriends/' + $localStorage.logged.id, message);
+           }
+
+           $scope.inviteFriend = function(person){
+               $scope.invitedFriends.push(person)
+               var temp = [];
+               for(i = 0; i<$scope.foundFriends.length; i++){
+                   if($scope.foundFriends[i].id != person.id)
+                       temp.push($scope.foundFriends[i]);
+               }
+               $scope.foundFriends = temp;
+               toastr.info(person.name + ' ' + person.surname + ' is added to invitation list.');
            }
 
            $scope.changeModalMode = function(mode){

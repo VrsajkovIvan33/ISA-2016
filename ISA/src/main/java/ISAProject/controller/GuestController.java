@@ -32,6 +32,30 @@ public class GuestController {
         return new ResponseEntity<List<Guest>>(ret, HttpStatus.OK);
     }
 
+    @MessageMapping("/searchFriends/{id}")
+    @SendTo("/topic/searchFriends/{id}")
+    public List<Guest> searchFriends(@DestinationVariable Long id, Message person){
+        Guest user = guestService.findOne(id);
+        List<Guest> friends = new ArrayList<Guest>();
+        String[] splitNameSurname = person.getMessage().split(" ");
+        if(splitNameSurname.length != 2){
+            for (String nameSurname : splitNameSurname){
+                for(Guest friend : user.getFriendList()){
+                    if(friend.getName().equals(nameSurname) || friend.getSurname().equals(nameSurname))
+                        friends.add(friend);
+                }
+            }
+        }else{
+            for(Guest friend : user.getFriendList()){
+                if((friend.getName().equals(splitNameSurname[0]) && friend.getSurname().equals(splitNameSurname[1])) || (friend.getName().equals(splitNameSurname[1]) && friend.getSurname().equals(splitNameSurname[0]))){
+                    friends.add(friend);
+                }
+            }
+        }
+
+        return friends;
+    }
+
     @MessageMapping("/searchPersons/{id}")
     @SendTo("/topic/persons/{id}")
     public List<Guest> searchPersons(@DestinationVariable Long id, Message person){

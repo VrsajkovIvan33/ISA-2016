@@ -46,7 +46,7 @@ public class ReservationController {
                 (reservation.getTimeH() + reservation.getTimeM()/60 + reservation.getDurationH() + reservation.getDurationM()/60) < (message.getTimeH() + message.getTimeM()/60 + message.getDurationH() + message.getDurationM()/60) ){
 
                 for(RestaurantTable restaurantTable : reservation.getTables()){
-                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true));
+                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
                 }
             }
 
@@ -54,7 +54,7 @@ public class ReservationController {
                ((reservation.getTimeH() + reservation.getTimeM()/60) > (message.getTimeH() + message.getTimeM()/60))){
 
                 for(RestaurantTable restaurantTable : reservation.getTables()){
-                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true));
+                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
                 }
             }
         }
@@ -66,7 +66,7 @@ public class ReservationController {
                     flag = true;
             }
             if(!flag)
-                returnTables.add(new RestaurantTableReservationHelper(restaurantTable, false));
+                returnTables.add(new RestaurantTableReservationHelper(restaurantTable, false, false));
         }
 
         return (List<RestaurantTableReservationHelper>)returnTables;

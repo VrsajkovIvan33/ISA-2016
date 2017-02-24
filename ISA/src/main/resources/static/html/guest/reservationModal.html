@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-lg-10">
                         <div class="column flex_container" ng-repeat="r1 in [0, 1, 2, 3, 4]">
-                            <span class="col-sm-1 thumbnail" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-style="{backgroundColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].reserved ? 'red' : 'green' : 'black', margin: '5px', borderStyle: 'solid', borderWidth: 'medium', borderColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].table.restaurantSegment.rsColor : 'white' }"  ng-model="tables[r1*10 + r2]">{{tables[r1*10+r2].table.rtNumber}}</span>
+                            <span class="col-sm-1 thumbnail" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-style="{backgroundColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].reserved ? 'red' : tables[r1*10+r2].selected ? 'blue' : 'green' : 'black', margin: '5px', borderStyle: 'solid', borderWidth: 'medium', borderColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].table.restaurantSegment.rsColor : 'white', color : 'white'}"  ng-model="tables[r1*10 + r2]" ng-click="selectTable(tables[r1*10+r2])">{{tables[r1*10+r2].table.rtNumber}}</span>
                         </div>
                     </div>
                 </div>
@@ -66,17 +66,49 @@
         <div class=" flex_container">
             <div style="min-width: 50px"></div>
             <div class=" flex_container">
-                <div style="width: 90px; height: 35px; background-color: red; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Reserved</h5></div>
-                <div style="width: 90px; height: 35px; background-color: blue; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Selected</h5></div>
-                <div style="width: 90px; height: 35px; background-color: green; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Free</h5></div>
-                <div style="width: 90px; height: 35px; background-color: black; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Not active</h5></div>
+                <div style="width: 90px; height: 35px; background-color: red; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5 style="color: white">Reserved</h5></div>
+                <div style="width: 90px; height: 35px; background-color: blue; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5 style="color : white">Selected</h5></div>
+                <div style="width: 90px; height: 35px; background-color: green; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5 style="color : white">Free</h5></div>
+                <div style="width: 90px; height: 35px; background-color: black; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5 style="color : white">Not active</h5></div>
             </div>
             <div style="min-width: 50px"></div>
         </div>
     </div>
 
     <div ng-if="modalMode == 3">
-        <h2>Mode 3</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4" style="margin-left: 90px">
+                    <div id="imaginary_container">
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control"  placeholder="Search" ng-model="personForSearch">
+                            <span class="input-group-addon">
+                        <button type="submit" ng-click="search(personForSearch)">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="jumbotron list-content">
+            <ul class="list-group">
+                <li href="#" class="list-group-item title">
+                    Friends
+                </li>
+                <li href="#" class="list-group-item text-left" ng-repeat="person in foundFriends">
+                    <!--img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg"-->
+                    <label class="name">
+                        {{person.name}} {{person.surname}}<br>
+                    </label>
+                    <label class="pull-right">
+                        <a  class="btn btn-primary btn-xs " ng-click="inviteFriend(person)" title="Invite friend">Invite</a>
+                    </label>
+                    <div class="break"></div>
+                </li>
+            </ul>
+        </div>
     </div>
 
 </div>

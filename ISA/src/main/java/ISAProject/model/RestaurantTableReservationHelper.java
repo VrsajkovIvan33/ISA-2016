@@ -9,13 +9,15 @@ public class RestaurantTableReservationHelper {
 
     private RestaurantTable table;
     private boolean reserved;
+    private boolean selected;
 
     public RestaurantTableReservationHelper() {
     }
 
-    public RestaurantTableReservationHelper(RestaurantTable table, boolean reserved) {
+    public RestaurantTableReservationHelper(RestaurantTable table, boolean reserved, boolean selected) {
         this.table = table;
         this.reserved = reserved;
+        this.selected = selected;
     }
 
     public RestaurantTable getTable() {
@@ -32,5 +34,13 @@ public class RestaurantTableReservationHelper {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
