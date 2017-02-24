@@ -1,9 +1,12 @@
 package ISAProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marko on 11/24/2016.
@@ -14,7 +17,6 @@ import java.io.Serializable;
 public class Menu implements Serializable {
 
     public Menu(){
-
     }
 
     public Menu(String mName, String mType, String mDescription, float mPrice, float mReview, Restaurant mRestaurant, int version) {

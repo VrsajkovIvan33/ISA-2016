@@ -27,5 +27,6 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.MenuController',
     'restaurantApp.BeverageController',
     'restaurantApp.StatementController',
+    'restaurantApp.GuestHistoryController',
     'restaurantApp.RestaurantProvidersController'
 ]);
