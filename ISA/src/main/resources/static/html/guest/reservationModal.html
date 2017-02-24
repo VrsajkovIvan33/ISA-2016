@@ -111,10 +111,15 @@
         </div>
     </div>
 
+    <div ng-if="modalMode == 4">
+        <h3>Orders</h3>
+    </div>
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="getFreeTables(reservationHelper)" ng-if="modalMode ==1">Next</button>
-    <button type="button" class="btn btn-default" ng-click="changeModalMode(modalMode)" ng-if="modalMode == 2">Book</button>
+    <button type="button" class="btn btn-default" ng-click="changeModalMode(modalMode)" ng-if="modalMode == 2">Next</button>
+    <button type="button" class="btn btn-default" ng-if="modalMode == 3" ng-click="changeModalMode(modalMode)">Order</button>
     <button type="button" class="btn btn-default" ng-if="modalMode == 3">Finish</button>
     <button type="button" class="btn btn-default" ng-click="close()">Close</button>
 </div>

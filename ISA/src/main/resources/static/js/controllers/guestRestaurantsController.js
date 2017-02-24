@@ -104,6 +104,19 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.tables = [];
                $scope.foundFriends = [];
                $scope.invitedFriends = [];
+               $scope.order = {
+                   orderItems : [],
+                   restaurantTable : null,
+                   oStatus : 'Waiting for waiter',
+                   oAssigned : false,
+                   waiters : [],
+                   currentWaiter : null,
+                   year : 0,
+                   month : 0,
+                   day : 0,
+                   hourOfArrival : 0,
+                   minuteOfArrival : 0
+               };
            };
 
            var subscription = null;
@@ -144,6 +157,8 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
 
            $scope.selectTable = function(table){
                table.selected = true;
+               if($scope.order.restaurantTable == null)
+                   $scope.order.restaurantTable = table;s
            }
 
            $scope.search = function(friendForSearch){
