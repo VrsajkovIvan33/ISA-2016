@@ -19,12 +19,11 @@ public class Tender implements Serializable {
 
     }
 
-    public Tender(Date tStart, Date tEnd, String tStatus, Restaurant tRestaurant, List<TenderItem> tenderItems, int version) {
+    public Tender(Date tStart, Date tEnd, String tStatus, Restaurant tRestaurant, int version) {
         this.tStart = tStart;
         this.tEnd = tEnd;
         this.tStatus = tStatus;
         this.tRestaurant = tRestaurant;
-        //this.tenderItems = tenderItems;
         this.version = version;
     }
 
@@ -33,7 +32,6 @@ public class Tender implements Serializable {
         this.tEnd = tender.tEnd;
         this.tStatus = tender.tStatus;
         this.tRestaurant = tender.tRestaurant;
-        //this.tenderItems = tender.tenderItems;
         this.version = tender.version;
     }
 
@@ -54,9 +52,6 @@ public class Tender implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Restaurant tRestaurant;
-
-    //@OneToMany(mappedBy = "tenderitems", cascade = CascadeType.ALL)
-    //private List<TenderItem> tenderItems;
 
     @Version
     private int version;
@@ -100,14 +95,6 @@ public class Tender implements Serializable {
     public void settRestaurant(Restaurant tRestaurant) {
         this.tRestaurant = tRestaurant;
     }
-
-   // public List<TenderItem> getTenderItems() {
-        //return tenderItems;
-    //}
-
-    //public void setTenderItems(List<TenderItem> tenderItems) {
-      //  this.tenderItems = tenderItems;
-    //}
 
     public int getVersion() {
         return version;
