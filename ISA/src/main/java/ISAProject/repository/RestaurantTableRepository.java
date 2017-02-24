@@ -17,6 +17,8 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
 
     List<RestaurantTable> findAll();
 
+
+
     List<RestaurantTable> findByRestaurantOrderByRtPositionAsc(Restaurant restaurant);
 
     List<RestaurantTable> findByRestaurantAndTableRegionOrderByRtPositionAsc(Restaurant restaurant, TableRegion tableRegion);

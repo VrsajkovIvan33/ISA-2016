@@ -96,15 +96,42 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                })
            }
        })
-       .controller('GuestReservationController', function ($localStorage, $scope, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
+       .controller('GuestReservationController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
            function init(){
                $scope.restaurant = param.restaurant;
-               $scope.modalMode = true;
+               $scope.modalMode = 1;
+               $scope.reservationHelper = new Object();
+               $scope.tables = [];
            };
 
+           var subscription = null;
            init();
+
+           $stomp.setDebug(function (args) {
+               $log.debug(args);
+           });
+
+           $stomp.connect('/stomp', {})
+                 .then(function(frame){
+                     subscription = $stomp.subscribe('/topic/tables/' + $localStorage.logged.id, function(tables, headers, res){
+                         $scope.tables = tables;
+                     });
+                 });
+
+           $scope.getFreeTables = function(reservationHelper){
+               $scope.modalMode += 1;
+               $stomp.send('/app/getTables/' + $scope.restaurant.id + '/' + $localStorage.logged.id, reservationHelper);
+           }
 
            $scope.changeModalMode = function(mode){
                $scope.modalMode += 1;
            }
+
+           $scope.close = function(){
+               subscription.unsubscribe();
+               $stomp.disconnect().then(function(){
+                   $log.info('disconnected');
+               })
+               $uibModalInstance.dismiss('cancel');
+           };
        });

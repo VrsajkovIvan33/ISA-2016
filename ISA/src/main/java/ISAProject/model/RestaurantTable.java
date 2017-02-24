@@ -1,5 +1,6 @@
 package ISAProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -29,15 +30,15 @@ public class RestaurantTable implements Serializable {
     @Column(name = "rtPosition", nullable = false)
     private int rtPosition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rsid", referencedColumnName = "rsid")
     private RestaurantSegment restaurantSegment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trid", referencedColumnName = "trid")
     private TableRegion tableRegion;
 
