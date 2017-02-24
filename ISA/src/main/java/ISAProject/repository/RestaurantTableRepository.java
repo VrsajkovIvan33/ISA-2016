@@ -21,6 +21,8 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
 
     List<RestaurantTable> findByRestaurantOrderByRtPositionAsc(Restaurant restaurant);
 
+    List<RestaurantTable> findByRestaurantAndRtActiveOrderByRtPositionAsc(Restaurant restaurant, Boolean rtActive);
+
     List<RestaurantTable> findByRestaurantAndTableRegionOrderByRtPositionAsc(Restaurant restaurant, TableRegion tableRegion);
 
     RestaurantTable findById(Long id);
@@ -28,5 +30,4 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
     RestaurantTable save(RestaurantTable restaurantTable);
 
     void delete(Long id);
-
 }

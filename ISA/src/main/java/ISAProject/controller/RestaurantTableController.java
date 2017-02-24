@@ -47,6 +47,16 @@ public class RestaurantTableController {
     }
 
     @RequestMapping(
+            value = "/RestaurantTablesActiveByRestaurant/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RestaurantTable>> getRestaurantTablesActiveByRestaurant(@PathVariable("id") Long restaurantId) {
+        Restaurant restaurantById = restaurantService.findOne(restaurantId);
+        List<RestaurantTable> restaurantTables = restaurantTableService.findByRestaurantAndActive(restaurantById, true);
+        return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/RestaurantTables",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)

@@ -47,13 +47,19 @@ public class OrderItem {
     @JoinColumn(name = "staffid", referencedColumnName = "id")
     private User staff;
 
-    //"Waiting", "Currently making", "Ready"
+    //"Waiting for waiter", "Waiting", "Currently making", "Ready"
     @Column(name = "oiStatus", nullable = false)
     private String oiStatus;
 
     //da li treba da bude pripremljeno pre nego sto stigne gost
     @Column(name = "oiReadybyarrival", nullable = false)
     private Boolean oiReadyByArrival;
+
+    @Column(name = "oiHour")
+    private int hourOfArrival;
+
+    @Column(name = "oiMinute")
+    private int minuteOfArrival;
 
     public Long getId() {
         return id;
@@ -101,5 +107,37 @@ public class OrderItem {
 
     public void setOiReadyByArrival(Boolean oiReadyByArrival) {
         this.oiReadyByArrival = oiReadyByArrival;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public User getStaff() {
+        return staff;
+    }
+
+    public void setStaff(User staff) {
+        this.staff = staff;
+    }
+
+    public int getHourOfArrival() {
+        return hourOfArrival;
+    }
+
+    public void setHourOfArrival(int hourOfArrival) {
+        this.hourOfArrival = hourOfArrival;
+    }
+
+    public int getMinuteOfArrival() {
+        return minuteOfArrival;
+    }
+
+    public void setMinuteOfArrival(int minuteOfArrival) {
+        this.minuteOfArrival = minuteOfArrival;
     }
 }

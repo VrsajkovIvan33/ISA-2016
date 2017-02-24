@@ -17,7 +17,7 @@ import java.util.List;
 public class Order {
 
     public Order() {
-        //waiters = new ArrayList<Waiter>();
+        waiters = new ArrayList<Waiter>();
         oStatus = "Waiting";
         oAssigned = false;
     }
@@ -37,7 +37,7 @@ public class Order {
     @JoinColumn(name = "rtid", referencedColumnName = "rtid")
     private RestaurantTable restaurantTable;
 
-    //"Waiting", "Currently making" (ne moze da se menja), "Ready", "Served" (moze da se napravi racun)
+    //"Waiting for waiter", "Waiting", "Currently making" (ne moze da se menja), "Ready", "Served" (moze da se napravi racun)
     @Column(name = "oStatus", nullable = false)
     private String oStatus;
 
@@ -46,9 +46,28 @@ public class Order {
     private Boolean oAssigned;
 
     // jer je moguce da se zavrsi smena i drugi krene da ih opsluzuje
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "waiterorders", joinColumns = @JoinColumn(name = "orderid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "waiterid", referencedColumnName = "id"))
-//    private List<Waiter> waiters;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "waiterorders", joinColumns = @JoinColumn(name = "orderid", referencedColumnName = "oid"), inverseJoinColumns = @JoinColumn(name = "waiterid", referencedColumnName = "id"))
+    private List<Waiter> waiters;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wid", referencedColumnName = "id")
+    private Waiter currentWaiter;
+
+    @Column(name = "oYear")
+    private int year;
+
+    @Column(name = "oMonth")
+    private int month;
+
+    @Column(name = "oDay")
+    private int day;
+
+    @Column(name = "oHour")
+    private int hourOfArrival;
+
+    @Column(name = "oMinute")
+    private int minuteOfArrival;
 
     public Long getId() {
         return id;
@@ -98,11 +117,59 @@ public class Order {
         this.oAssigned = oAssigned;
     }
 
-//    public List<Waiter> getWaiters() {
-//        return waiters;
-//    }
-//
-//    public void setWaiters(List<Waiter> waiters) {
-//        this.waiters = waiters;
-//    }
+    public List<Waiter> getWaiters() {
+        return waiters;
+    }
+
+    public void setWaiters(List<Waiter> waiters) {
+        this.waiters = waiters;
+    }
+
+    public Waiter getCurrentWaiter() {
+        return currentWaiter;
+    }
+
+    public void setCurrentWaiter(Waiter currentWaiter) {
+        this.currentWaiter = currentWaiter;
+    }
+
+    public int getHourOfArrival() {
+        return hourOfArrival;
+    }
+
+    public void setHourOfArrival(int hourOfArrival) {
+        this.hourOfArrival = hourOfArrival;
+    }
+
+    public int getMinuteOfArrival() {
+        return minuteOfArrival;
+    }
+
+    public void setMinuteOfArrival(int minuteOfArrival) {
+        this.minuteOfArrival = minuteOfArrival;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 }

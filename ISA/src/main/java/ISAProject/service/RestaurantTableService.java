@@ -15,6 +15,8 @@ public interface RestaurantTableService {
 
     List<RestaurantTable> findByRestaurant(Restaurant restaurant);
 
+    List<RestaurantTable> findByRestaurantAndActive(Restaurant restaurant, Boolean active);
+
     RestaurantTable findById(Long id);
 
     List<RestaurantTable> findByRestaurantAndTableRegion(Restaurant restaurant, TableRegion tableRegion);

@@ -20,7 +20,7 @@ import java.util.List;
 public class Waiter extends User implements Serializable {
 
     public Waiter(){
-        //orders = new ArrayList<Order>();
+        orders = new ArrayList<Order>();
     }
 
     @Column(name = "date_of_birth")
@@ -39,9 +39,9 @@ public class Waiter extends User implements Serializable {
     @Column(name = "review")
     private float review;
 
-    //@ManyToMany(mappedBy = "waiters")
-    //@JsonIgnore
-    //private List<Order> orders;
+    @ManyToMany(mappedBy = "waiters")
+    @JsonIgnore
+    private List<Order> orders;
 
     public Date getDate_of_birth() {
         return date_of_birth;
@@ -83,11 +83,11 @@ public class Waiter extends User implements Serializable {
         this.restaurant = restaurant;
     }
 
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

@@ -1,10 +1,7 @@
 package ISAProject.controller;
 
 import ISAProject.model.*;
-import ISAProject.model.users.Bartender;
-import ISAProject.model.users.Cook;
-import ISAProject.model.users.RestaurantManager;
-import ISAProject.model.users.Waiter;
+import ISAProject.model.users.*;
 import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -127,6 +124,11 @@ public class RestaurantController {
         for(Menu m: menus){
             menuService.delete(m.getmId());
         }
+
+        //delete restaurant providers
+        List<Provider> providers = restaurant.getProviders();
+        providers.clear();
+        restaurant.setProviders(providers);
 
         restaurantService.delete(id);
         return new ResponseEntity<Restaurant>(HttpStatus.NO_CONTENT);

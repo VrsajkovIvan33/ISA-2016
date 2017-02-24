@@ -23,6 +23,8 @@ angular.module('restaurantApp.ProviderController',[])
             $uibModal.open({
                 templateUrl : 'html/provider/addNewProvider.html',
                 controller : 'NewProviderController'
+            }).result.then(function(){
+                getProviders();
             });
         }
 
@@ -31,6 +33,8 @@ angular.module('restaurantApp.ProviderController',[])
             $uibModal.open({
                 templateUrl : 'html/provider/updateProvider.html',
                 controller : 'UpdateProviderController'
+            }).result.then(function(){
+                getProviders();
             });
         }
 
@@ -43,7 +47,6 @@ angular.module('restaurantApp.ProviderController',[])
             ProviderService.addProvider(provider).success(function (data) {
                 $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -57,7 +60,6 @@ angular.module('restaurantApp.ProviderController',[])
         $scope.updateProvider = function (provider) {
             ProviderService.updateProvider(provider).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

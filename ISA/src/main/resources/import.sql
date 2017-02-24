@@ -26,6 +26,12 @@ INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName", "proSurname", "pro", "pro@gmail.com", "PROVIDER", 0)
 INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro@gmail.com"))
 
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "proSurname2", "pro2", "pro2@gmail.com", "PROVIDER", 0)
+INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro2@gmail.com"))
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "Prezime", "pro3", "pro3@gmail.com", "PROVIDER", 0)
+INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro3@gmail.com"))
+
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "man", "res", "res@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
 
@@ -33,10 +39,10 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("bar", "
 INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Novica", "Sarenac", "nov", "ns@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad Cook', (SELECT id FROM user WHERE email="ns@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad', (SELECT id FROM user WHERE email="ns@gmail.com"), 1)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Ivan", "Vrsajkov", "iva", "iv@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish Cook', (SELECT id FROM user WHERE email="iv@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish', (SELECT id FROM user WHERE email="iv@gmail.com"), 1)
 
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Indoors', 'blue')
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Smoking', 'red')
@@ -131,3 +137,9 @@ INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (3, 3, "2016-10-01 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (4, 2, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
+
+
+INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 23, 16, 0)
+INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 5, 1, "Waiting for waiter", false, 16, 0)
+
+INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);

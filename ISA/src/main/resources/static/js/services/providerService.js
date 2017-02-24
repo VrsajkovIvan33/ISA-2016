@@ -21,5 +21,9 @@ angular.module('restaurantApp.ProviderService', [])
             return $http.post('/updateProvider', provider);
         }
 
+        factory.searchProviders = function (searchedNameSurname, rid) {
+            return $http.get('/searchProviders/'  + searchedNameSurname + '/' + rid, {"searchedNameSurname":searchedNameSurname, "rid":rid});
+        }
+
         return factory;
     });

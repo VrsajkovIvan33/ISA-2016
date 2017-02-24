@@ -2,6 +2,7 @@ package ISAProject.repository;
 
 import ISAProject.model.Order;
 import ISAProject.model.RestaurantTable;
+import ISAProject.model.users.Waiter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findById(Long id);
 
-    List<Order> findByOAssignedAndRestaurantTable(Boolean oAssigned, RestaurantTable restaurantTable);
+    List<Order> findByOAssignedAndRestaurantTableAndYearAndMonthAndDay(Boolean oAssigned, RestaurantTable restaurantTable, int year, int month, int day);
+
+    List<Order> findByCurrentWaiter(Waiter waiter);
 
     Order save(Order order);
 

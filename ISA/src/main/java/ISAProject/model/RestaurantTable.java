@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "restauranttable")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RestaurantTable implements Serializable {
 
     public RestaurantTable(){

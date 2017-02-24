@@ -69,6 +69,7 @@ public class CalendarEventController {
         System.out.println(hour);
         System.out.println(calendar.getTime());
         CalendarEvent calendarEvent = calendarEventService.findByUserAndShift(userId, year, month, day, hour);
+        //CalendarEvent calendarEvent = null;
         return new ResponseEntity<CalendarEvent>(calendarEvent, HttpStatus.OK);
     }
 

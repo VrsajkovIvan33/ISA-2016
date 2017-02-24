@@ -23,6 +23,8 @@ angular.module('restaurantApp.SystemmanagerController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/addNewSystemManager.html',
                 controller : 'NewSystemmanagerController'
+            }).result.then(function(){
+                getSystemManagers();
             });
         }
 
@@ -31,15 +33,27 @@ angular.module('restaurantApp.SystemmanagerController',[])
             $uibModal.open({
                 templateUrl : 'html/systemManager/updateSystemManager.html',
                 controller : 'UpdateSystemmanagerController'
+            }).result.then(function(){
+                getSystemManagers();
             });
         }
 
         getSystemManagers();
 
-        $scope.checkSystemManager = function(sm){
+        $scope.checkSystemManagerDelete = function(sm){
             if(sm.email == "admin@gmail.com")
                 return false;
-            //fali za ulogovanog
+
+            if(sm.email == $localStorage.logged.email)
+                return false;
+
+            return true;
+        }
+
+        $scope.checkSystemManagerUpdate = function(sm){
+            if(sm.email == "admin@gmail.com")
+                return false;
+
             return true;
         }
     })
@@ -50,7 +64,6 @@ angular.module('restaurantApp.SystemmanagerController',[])
             SystemmanagerService.addSystemManager(systemManager).success(function (data) {
                 $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -64,7 +77,6 @@ angular.module('restaurantApp.SystemmanagerController',[])
         $scope.updateSystemManager = function (systemManager) {
             SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
