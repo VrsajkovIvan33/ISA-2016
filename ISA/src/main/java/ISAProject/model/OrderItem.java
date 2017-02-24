@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Verpsychoff on 2/19/2017.
@@ -18,6 +20,7 @@ public class OrderItem {
     public OrderItem() {
         oiStatus = "Waiting";
         oiReadyByArrival = false;
+        this.histories = new ArrayList<VisitHistory>();
     }
 
     @Id
@@ -60,6 +63,10 @@ public class OrderItem {
 
     @Column(name = "oiMinute")
     private int minuteOfArrival;
+
+    @ManyToMany(mappedBy = "orderItems")
+    @JsonIgnore
+    private List<VisitHistory> histories;
 
     public Long getId() {
         return id;
@@ -139,5 +146,13 @@ public class OrderItem {
 
     public void setMinuteOfArrival(int minuteOfArrival) {
         this.minuteOfArrival = minuteOfArrival;
+    }
+
+    public List<VisitHistory> getHistories() {
+        return histories;
+    }
+
+    public void setHistories(List<VisitHistory> histories) {
+        this.histories = histories;
     }
 }

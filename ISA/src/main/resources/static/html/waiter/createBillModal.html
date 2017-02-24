@@ -10,31 +10,32 @@
 
 <div class="modal-header">
     <button type="button" class="close" ng-click="close()">&times;</button>
-    <h4 class="modal-title">Show order items</h4>
+    <h4 class="modal-title">Create bill</h4>
 </div>
 <div class="modal-body">
-    <h3>Order items</h3>
+    <h3>Create Bill</h3>
+    <h3>Table: {{orderToBill.restaurantTable.rtNumber}}</h3>
     <table class="responstable">
         <thead>
         <tr>
             <th>Guest:</th>
             <th>Menu:</th>
             <th>Type:</th>
-            <th>Status:</th>
-            <th>Ready by arrival:</th>
+            <th>Price:</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="oi in orderToShow.orderItems">
+        <tr ng-repeat="oi in orderToBill.orderItems">
             <td>{{oi.user.name + " " + oi.user.surname}}</td>
             <td>{{oi.menu.mName}}</td>
             <td>{{oi.menu.mType}}</td>
-            <td>{{oi.oiStatus}}</td>
-            <td>{{oi.oiReadyByArrival}}</td>
+            <td>{{oi.menu.mPrice}}</td>
         </tr>
         </tbody>
     </table>
+    <h3>Total: {{total}}</h3>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+    <button type="button" class="btn btn-primary" ng-click="createBill()">Create bill</button>
+    <button type="button" class="btn btn-primary" ng-click="close()">Cancel</button>
 </div>

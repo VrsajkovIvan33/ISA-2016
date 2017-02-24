@@ -25,6 +25,8 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, Lo
             " ce.day = ?4 and ce.startHour <= ?5 and ce.endHour >= ?5")
     CalendarEvent findByUserAndShift(Long userID, int year, int month, int day, int hour);
 
+    CalendarEvent findByUserAndYearAndMonthAndDay(User user, int year, int month, int day);
+
     CalendarEvent save(CalendarEvent calendarEvent);
 
     void delete(Long id);
