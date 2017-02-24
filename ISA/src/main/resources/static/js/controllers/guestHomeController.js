@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.GuestHomeController', [])
-       .controller('GuestHomeController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestHomeFactory){
+       .controller('GuestHomeController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, $rootScope, GuestHomeFactory, VisitHistoryFactory){
            function init(){
                $scope.loggedUser = $localStorage.logged;
                $scope.friendRequestsNumber = 0;
@@ -14,11 +14,27 @@ angular.module('restaurantApp.GuestHomeController', [])
                        $scope.showRequests = true;
                });
 
+               VisitHistoryFactory.getHistoriesByGuest($scope.loggedUser).success(function(data) {
+                   $scope.histories = data;
+               })
+
            };
 
            var friendRequestSubscription = null;
            var acceptedFriendRequestSubscription = null;
            init();
+
+           $scope.openGradesModal = function(history) {
+               $rootScope.historyToShow = history;
+               $uibModal.open({
+                   templateUrl : 'html/guest/historyGradesModal.html',
+                   controller : 'HistoryGradesController'
+               }).result.then(function(){
+                   VisitHistoryFactory.getHistoriesByGuest($scope.loggedUser).success(function(data) {
+                       $scope.histories = data;
+                   })
+               });
+           }
 
            $stomp.setDebug(function(args){
                $log.debug(args);
@@ -45,4 +61,25 @@ angular.module('restaurantApp.GuestHomeController', [])
                    $log.info('disconnected');
                });
            };
+       })
+       .controller('HistoryGradesController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, VisitHistoryFactory) {
+
+           $scope.historyToShow = $rootScope.historyToShow;
+           $scope.grades = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+           $scope.restaurantGrade = $scope.grades[4];
+           $scope.menuGrade = $scope.grades[4];
+           $scope.serviceGrade = $scope.grades[4];
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
+           }
+
+           $scope.grade = function() {
+               $scope.historyToShow.restaurantGrade = $scope.restaurantGrade;
+               $scope.historyToShow.menuGrade = $scope.menuGrade;
+               $scope.historyToShow.serviceGrade = $scope.serviceGrade;
+               VisitHistoryFactory.updateHistory($scope.historyToShow).success(function(data) {
+                   $uibModalInstance.close();
+               })
+           }
        });

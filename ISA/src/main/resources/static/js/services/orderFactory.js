@@ -31,6 +31,10 @@ angular.module('restaurantApp.OrderFactory',[])
             return $http.delete("/removeOrder/" + order.id);
         }
 
+        factory.finalizeOrder = function(order) {
+            return $http.put("/FinalizeOrder", order);
+        }
+
         return factory;
 
     });

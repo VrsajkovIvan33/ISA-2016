@@ -37,6 +37,11 @@ public class JpaCalendarEventService implements CalendarEventService {
     }
 
     @Override
+    public CalendarEvent findByUserAndYearAndMonthAndDay(User user, int year, int month, int day) {
+        return calendarEventRepository.findByUserAndYearAndMonthAndDay(user, year, month, day);
+    }
+
+    @Override
     public List<CalendarEvent> findByUser(User user) {
         return calendarEventRepository.findByUser(user);
     }

@@ -131,6 +131,18 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 });
             }
 
+            $scope.openCreateBillModal = function(order) {
+                $rootScope.orderToBill = order;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/createBillModal.html',
+                    controller : 'CreateBillController'
+                }).result.then(function(){
+                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                        $scope.orders = data;
+                    });
+                });
+            }
+
         }
 
         init();
@@ -223,6 +235,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         $scope.newOrder.day = 0;
         $scope.newOrder.hourOfArrival = 0;
         $scope.newOrder.minuteOfArrival = 0;
+        $scope.newOrder.billCreated = false;
 
         RestaurantTableFactory.getActiveTablesByRestaurant($rootScope.waiterForOrder.restaurant).success(function(data) {
            $scope.tables = data;
@@ -240,5 +253,26 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         }
 
     })
+    .controller('CreateBillController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, OrderFactory) {
+
+        $scope.orderToBill = $rootScope.orderToBill;
+
+        $scope.total = 0;
+        var i = 0;
+        for (i = 0; i < $scope.orderToBill.orderItems.length; i++) {
+            $scope.total += $scope.orderToBill.orderItems[i].menu.mPrice;
+        }
+
+        $scope.createBill = function() {
+            $scope.orderToBill.billCreated = true;
+            OrderFactory.finalizeOrder($scope.orderToBill).success(function(data) {
+                $uibModalInstance.close();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+    });
 
 

@@ -19,9 +19,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findById(Long id);
 
-    List<Order> findByOAssignedAndRestaurantTableAndYearAndMonthAndDay(Boolean oAssigned, RestaurantTable restaurantTable, int year, int month, int day);
+    List<Order> findByOAssignedAndRestaurantTableAndYearAndMonthAndDayAndBillCreated(Boolean oAssigned, RestaurantTable restaurantTable, int year, int month, int day, Boolean billCreated);
 
-    List<Order> findByCurrentWaiter(Waiter waiter);
+    List<Order> findByCurrentWaiterAndBillCreated(Waiter waiter, Boolean billCreated);
 
     Order save(Order order);
 

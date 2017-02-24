@@ -1,9 +1,6 @@
 package ISAProject.controller;
 
-import ISAProject.model.CalendarEvent;
-import ISAProject.model.Order;
-import ISAProject.model.OrderItem;
-import ISAProject.model.RestaurantTable;
+import ISAProject.model.*;
 import ISAProject.model.users.User;
 import ISAProject.model.users.Waiter;
 import ISAProject.service.*;
@@ -41,6 +38,15 @@ public class OrderController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BillService billService;
+
+    @Autowired
+    private GuestService guestService;
+
+    @Autowired
+    private VisitHistoryService visitHistoryService;
 
     @RequestMapping(
             value = "/OrdersUnassignedByUser/{id}",
@@ -116,8 +122,22 @@ public class OrderController {
             order.setHourOfArrival(calendar.get(Calendar.HOUR_OF_DAY));
             order.setMinuteOfArrival(calendar.get(Calendar.MINUTE));
         }
-        Order newOrder = orderService.save(order);
-        return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+        Order newOrder = new Order();
+        newOrder.setBillCreated(order.getBillCreated());
+        newOrder.setoAssigned(order.getoAssigned());
+        newOrder.setoStatus(order.getoStatus());
+        newOrder.setYear(order.getYear());
+        newOrder.setMonth(order.getMonth());
+        newOrder.setDay(order.getDay());
+        newOrder.setHourOfArrival(order.getHourOfArrival());
+        newOrder.setMinuteOfArrival(order.getMinuteOfArrival());
+        newOrder.setRestaurantTable(order.getRestaurantTable());
+        Order newerOrder = orderService.save(newOrder);
+        newerOrder.setCurrentWaiter(order.getCurrentWaiter());
+        newerOrder.setWaiters(order.getWaiters());
+        Order newestOrder = orderService.save(newerOrder);
+        //Order newOrder = orderService.save(order);
+        return new ResponseEntity<Order>(newestOrder, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -136,7 +156,7 @@ public class OrderController {
             orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
         }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
-        System.out.println("Order put, current waiter: " + originalOrder.getCurrentWaiter().getId());
+        //System.out.println("Order put, current waiter: " + originalOrder.getCurrentWaiter().getId());
         originalOrder.setoAssigned(order.getoAssigned());
         originalOrder.setoStatus(order.getoStatus());
         originalOrder.setRestaurantTable(order.getRestaurantTable());
@@ -161,5 +181,100 @@ public class OrderController {
         orderService.delete(id);
         return new ResponseEntity<Order>(HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping(
+            value = "/FinalizeOrder",
+            method = RequestMethod.PUT,
+            consumes = "application/json")
+    public ResponseEntity<Order> finalizeOrder(@RequestBody Order order) throws Exception {
+        Order originalOrder = orderService.findById(order.getId());
+        originalOrder.setoStatus(order.getoStatus());
+        originalOrder.setBillCreated(order.getBillCreated());
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = calendar.get(Calendar.MINUTE);
+
+        //prvo nadji konobara kome ce se pripisati
+        Waiter maxServedWaiter = null;
+        int maxServedTime = 0;
+        for (Waiter waiter : originalOrder.getWaiters()) {
+            User user = userService.findOne(waiter.getId());
+            CalendarEvent calendarEvent = calendarEventService.findByUserAndYearAndMonthAndDay(user, originalOrder.getYear(), originalOrder.getMonth(), originalOrder.getDay());
+            int orderStart = originalOrder.getHourOfArrival() * 60 + originalOrder.getMinuteOfArrival();
+            int orderEnd = currentHour * 60 + currentMinute;
+            int shiftStart = calendarEvent.getStartHour() * 60 + calendarEvent.getStartMinute();
+            int shiftEnd = calendarEvent.getEndHour() * 60 + calendarEvent.getEndMinute();
+            int servedTime = 0;
+            if (orderStart >= shiftStart && orderEnd <= shiftEnd) {
+                //porudzbina za vreme smene
+                servedTime = orderEnd - orderStart;
+            }
+            else if (orderEnd <= shiftEnd) {
+                //znaci da je smena pocela nakon narucivanja
+                servedTime = orderEnd - shiftStart;
+            }
+            else if (orderStart >= shiftStart) {
+                //znaci da se smena zavrsila pre nego sto je zavrseno narucivanje
+                servedTime = shiftEnd - orderStart;
+            }
+            if (servedTime > maxServedTime) {
+                maxServedTime = servedTime;
+                maxServedWaiter = waiter;
+            }
+        }
+
+        System.out.println("MaxServedWaiter je: " + maxServedWaiter.getId());
+
+        //napraviti racun
+        Bill bill = new Bill();
+        bill.setDate(calendar.getTime());
+        bill.setWaiter(maxServedWaiter);
+        float total = 0;
+        for (OrderItem orderItem : originalOrder.getOrderItems()) {
+
+            total += orderItem.getMenu().getmPrice();
+        }
+        bill.setTotal(total);
+        billService.save(bill);
+
+        //napraviti history
+        List<Long> guestIds = new ArrayList<Long>();
+        List<VisitHistory> visitHistories = new ArrayList<VisitHistory>();
+        System.out.println("Broj orderItem-ova: " + originalOrder.getOrderItems().size());
+        for (OrderItem orderItem : originalOrder.getOrderItems()) {
+            //samo za one koji imaju usere definisane
+            if (orderItem.getUser() != null) {
+                if (guestIds.contains(orderItem.getUser().getId())) {
+                    //vec postoji history - njega dopuniti
+                    System.out.println("Vec postoji gost");
+                    for (VisitHistory visitHistory : visitHistories) {
+                        if (visitHistory.getGuest().getId() == orderItem.getUser().getId()) {
+                            visitHistory.getOrderItems().add(orderItem);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    //napravi nov history
+                    System.out.println("Pravi nov");
+                    VisitHistory visitHistory = new VisitHistory();
+                    visitHistory.setGuest(guestService.findOne(orderItem.getUser().getId()));
+                    visitHistory.setWaiter(maxServedWaiter);
+                    visitHistory.getOrderItems().add(orderItem);
+                    visitHistory.setDate(calendar.getTime());
+                    visitHistories.add(visitHistory);
+                    guestIds.add(orderItem.getUser().getId());
+                }
+            }
+        }
+        for (VisitHistory visitHistory : visitHistories) {
+            visitHistoryService.save(visitHistory);
+        }
+
+        Order newOrder = orderService.save(originalOrder);
+        return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+    }
+
+
 
 }

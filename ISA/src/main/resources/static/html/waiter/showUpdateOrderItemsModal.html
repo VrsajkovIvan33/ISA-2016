@@ -27,7 +27,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="oi in orderToShowUpdate.orderItems">
-            <td>{{oi.user.name.concat(" ".concat(oi.user.surname))}}</td>
+            <td>{{oi.user.name + " " + oi.user.surname}}</td>
             <td>{{oi.menu.mName}}</td>
             <td>{{oi.menu.mType}}</td>
             <td>{{oi.oiStatus}}</td>
