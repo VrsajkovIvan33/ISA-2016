@@ -52,6 +52,9 @@ public class RestaurantController {
     @Autowired
     private MenuReviewService menuReviewService;
 
+    @Autowired
+    private TenderService tenderService;
+
     @RequestMapping(
             value = "/getRestaurants",
             method = RequestMethod.GET,
@@ -126,6 +129,14 @@ public class RestaurantController {
         List<Provider> providers = restaurant.getProviders();
         providers.clear();
         restaurant.setProviders(providers);
+
+        //delete tenders
+        List<Tender> tenders = tenderService.findByTRestaurant(restaurant);
+        for(Tender t: tenders){
+            t.settRestaurant(null);
+            t.settStatus("Closed");
+            tenderService.save(t);
+        }
 
         restaurantService.delete(id);
         return new ResponseEntity<Restaurant>(HttpStatus.NO_CONTENT);
