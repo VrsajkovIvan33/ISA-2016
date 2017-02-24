@@ -37,7 +37,7 @@
                     <td>{{or.oStatus}}</td>
                     <td>{{or.hourOfArrival + ":" + or.minuteOfArrival}}</td>
                     <td><button class="btn btn-primary" ng-click="openShowUpdateOrderItemsModal(or)">Items</button></td>
-                    <td><button class="btn btn-primary">Bill</button></td>
+                    <td><button class="btn btn-primary" ng-disabled="or.oStatus!='Ready'">Bill</button></td>
                     <td><button class="btn btn-primary" ng-click="unassignOrder(or)">Unassign</button></td>
                 </tr>
                 </tbody>

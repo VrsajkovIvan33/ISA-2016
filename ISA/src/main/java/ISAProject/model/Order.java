@@ -2,6 +2,7 @@ package ISAProject.model;
 
 import ISAProject.model.users.Waiter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class Order {
     @JoinColumn(name = "rtid", referencedColumnName = "rtid")
     private RestaurantTable restaurantTable;
 
-    //"Waiting for waiter", "Waiting", "Currently making" (ne moze da se menja), "Ready", "Served" (moze da se napravi racun)
+    //"Waiting for waiter", "Waiting", "Currently making" (ne moze da se menja), "Ready" (moze da se napravi racun)
     @Column(name = "oStatus", nullable = false)
     private String oStatus;
 
@@ -68,6 +69,9 @@ public class Order {
 
     @Column(name = "oMinute")
     private int minuteOfArrival;
+
+    @Column(name = "oBillCreated")
+    private Boolean billCreated;
 
     public Long getId() {
         return id;
@@ -171,5 +175,13 @@ public class Order {
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public Boolean getBillCreated() {
+        return billCreated;
+    }
+
+    public void setBillCreated(Boolean billCreated) {
+        this.billCreated = billCreated;
     }
 }

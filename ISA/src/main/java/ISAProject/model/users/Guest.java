@@ -1,6 +1,7 @@
 package ISAProject.model.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "guest")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Guest extends User implements Serializable{
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
