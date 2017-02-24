@@ -8,7 +8,6 @@
                     <li><a href="#/guest/friends" ng-click="disconnect()">Friends</a></li>
                     <li><a href="#/guest/friendRequests" ng-click="disconnect()">Friend Requests<span class="badge" ng-if="showRequests" style="background-color: red">{{friendRequestsNumber}}</span></a></li>
                     <li><a href="#/guest/restaurants" ng-click="disconnect()">Restaurants</a></li>
-                    <li><a href="#/guest/history" >History</a></li>
                     <li><a href="#/" ng-click="disconnect()">Log out</a></li>
                     </ul>
                 </div>
@@ -18,7 +17,23 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <p>AAAAAAAAAAAAAAAAAAAA</p>
+            <h3>My restaurant history</h3>
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Restaurant</th>
+                    <th>Date</th>
+                    <th>Grades</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="his in histories">
+                    <td>{{his.waiter.restaurant.rName}}</td>
+                    <td>{{his.date | date}}</td>
+                    <td><button class="btn btn-primary" ng-click="openGradesModal(his)">Show</button></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

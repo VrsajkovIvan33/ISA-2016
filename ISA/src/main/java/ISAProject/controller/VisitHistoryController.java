@@ -57,6 +57,8 @@ public class VisitHistoryController {
         VisitHistory originalHistory = visitHistoryService.findOne(visitHistory.getId());
         if (visitHistory.getMenuGrade() != -1) {
             //znaci da je uneta ocena
+            System.out.println("Krenuo je da pravi review-ove!");
+
             originalHistory.setMenuGrade(visitHistory.getMenuGrade());
             originalHistory.setServiceGrade(visitHistory.getServiceGrade());
             originalHistory.setRestaurantGrade(visitHistory.getRestaurantGrade());

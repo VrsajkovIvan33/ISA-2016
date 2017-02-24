@@ -1,0 +1,38 @@
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Visit history</h4>
+</div>
+<div class="modal-body">
+    <h3>{{historyToShow.waiter.restaurant.rName}}</h3>
+    <h3>{{historyToShow.date | date }}</h3>
+    <div ng-show="historyToShow.restaurantGrade == -1">
+        <form role="form">
+            <label for="restaurantSelect">Restaurant grade</label>
+            <select class="form-control form-control-lg" ng-model="restaurantGrade" ng-options="grade for grade in grades" id="restaurantSelect"></select>
+            <label for="menuSelect">Menu grade</label>
+            <select class="form-control form-control-lg" ng-model="menuGrade" ng-options="grade for grade in grades" id="menuSelect"></select>
+            <label for="serviceSelect">Service grade</label>
+            <select class="form-control form-control-lg" ng-model="serviceGrade" ng-options="grade for grade in grades" id="serviceSelect"></select>
+        </form>
+    </div>
+    <div ng-show="historyToShow.restaurantGrade != -1">
+        <h3>Restaurant grade: {{historyToShow.restaurantGrade}}</h3>
+        <h3>Menu grade: {{historyToShow.menuGrade}}</h3>
+        <h3>Service grade: {{historyToShow.serviceGrade}}</h3>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-show="historyToShow.restaurantGrade == -1" ng-click="grade()">Grade</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>
