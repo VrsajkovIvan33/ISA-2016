@@ -49,7 +49,7 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
             templateUrl : 'html/restaurantManager/tables.html'
         })
         .when('/restaurantManager/providers',{
-            templateUrl : 'html/provider/providers.html'
+            templateUrl : 'html/restaurantManager/providers.html'
         })
         .when('/restaurantManager/waiters',{
             templateUrl : 'html/restaurantManager/waiters.html'
@@ -129,6 +129,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/systemmanager/restaurants', {
             templateUrl: 'html/systemManager/restaurants.html'
+        })
+        .when('/systemmanager/providers', {
+            templateUrl: 'html/systemManager/providers.html'
         })
         .when('/confirm', {
             templateUrl : 'html/confirm.html'

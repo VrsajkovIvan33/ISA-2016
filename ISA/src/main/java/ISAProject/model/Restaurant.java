@@ -1,5 +1,6 @@
 package ISAProject.model;
 
+import ISAProject.model.users.Provider;
 import ISAProject.model.users.RestaurantManager;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,6 +34,11 @@ public class Restaurant implements Serializable {
 
     @Column(name = "rtype", nullable = false)
     private String rType;
+
+
+    @ManyToMany
+    @JoinTable(name = "restaurantproviders", joinColumns = @JoinColumn(name = "restaurantid", referencedColumnName = "rid", nullable = false), inverseJoinColumns = @JoinColumn(name = "providerid", referencedColumnName = "id", nullable = false))
+    private List<Provider> providers;
 
 
     //TODO proveriti za ocenu
@@ -74,5 +80,13 @@ public class Restaurant implements Serializable {
 
     public void setrType(String rType) {
         this.rType = rType;
+    }
+
+    public List<Provider> getProviders() {
+        return providers;
+    }
+
+    public void setProviders(List<Provider> providers) {
+        this.providers = providers;
     }
 }

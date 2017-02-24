@@ -23,6 +23,8 @@ angular.module('restaurantApp.CookController',[])
             $uibModal.open({
                 templateUrl : 'html/cook/addNewCook.html',
                 controller : 'NewCookController'
+            }).result.then(function(){
+                getCooksByRestaurant();
             });
         }
 
@@ -31,6 +33,8 @@ angular.module('restaurantApp.CookController',[])
             $uibModal.open({
                 templateUrl : 'html/cook/updateCook.html',
                 controller : 'UpdateCookController'
+            }).result.then(function(){
+                getCooksByRestaurant();
             });
         }
 
@@ -45,7 +49,6 @@ angular.module('restaurantApp.CookController',[])
             CookService.addCook(cook).success(function (data) {
                 $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -75,7 +78,6 @@ angular.module('restaurantApp.CookController',[])
         $scope.updateCook = function (cook) {
             CookService.updateCook(cook).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

@@ -26,6 +26,8 @@ angular.module('restaurantApp.BeverageController',[])
             $uibModal.open({
                 templateUrl : 'html/menu/addNewBeverage.html',
                 controller : 'NewBeverageController'
+            }).result.then(function(){
+                getBeverages();
             });
         }
 
@@ -34,6 +36,8 @@ angular.module('restaurantApp.BeverageController',[])
             $uibModal.open({
                 templateUrl : 'html/menu/updateBeverage.html',
                 controller : 'UpdateBeverageController'
+            }).result.then(function(){
+                getBeverages();
             });
         }
 
@@ -46,7 +50,6 @@ angular.module('restaurantApp.BeverageController',[])
             MenuService.addMenu(menu).success(function (data) {
                 $scope.newBeverage = {mId:null, mName:'', mType:'Drink' , mDescription:'', mPrice:0, mReview:0, mRestaurant:$localStorage.logged.restaurant, version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -72,7 +75,6 @@ angular.module('restaurantApp.BeverageController',[])
         $scope.updateMenu = function (menu) {
             MenuService.updateMenu(menu).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

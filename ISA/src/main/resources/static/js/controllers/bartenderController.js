@@ -23,6 +23,8 @@ angular.module('restaurantApp.BartenderController',[])
             $uibModal.open({
                 templateUrl : 'html/bartender/addNewBartender.html',
                 controller : 'NewBartenderController'
+            }).result.then(function(){
+                getBartendersByRestaurant();
             });
         }
 
@@ -31,6 +33,8 @@ angular.module('restaurantApp.BartenderController',[])
             $uibModal.open({
                 templateUrl : 'html/bartender/updateBartender.html',
                 controller : 'UpdateBartenderController'
+            }).result.then(function(){
+                getBartendersByRestaurant();
             });
         }
 
@@ -43,7 +47,6 @@ angular.module('restaurantApp.BartenderController',[])
             BartenderService.addBartender(bartender).success(function (data) {
                 $scope.newBartender = {id:null, name:'', surname:'', email:'', password:'', type:'BARTENDER', date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, version:0};
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 
@@ -71,7 +74,6 @@ angular.module('restaurantApp.BartenderController',[])
         $scope.updateBartender = function (bartender) {
             BartenderService.updateBartender(bartender).success(function (data) {
                 $uibModalInstance.close();
-                window.location.reload();
             });
         }
 

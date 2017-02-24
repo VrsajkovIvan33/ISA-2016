@@ -10,6 +10,7 @@
                     <li><a href="#/systemmanager/systemmanagers">System Managers</a></li>
                     <li><a href="#/systemmanager/restaurantmanagers">Restaurant Managers</a></li>
                     <li><a href="#/systemmanager/restaurants">Restaurants</a></li>
+                    <li><a href="#/systemmanager/providers">Providers</a></li>
                     <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
@@ -40,8 +41,8 @@
                     <td>{{sm.email}}</td>
                     <!--<td><button ng-if="checkSystemManager(sm)" ng-click="openUpdateModal(sm)" type="button" class="btn btn-primary btn-md">Update</button></td>-->
                     <!--<td><button ng-if="checkSystemManager(sm)" ng-click="removeSystemManager(sm)" type="button" class="btn btn-primary btn-md">Remove</button></td>-->
-                    <td><a ng-if="checkSystemManager(sm)" ng-click="openUpdateModal(sm)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a ng-if="checkSystemManager(sm)" ng-click="removeSystemManager(sm)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td><a ng-if="checkSystemManagerUpdate(sm)" ng-click="openUpdateModal(sm)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a ng-if="checkSystemManagerDelete(sm)" ng-click="removeSystemManager(sm)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 </tbody>
             </table>
