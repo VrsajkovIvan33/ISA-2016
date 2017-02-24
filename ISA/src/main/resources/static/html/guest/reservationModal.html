@@ -29,7 +29,7 @@
 
 <div class="modal-body">
     <div ng-if="modalMode == 1">
-        <label for="startingDate">Date</label>
+        <label>Date</label>
         <input type="date" class="form-control form-control-lg" id="startingDate" ng-model="reservationHelper.date">
         <label>Time</label>
         <div class="container" style="margin-top: -45; margin-left: -10; margin-bottom: -45">
@@ -50,7 +50,29 @@
     </div>
 
     <div ng-if="modalMode == 2">
-        <h2>Mode 2</h2>
+        <h3>Select tables:</h3>
+        <div class="flex_container">
+            <div style="min-width: 50px"></div>
+            <div style="background-color:white; min-width: 500px; margin: 0 auto">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="column flex_container" ng-repeat="r1 in [0, 1, 2, 3, 4]">
+                            <span class="col-sm-1 thumbnail" ng-repeat="r2 in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]" ng-style="{backgroundColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].reserved ? 'red' : 'green' : 'black', margin: '5px', borderStyle: 'solid', borderWidth: 'medium', borderColor: tables[r1*10+r2].table.rtActive == true ? tables[r1*10+r2].table.restaurantSegment.rsColor : 'white' }"  ng-model="tables[r1*10 + r2]">{{tables[r1*10+r2].table.rtNumber}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" flex_container">
+            <div style="min-width: 50px"></div>
+            <div class=" flex_container">
+                <div style="width: 90px; height: 35px; background-color: red; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Reserved</h5></div>
+                <div style="width: 90px; height: 35px; background-color: blue; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Selected</h5></div>
+                <div style="width: 90px; height: 35px; background-color: green; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Free</h5></div>
+                <div style="width: 90px; height: 35px; background-color: black; margin: 5px; border-style: solid; border-width: medium; border-color: black"><h5>Not active</h5></div>
+            </div>
+            <div style="min-width: 50px"></div>
+        </div>
     </div>
 
     <div ng-if="modalMode == 3">
