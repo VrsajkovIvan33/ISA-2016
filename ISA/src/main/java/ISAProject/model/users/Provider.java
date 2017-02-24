@@ -18,6 +18,8 @@ public class Provider extends User implements Serializable {
 
     }
 
+    @Column(name = "ppasswordchanged")
+    private Boolean pPasswordChanged;
 
     @ManyToMany(mappedBy = "providers")
     @JsonIgnore
@@ -29,5 +31,13 @@ public class Provider extends User implements Serializable {
 
     public void setRestaurants(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
+    }
+
+    public Boolean getpPasswordChanged() {
+        return pPasswordChanged;
+    }
+
+    public void setpPasswordChanged(Boolean pPasswordChanged) {
+        this.pPasswordChanged = pPasswordChanged;
     }
 }

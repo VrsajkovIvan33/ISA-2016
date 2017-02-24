@@ -1,5 +1,6 @@
 package ISAProject.model;
 
+import ISAProject.model.users.Provider;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -15,27 +16,80 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Offer implements Serializable {
 
+    public Offer(){
+
+    }
+
+    public Offer(String offStatus, Provider offProvider, Tender offTender, int version) {
+        this.offStatus = offStatus;
+        this.offProvider = offProvider;
+        this.offTender = offTender;
+        this.version = version;
+    }
+
+    public Offer(Offer offer){
+        this.offStatus = offer.offStatus;
+        this.offProvider = offer.offProvider;
+        this.offTender = offer.offTender;
+        this.version = offer.version;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "offid")
     private Long offId;
 
-    /*@Column(name = "tstart", nullable = false)
-    private Date tStart;
-
-    @Column(name = "tend", nullable = false)
-    private Date tEnd;
-
-    @Column(name = "tstatus", nullable = false)
-    private String tStatus;
+    @Column(name = "offstatus", nullable = false)
+    private String offStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rid", referencedColumnName = "rid")
-    private Restaurant tRestaurant;
+    @JoinColumn(name = "pid", referencedColumnName = "id")
+    private Provider offProvider;
 
-    @OneToMany(mappedBy = "tender", cascade = CascadeType.ALL)
-    private List<TenderItem> tenderItems;*/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tid", referencedColumnName = "tid")
+    private Tender offTender;
 
     @Version
     private int version;
+
+    public Long getOffId() {
+        return offId;
+    }
+
+    public void setOffId(Long offId) {
+        this.offId = offId;
+    }
+
+    public String getOffStatus() {
+        return offStatus;
+    }
+
+    public void setOffStatus(String offStatus) {
+        this.offStatus = offStatus;
+    }
+
+    public Provider getOffProvider() {
+        return offProvider;
+    }
+
+    public void setOffProvider(Provider offProvider) {
+        this.offProvider = offProvider;
+    }
+
+    public Tender getOffTender() {
+        return offTender;
+    }
+
+    public void setOffTender(Tender offTender) {
+        this.offTender = offTender;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 }

@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="ProviderAccountController">
+<div ng-cloak ng-controller="ProviderProfileController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -17,7 +17,14 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h1>Welcome {{currentProvider.name}} {{currentProvider.surname}}</h1>
+            <div class="row">
+                <div class="span3 well">
+                    <h3 style="color: black;">{{currentProvider.name}} {{currentProvider.surname}}</h3>
+                    <em style="color: black;">{{currentProvider.email}}</em>
+                    <br><br><br>
+                    <button type="button" class="btn btn-default" ng-click="openUpdateModal()">Edit your info</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
