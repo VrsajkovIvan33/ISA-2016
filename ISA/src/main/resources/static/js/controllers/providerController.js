@@ -42,10 +42,10 @@ angular.module('restaurantApp.ProviderController',[])
     })
     .controller('NewProviderController', function ($localStorage, $scope, $location, $uibModalInstance, ProviderService) {
 
-        $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
+        $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', pPasswordChanged:false, version:0};
         $scope.addProvider = function (provider) {
             ProviderService.addProvider(provider).success(function (data) {
-                $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', version:0};
+                $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', pPasswordChanged:false, version:0};
                 $uibModalInstance.close();
             });
         }

@@ -133,7 +133,12 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/confirm', {
             templateUrl : 'html/confirm.html'
         })
+
+
         .when('/provider', {
             templateUrl : 'html/provider/provider.html'
+        })
+        .when('/provider/profile', {
+            templateUrl : 'html/provider/providerProfile.html'
         });
 }]);

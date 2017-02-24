@@ -22,13 +22,13 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dick", 
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:00", (SELECT id FROM user WHERE email="dickeyMoose@gmail.com"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName", "proSurname", "pro", "pro@gmail.com", "PROVIDER", 0)
-INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro@gmail.com"))
+INSERT INTO provider(id, ppasswordchanged) VALUES ((SELECT id FROM user WHERE email="pro@gmail.com"), FALSE)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "proSurname2", "pro2", "pro2@gmail.com", "PROVIDER", 0)
-INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro2@gmail.com"))
+INSERT INTO provider(id, ppasswordchanged) VALUES ((SELECT id FROM user WHERE email="pro2@gmail.com"), FALSE)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("proName2", "Prezime", "pro3", "pro3@gmail.com", "PROVIDER", 0)
-INSERT INTO provider(id) VALUES ((SELECT id FROM user WHERE email="pro3@gmail.com"))
+INSERT INTO provider(id, ppasswordchanged) VALUES ((SELECT id FROM user WHERE email="pro3@gmail.com"), FALSE)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "man", "res", "res@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
