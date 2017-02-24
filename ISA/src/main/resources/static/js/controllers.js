@@ -29,5 +29,6 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.StatementController',
     'restaurantApp.RestaurantProvidersController',
     'restaurantApp.ProviderAccountController',
-    'restaurantApp.ProviderProfileController'
+    'restaurantApp.ProviderProfileController',
+    'restaurantApp.TenderController'
 ]);
