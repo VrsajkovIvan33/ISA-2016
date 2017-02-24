@@ -223,24 +223,30 @@ public class OrderController {
             }
         }
 
+        System.out.println("MaxServedWaiter je: " + maxServedWaiter.getId());
+
         //napraviti racun
         Bill bill = new Bill();
         bill.setDate(calendar.getTime());
         bill.setWaiter(maxServedWaiter);
-        int total = 0;
+        float total = 0;
         for (OrderItem orderItem : originalOrder.getOrderItems()) {
+
             total += orderItem.getMenu().getmPrice();
         }
+        bill.setTotal(total);
         billService.save(bill);
 
         //napraviti history
         List<Long> guestIds = new ArrayList<Long>();
         List<VisitHistory> visitHistories = new ArrayList<VisitHistory>();
+        System.out.println("Broj orderItem-ova: " + originalOrder.getOrderItems().size());
         for (OrderItem orderItem : originalOrder.getOrderItems()) {
             //samo za one koji imaju usere definisane
             if (orderItem.getUser() != null) {
                 if (guestIds.contains(orderItem.getUser().getId())) {
                     //vec postoji history - njega dopuniti
+                    System.out.println("Vec postoji gost");
                     for (VisitHistory visitHistory : visitHistories) {
                         if (visitHistory.getGuest().getId() == orderItem.getUser().getId()) {
                             visitHistory.getOrderItems().add(orderItem);
@@ -250,11 +256,14 @@ public class OrderController {
                 }
                 else {
                     //napravi nov history
+                    System.out.println("Pravi nov");
                     VisitHistory visitHistory = new VisitHistory();
                     visitHistory.setGuest(guestService.findOne(orderItem.getUser().getId()));
                     visitHistory.setWaiter(maxServedWaiter);
                     visitHistory.getOrderItems().add(orderItem);
                     visitHistory.setDate(calendar.getTime());
+                    visitHistories.add(visitHistory);
+                    guestIds.add(orderItem.getUser().getId());
                 }
             }
         }

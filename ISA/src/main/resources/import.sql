@@ -138,5 +138,6 @@ INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (
 
 INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 24, 16, 0, false)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 5, 1, "Waiting for waiter", false, 16, 0)
+INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 1, 1, "Waiting for waiter", true, 16, 0)
 
 INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);
