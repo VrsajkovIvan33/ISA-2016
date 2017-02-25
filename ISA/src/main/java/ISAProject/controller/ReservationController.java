@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Nole on 2/23/2017.
@@ -49,7 +49,13 @@ public class ReservationController {
                 (reservation.getTimeH() + reservation.getTimeM()/60 + reservation.getDurationH() + reservation.getDurationM()/60) < (message.getTimeH() + message.getTimeM()/60 + message.getDurationH() + message.getDurationM()/60) ){
 
                 for(RestaurantTable restaurantTable : reservation.getTables()){
-                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
+                    boolean contains = false;
+                    for(RestaurantTableReservationHelper rh : returnTables){
+                        if(rh.getTable().getId().equals(restaurantTable.getId()))
+                            contains = true;
+                    }
+                    if(!contains)
+                        returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
                 }
             }
 
@@ -57,7 +63,13 @@ public class ReservationController {
                ((reservation.getTimeH() + reservation.getTimeM()/60) > (message.getTimeH() + message.getTimeM()/60))){
 
                 for(RestaurantTable restaurantTable : reservation.getTables()){
-                    returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
+                    boolean contains = false;
+                    for(RestaurantTableReservationHelper rh : returnTables){
+                        if(rh.getTable().getId().equals(restaurantTable.getId()))
+                            contains = true;
+                    }
+                    if(!contains)
+                        returnTables.add(new RestaurantTableReservationHelper(restaurantTable, true, false));
                 }
             }
         }
@@ -72,6 +84,7 @@ public class ReservationController {
                 returnTables.add(new RestaurantTableReservationHelper(restaurantTable, false, false));
         }
 
+        Collections.sort(returnTables, (o1, o2) -> o1.getTable().getRtPosition() - o2.getTable().getRtPosition());
         return (List<RestaurantTableReservationHelper>)returnTables;
     }
 
@@ -81,6 +94,14 @@ public class ReservationController {
         for(OrderItem item : reservation.getOrder().getOrderItems()){
             orderItemService.save(item);
         }
+        Date date = reservation.getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        reservation.getOrder().setYear(cal.get(Calendar.YEAR));
+        reservation.getOrder().setMonth(cal.get(Calendar.MONTH));
+        reservation.getOrder().setDay(cal.get(Calendar.DAY_OF_MONTH));
+        reservation.getOrder().setHourOfArrival(reservation.getTimeH());
+        reservation.getOrder().setMinuteOfArrival(reservation.getTimeM());
         orderService.save(reservation.getOrder());
 
         Reservation saved = reservationService.save(reservation);

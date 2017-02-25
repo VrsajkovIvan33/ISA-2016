@@ -64,7 +64,7 @@ public class Reservation implements Serializable {
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "reservationtable", joinColumns = @JoinColumn(name = "reservationId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tableId", referencedColumnName = "rtid"))
-    private List<RestaurantTable> tables;
+    private Set<RestaurantTable> tables;
 
     public Reservation() {
     }
@@ -125,11 +125,11 @@ public class Reservation implements Serializable {
         this.durationM = durationM;
     }
 
-    public List<RestaurantTable> getTables() {
+    public Set<RestaurantTable> getTables() {
         return tables;
     }
 
-    public void setTables(List<RestaurantTable> tables) {
+    public void setTables(Set<RestaurantTable> tables) {
         this.tables = tables;
     }
 

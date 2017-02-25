@@ -131,7 +131,10 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            $stomp.connect('/stomp', {})
                  .then(function(frame){
                      subscription = $stomp.subscribe('/topic/tables/' + $localStorage.logged.id, function(tables, headers, res){
-                         $scope.tables = tables;
+                         $scope.$apply(function(){
+                             $scope.tables = tables;
+                         })
+
                      });
 
                      searchSubscription = $stomp.subscribe('/topic/searchFriends/' + $localStorage.logged.id, function(friends, headers, res){
@@ -156,10 +159,14 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $stomp.send('/app/getTables/' + $scope.restaurant.id + '/' + $localStorage.logged.id, reservationHelper);
            }
 
-           $scope.selectTable = function(table){
-               table.selected = true;
-               if($scope.order.restaurantTable == null)
-                   $scope.order.restaurantTable = table.table;
+           $scope.selectTable = function(table) {
+               if (!table.table.rtActive || table.reserved) {
+                   toastr.warning('You can not select unactive and reserved table!')
+               } else{
+                    table.selected = true;
+                    if ($scope.order.restaurantTable == null)
+                        $scope.order.restaurantTable = table.table;
+                }
            }
 
            $scope.search = function(friendForSearch){

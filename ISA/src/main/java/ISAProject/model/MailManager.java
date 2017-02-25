@@ -38,5 +38,4 @@ public class MailManager {
         simpleMailMessage.setText(mailContent);
         javaMailSender.send(simpleMailMessage);
     }
-
 }

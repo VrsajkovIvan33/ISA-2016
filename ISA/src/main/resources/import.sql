@@ -3,7 +3,7 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko",
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Jankovic", "janko", "janko@yahoo.com", "GUEST", 0)
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dejan", "Jankovic", "dejan", "dejan@yahoo.com", "GUEST", 0)
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="cmd3395@yahoo.com" AND password="boki"))
-INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="marko@yahoo.com" AND password="marko"))
+INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="novicasarenac@gmail.com" AND password="marko"))
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="janko@yahoo.com" AND password="janko"))
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="dejan@yahoo.com" AND password="dejan"))
 
