@@ -1,5 +1,7 @@
 package ISAProject.model;
 
+import ISAProject.model.users.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -35,6 +37,26 @@ public class Reservation implements Serializable {
 
     @Column(name = "durationM")
     private int durationM;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurantId", referencedColumnName = "rid")
+    private Restaurant restaurant;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "oid", referencedColumnName = "oid")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hostId", referencedColumnName = "id")
+    private User host;
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    private List<User> pendingGuests;
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    private List<User> acceptedGuests;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "reservationtable", joinColumns = @JoinColumn(name = "reservationId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tableId", referencedColumnName = "rtid"))

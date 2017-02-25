@@ -200,6 +200,28 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.order.orderItems.splice(index, 1);
            }
 
+           $scope.finish = function(){
+               var selectedTables = [];
+               for(int i=0; i<$scope.tables.length; i++){
+                   if($scope.tables[i].selected)
+                       selectedTables.push($scope.tables[i]);
+               }
+               $scope.reservation = {
+                   date: $scope.reservationHelper.date,
+                   timeH: $scope.reservationHelper.timeH,
+                   timeM: $scope.reservationHelper.timeM,
+                   durationH: $scope.reservationHelper.durationH,
+                   durationM: $scope.reservationHelper.durationM,
+                   restaurant: $scope.restaurant,
+                   order: $scope.order,
+                   host: $localStorage.logged,
+                   pendingGuests: $scope.invitedFriends,
+                   acceptedGuests: [],
+                   tables:  selectedTables
+               };
+               toastr.info('Tables reserved and invitation mails sent!');
+           }
+
            $scope.close = function(){
                subscription.unsubscribe();
                $stomp.disconnect().then(function(){
