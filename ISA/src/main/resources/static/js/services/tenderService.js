@@ -18,7 +18,7 @@ angular.module('restaurantApp.TenderService', [])
         }
 
         factory.getTendersByTRestaurantAndTStatus = function (id, status) {
-            return $http.get('/getTendersByTRestaurantAndTStatus/' + id + '/' + type, {"id":id, "status":status});
+            return $http.get('/getTendersByTRestaurantAndTStatus/' + id + '/' + status, {"id":id, "status":status});
         }
 
         factory.removeTender = function (tender) {

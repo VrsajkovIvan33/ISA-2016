@@ -53,4 +53,9 @@ public class JpaOfferService implements OfferService{
     public List<Offer> findByOffProvider(Provider offProvider) {
         return offerRepository.findByOffProvider(offProvider);
     }
+
+    @Override
+    public Offer findByOffTenderAndOffProvider(Tender offTender, Provider offProvider) {
+        return offerRepository.findByOffTenderAndOffProvider(offTender, offProvider);
+    }
 }

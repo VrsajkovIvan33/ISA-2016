@@ -69,6 +69,12 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/restaurantManager/tenders',{
             templateUrl : 'html/restaurantManager/tenders.html'
         })
+        .when('/restaurantManager/offers',{
+            templateUrl : 'html/restaurantManager/offers.html'
+        })
+        .when('/restaurantManager/reports',{
+            templateUrl : 'html/restaurantManager/reports.html'
+        })
 
         //routing for the waiter
         .when('/waiter',{
@@ -152,5 +158,11 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/provider/profile', {
             templateUrl : 'html/provider/providerProfile.html'
+        })
+        .when('/provider/tenders', {
+            templateUrl : 'html/provider/tenders.html'
+        })
+        .when('/provider/offerHistory', {
+            templateUrl : 'html/provider/offerHistory.html'
         });
 }]);

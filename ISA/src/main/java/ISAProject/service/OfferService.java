@@ -25,4 +25,6 @@ public interface OfferService {
     List<Offer> findByOffProviderAndOffStatus(Provider offProvider, String offStatus);
 
     List<Offer> findByOffProvider(Provider offProvider);
+
+    Offer findByOffTenderAndOffProvider(Tender offTender, Provider offProvider);
 }

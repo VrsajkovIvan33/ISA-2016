@@ -1,0 +1,47 @@
+<div ng-cloak ng-controller="ProviderTendersController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/provider">Home</a></li>
+                    <li><a href="#/provider/profile">Profile</a></li>
+                    <li><a href="#/provider/tenders">Tenders</a></li>
+                    <li><a href="#/provider/offerHistory">Offer History</a></li>
+                    <li><a href="#/">Logout</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Tenders</h3>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Restaurant:</th>
+                    <th>Tender start:</th>
+                    <th>Tender end:</th>
+                    <th>Tender status:</th>
+                    <th>Tender items:</th>
+                    <th>Offer:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="t in providerTenders">
+                    <td>{{t.tRestaurant.rName}}</td>
+                    <td>{{t.tStart | date}}</td>
+                    <td>{{t.tEnd | date}}</td>
+                    <td>{{t.tStatus}}</td>
+                    <td><a ng-click="zoomTender(t)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                    <td><a ng-click="updateOffer(t)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
