@@ -32,5 +32,6 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.ProviderProfileController',
     'restaurantApp.TenderController',
     'restaurantApp.ProviderTendersController',
-    'restaurantApp.OfferHistoryController'
+    'restaurantApp.OfferHistoryController',
+    'restaurantApp.RestaurantOffersController'
 ]);

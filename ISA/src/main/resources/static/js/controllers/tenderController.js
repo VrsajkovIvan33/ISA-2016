@@ -71,6 +71,18 @@ angular.module('restaurantApp.TenderController',[])
                 controller : 'ZoomTenderController'
             })
         }
+
+        $scope.acceptedOffer = function(tender){
+
+            OfferService.getOffersByOffTenderAndOffStatus(tender.tId, 'Accepted').success(function (data) {
+                $rootScope.zoomROffer = data[0];
+                $uibModal.open({
+                    templateUrl : 'html/restaurantManager/zoomRestaurantOffer.html',
+                    controller : 'ZoomRestaurantOfferController',
+                    size: 'lg'
+                })
+            });
+        }
     })
     .controller('NewTenderController', function ($localStorage, $scope, $location, $uibModalInstance, TenderService, TenderItemService) {
 

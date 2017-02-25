@@ -1,0 +1,43 @@
+<!-- Modal for user info update -->
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Offer Items</h4>
+</div>
+<div class="modal-body">
+    <table class="responstable">
+        <thead>
+        <tr>
+            <th>Tender item name:</th>
+            <th>Tender item type:</th>
+            <th>Tender item quantity:</th>
+            <th>Offer item price:</th>
+            <th>Offer item delivery time:</th>
+            <th>Offer item guarantee:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="oi in offerItemList">
+            <td>{{oi.offiTenderItem.tiName}}</td>
+            <td>{{oi.offiTenderItem.tiType}}</td>
+            <td>{{oi.offiTenderItem.tiQuantity}}</td>
+            <td>{{oi.offiPrice}}</td>
+            <td>{{oi.offiDeliveryTime}}</td>
+            <td>{{oi.offiGuarantee}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <label>Total price: {{totalPrice}}</label>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>

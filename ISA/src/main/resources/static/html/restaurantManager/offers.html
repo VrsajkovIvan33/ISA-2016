@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="TenderController">
+<div ng-cloak ng-controller="RestaurantOffersController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -26,29 +26,25 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Tenders</h3>
-
-            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add New Tender</a>
+            <h3>Offers</h3>
 
             <table class="responstable">
                 <thead>
                 <tr>
-                    <th>Tender start:</th>
-                    <th>Tender end:</th>
-                    <th>Tender status:</th>
-                    <th>Tender items:</th>
-                    <th>Accepted offer:</th>
-                    <th>Cancel:</th>
+                    <th>Provider name:</th>
+                    <th>Provider surname:</th>
+                    <th>Provider email:</th>
+                    <th>Offer items:</th>
+                    <th>Accept:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="t in tenders">
-                    <td>{{t.tStart | date}}</td>
-                    <td>{{t.tEnd | date}}</td>
-                    <td>{{t.tStatus}}</td>
-                    <td><a ng-click="zoomTender(t)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                    <td><a ng-if="t.tStatus == 'Closed'" ng-click="acceptedOffer(t)" class="btn btn-info"><span class="glyphicon glyphicon-list"></span></a></td>
-                    <td><a ng-if="t.tStatus == 'Active'" ng-click="removeTender(t)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <tr ng-repeat="o in restaurantOffers">
+                    <td>{{o.offProvider.name}}</td>
+                    <td>{{o.offProvider.surname}}</td>
+                    <td>{{o.offProvider.email}}</td>
+                    <td><a ng-click="zoomRestaurantOffer(o)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                    <td><a ng-click="acceptOffer(o)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a></td>
                 </tr>
                 </tbody>
             </table>
