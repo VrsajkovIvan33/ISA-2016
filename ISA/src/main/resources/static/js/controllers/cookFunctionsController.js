@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.CookFunctionsController',[])
-    .controller('CookFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, $uibModal, CookService, CalendarEventFactory, OrderItemFactory) {
+    .controller('CookFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, $stomp, $log, uiCalendarConfig, $uibModal, CookService, CalendarEventFactory, OrderItemFactory) {
 
         function init() {
             $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -36,6 +36,9 @@ angular.module('restaurantApp.CookFunctionsController',[])
                 return name.concat(blankSpace.concat(surname));
             }
 
+            var ordersSubscription = null;
+            var orderItemsSubscription = null;
+
             CookService.getCook($localStorage.logged.id).success(function(data) {
                 $scope.cook = data;
                 $scope.checkPasswordChanged();
@@ -61,31 +64,67 @@ angular.module('restaurantApp.CookFunctionsController',[])
                 OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
                     $scope.making = data;
                 });
+
+                $stomp.connect('/stomp', {})
+                    .then(function(frame){
+                        ordersSubscription = $stomp.subscribe('/topic/orders/' + $scope.cook.restaurant.id, function(unimportantBoolean, headers, res){
+                            OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                                $scope.inWaiting = data;
+                            });
+                            OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                                $scope.making = data;
+                            });
+                        });
+                        orderItemsSubscription = $stomp.subscribe('/topic/orderItems/' + $scope.cook.restaurant.id, function(unimportantBoolean, headers, res){
+                            OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                                $scope.inWaiting = data;
+                            });
+                            OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                                $scope.making = data;
+                            });
+                        });
+
+                    });
+
             });
+
+            $stomp.setDebug(function(args){
+                $log.debug(args);
+            });
+
+            $scope.disconnect = function(){
+                ordersSubscription.unsubscribe();
+                orderItemsSubscription.unsubscribe();
+                $stomp.disconnect().then(function(){
+                    $log.info('disconnected');
+                });
+            };
 
             $scope.takeOrderItem = function(orderItem) {
                 orderItem.oiStatus = "Currently making";
                 orderItem.staff = $localStorage.logged;
-                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
-                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
-                        $scope.inWaiting = data;
-                    });
-                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
-                        $scope.making = data;
-                    });
-                });
+                $stomp.send('/app/updateOrderItem/' + $scope.cook.restaurant.id, orderItem);
+                // OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                //     OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                //         $scope.inWaiting = data;
+                //     });
+                //     OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                //         $scope.making = data;
+                //     });
+                // });
             }
 
             $scope.markAsFinished = function(orderItem) {
                 orderItem.oiStatus = "Ready";
-                OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
-                    OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
-                        $scope.inWaiting = data;
-                    });
-                    OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
-                        $scope.making = data;
-                    });
-                });
+                $stomp.send('/app/updateOrderItem/' + $scope.cook.restaurant.id, orderItem);
+                // OrderItemFactory.updateOrderItem(orderItem).success(function(data) {
+                //     OrderItemFactory.getOrderItemsInWaitingByStaff($scope.cook).success(function(data) {
+                //         $scope.inWaiting = data;
+                //     });
+                //     OrderItemFactory.getOrderItemsCurrentlyMakingByStaff($scope.cook).success(function(data) {
+                //         $scope.making = data;
+                //     });
+                // });
             }
 
             $scope.openUpdateProfileModal = function() {
