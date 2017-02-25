@@ -2,7 +2,7 @@
  * Created by Marko on 2/24/2017.
  */
 angular.module('restaurantApp.TenderController',[])
-    .controller('TenderController', function ($localStorage, $scope, $location, $uibModal, $rootScope, TenderService) {
+    .controller('TenderController', function ($localStorage, $scope, $location, $uibModal, $rootScope, TenderService, OfferService) {
 
         $scope.tenders = [];
         $scope.active = false;
@@ -23,9 +23,21 @@ angular.module('restaurantApp.TenderController',[])
 
 
         $scope.removeTender = function (tender) {
-            tender.tStatus = "Canceled";
-            TenderService.updateTender(tender).success(function (data) {
-                $scope.active = false;
+
+            var offers = [];
+            OfferService.getOffersByOffTender(tender.tId).success(function (data) {
+                offers = data;
+                for(var i = 0; i < offers.length; i++){
+                    offers[i].offStatus = 'Canceled';
+                    OfferService.updateOffer(offers[i]).success(function (data) {
+
+                    });
+                }
+
+                tender.tStatus = "Canceled";
+                TenderService.updateTender(tender).success(function (data) {
+                    $scope.active = false;
+                });
             });
         }
 

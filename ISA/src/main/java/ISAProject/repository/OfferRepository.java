@@ -28,4 +28,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     List<Offer> findByOffProviderAndOffStatus(Provider offProvider, String offStatus);
 
     List<Offer> findByOffProvider(Provider offProvider);
+
+    Offer findByOffTenderAndOffProvider(Tender offTender, Provider offProvider);
 }

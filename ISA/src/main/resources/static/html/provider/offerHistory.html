@@ -1,0 +1,45 @@
+<div ng-cloak ng-controller="OfferHistoryController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+
+
+                <div class="menuBar">
+
+                    <li><a href="#/provider">Home</a></li>
+                    <li><a href="#/provider/profile">Profile</a></li>
+                    <li><a href="#/provider/tenders">Tenders</a></li>
+                    <li><a href="#/provider/offerHistory">Offer History</a></li>
+                    <li><a href="#/">Logout</a></li>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Offer History</h3>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Restaurant:</th>
+                    <th>Tender start:</th>
+                    <th>Tender end:</th>
+                    <th>Offer status:</th>
+                    <th>Offer items:</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="o in offerHistory">
+                    <td>{{o.offTender.tRestaurant.rName}}</td>
+                    <td>{{o.offTender.tStart | date}}</td>
+                    <td>{{o.offTender.tEnd | date}}</td>
+                    <td>{{o.offStatus}}</td>
+                    <td><a ng-click="zoomOfferHistory(o)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

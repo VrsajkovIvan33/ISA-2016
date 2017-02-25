@@ -143,5 +143,11 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/provider/profile', {
             templateUrl : 'html/provider/providerProfile.html'
+        })
+        .when('/provider/tenders', {
+            templateUrl : 'html/provider/tenders.html'
+        })
+        .when('/provider/offerHistory', {
+            templateUrl : 'html/provider/offerHistory.html'
         });
 }]);
