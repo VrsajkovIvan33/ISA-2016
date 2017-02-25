@@ -5,6 +5,7 @@
 angular.module('restaurantApp.WaiterFunctionsController',[])
     .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
         function init() {
+
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 console.log("Kliknut dogadjaj!");
             };
@@ -37,6 +38,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
             WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
                 $scope.waiter = data;
+                $scope.checkPasswordChanged();
                 RestaurantTableFactory.getTablesByRestaurant($scope.waiter.restaurant).success(function(data) {
                     $scope.tables = data;
                 });
@@ -141,6 +143,33 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                         $scope.orders = data;
                     });
                 });
+            }
+
+            $scope.openUpdateProfileModal = function() {
+                $rootScope.updateWaiter = $scope.waiter;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/updateWaiter.html',
+                    controller : 'UpdateWaiterProfileController'
+                }).result.then(function(){
+                    WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+                        $scope.waiter = data;
+                    })
+                });
+            }
+
+            $scope.checkPasswordChanged = function () {
+                if($scope.waiter.passwordChanged == false){
+                    $uibModal.open({
+                        templateUrl : 'html/waiter/waiterChangePassword.html',
+                        controller : 'ChangeWaiterPasswordController',
+                        backdrop: 'static',
+                        keyboard: false
+                    }).result.then(function(){
+                        WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+                            $scope.waiter = data;
+                        })
+                    });
+                }
             }
 
         }
@@ -273,6 +302,48 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
         }
+    })
+    .controller('UpdateWaiterProfileController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, WaiterService) {
+
+        function getWaiter(){
+            $scope.waiterToUpdate = jQuery.extend(true, {}, $rootScope.updateWaiter);
+            $scope.waiterToUpdate.date_of_birth = new Date($scope.waiterToUpdate.date_of_birth);
+        }
+        getWaiter();
+
+        $scope.updateWaiter = function (waiter) {
+            WaiterService.updateWaiter(waiter).success(function (data) {
+                $uibModalInstance.close();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+    })
+    .controller('ChangeWaiterPasswordController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, WaiterService) {
+
+        WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+            $scope.waiter = data;
+        });
+
+        $scope.newPassword = "";
+        $scope.repeatPassword = "";
+
+
+        $scope.updateWaiterPassword = function() {
+            if($scope.repeatPassword != $scope.newPassword){
+                alert("Passwords do not match!");
+            }else {
+                $scope.waiter.password = $scope.newPassword;
+                $scope.waiter.passwordChanged = true;
+                WaiterService.updateWaiter($scope.waiter).success(function(data) {
+                    $uibModalInstance.close(data);
+                })
+            }
+        }
+
     });
 
 

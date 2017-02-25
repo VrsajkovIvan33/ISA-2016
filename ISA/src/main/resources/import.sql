@@ -13,10 +13,10 @@ INSERT INTO systemmanager(id) VALUES ((SELECT id FROM user WHERE email="admin@gm
 INSERT INTO restaurant(rname, rtype, version) VALUES ("Bob's Country Bunker", "Country", 0)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Branko", "Brankovic", "barek", "b.brankovic@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1975-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="b.brankovic@gmail.com" AND password="barek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1975-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="b.brankovic@gmail.com" AND password="barek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dick", "Steele", "BiggusDickus", "dickeyMoose@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:00", (SELECT id FROM user WHERE email="dickeyMoose@gmail.com"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
@@ -34,13 +34,13 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("bar", "man", "bar", "bar@gmail.com", "BARTENDER", 0)
-INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1)
+INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid, password_changed) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1, false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Novica", "Sarenac", "nov", "ns@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad', (SELECT id FROM user WHERE email="ns@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid, password_changed) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad', (SELECT id FROM user WHERE email="ns@gmail.com"), 1, false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Ivan", "Vrsajkov", "iva", "iv@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish', (SELECT id FROM user WHERE email="iv@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid, password_changed) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish', (SELECT id FROM user WHERE email="iv@gmail.com"), 1, false)
 
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Indoors', 'blue')
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Smoking', 'red')

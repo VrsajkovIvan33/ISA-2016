@@ -43,6 +43,9 @@ public class Waiter extends User implements Serializable {
     @JsonIgnore
     private List<Order> orders;
 
+    @Column(name = "passwordChanged")
+    private Boolean passwordChanged;
+
     public Date getDate_of_birth() {
         return date_of_birth;
     }
@@ -89,5 +92,13 @@ public class Waiter extends User implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Boolean getPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(Boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 }

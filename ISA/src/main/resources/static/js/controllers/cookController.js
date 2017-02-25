@@ -44,7 +44,7 @@ angular.module('restaurantApp.CookController',[])
     })
     .controller('NewCookController', function ($localStorage, $scope, $location, $uibModalInstance, CookService, RestaurantService) {
 
-        $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null};
+        $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null, passwordChanged:false};
         $scope.addCook = function (cook) {
             CookService.addCook(cook).success(function (data) {
                 $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null};
@@ -65,7 +65,7 @@ angular.module('restaurantApp.CookController',[])
 
         getRestaurants();
 
-        $scope.cookTypes = ["Salad Cook", "Cooked Meal Cook", "Grilled Dish Cook"];
+        $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
     })
     .controller('UpdateCookController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, CookService, RestaurantService) {
 
@@ -94,5 +94,5 @@ angular.module('restaurantApp.CookController',[])
 
         getRestaurants();
 
-        $scope.cookTypes = ["Salad Cook", "Cooked Meal Cook", "Grilled Dish Cook"];
+        $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
     });

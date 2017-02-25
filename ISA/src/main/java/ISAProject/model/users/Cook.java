@@ -36,6 +36,9 @@ public class Cook extends User implements Serializable {
     @Column(name = "typecook", nullable = false)
     private String typeCook;
 
+    @Column(name = "passwordChanged")
+    private Boolean passwordChanged;
+
     public Date getDate_of_birth() {
         return date_of_birth;
     }
@@ -74,5 +77,13 @@ public class Cook extends User implements Serializable {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public Boolean getPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(Boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 }
