@@ -1,6 +1,7 @@
 package ISAProject.controller;
 
 import ISAProject.model.*;
+import ISAProject.model.users.Guest;
 import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,9 @@ public class ReservationController {
 
     @Autowired
     private OrderItemService orderItemService;
+
+    @Autowired
+    private MailManager mailManager;
 
     @MessageMapping("/getTables/{restaurantId}/{id}")
     @SendTo("/topic/tables/{id}")
@@ -105,6 +109,10 @@ public class ReservationController {
         orderService.save(reservation.getOrder());
 
         Reservation saved = reservationService.save(reservation);
+
+        for(Guest guest : reservation.getPendingGuests()){
+            mailManager.sendInvitationMail(saved.getId(), guest);
+        }
 
         return new ResponseEntity<Reservation>(saved, HttpStatus.OK);
     }
