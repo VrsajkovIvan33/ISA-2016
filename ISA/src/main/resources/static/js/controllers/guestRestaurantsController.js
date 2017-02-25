@@ -96,7 +96,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                })
            }
        })
-       .controller('GuestReservationController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
+       .controller('GuestReservationController', function ($localStorage, $scope, $stomp, $uibModal, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
            function init(){
                $scope.restaurant = param.restaurant;
                $scope.modalMode = 1;
@@ -158,7 +158,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            $scope.selectTable = function(table){
                table.selected = true;
                if($scope.order.restaurantTable == null)
-                   $scope.order.restaurantTable = table;s
+                   $scope.order.restaurantTable = table;
            }
 
            $scope.search = function(friendForSearch){
@@ -181,6 +181,25 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.modalMode += 1;
            }
 
+           $scope.openNewItemModal = function(){
+               $uibModal.open({
+                   templateUrl : 'html/guest/newOrderItemModal.html',
+                   controller : 'NewOrderItemController',
+                   resolve: {
+                       param : function(){
+                           return {'restaurant' : $scope.restaurant };
+                       }
+                   }
+               }).result.then(function(orderItem){
+                    $scope.order.orderItems.push(orderItem);
+               });
+           }
+
+           $scope.removeItem = function(orderItem){
+               var index = $scope.order.orderItems.indexOf(orderItem);
+               $scope.order.orderItems.splice(index, 1);
+           }
+
            $scope.close = function(){
                subscription.unsubscribe();
                $stomp.disconnect().then(function(){
@@ -188,4 +207,28 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                })
                $uibModalInstance.dismiss('cancel');
            };
-       });
+       })
+       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, MenuService){
+           $scope.newOrderItem = new Object();
+           $scope.newOrderItem.oiStatus = "Waiting";
+           $scope.newOrderItem.user = $localStorage.logged;
+           $scope.newOrderItem.order = null;
+           $scope.newOrderItem.hourOfArrival = 0;
+           $scope.newOrderItem.minuteOfArrival = 0;
+           $scope.newOrderItem.oiReadyByArrival = false;
+
+           $scope.restaurant = param.restaurant;
+
+           MenuService.getMenusByMRestaurant($scope.restaurant.id).success(function(data){
+               $scope.menus = data;
+               $scope.newOrderItem.menu = $scope.menus[0];
+           });
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
+           }
+
+           $scope.addOrderItem = function(orderItem){
+               $uibModalInstance.close(orderItem);
+           }
+       })

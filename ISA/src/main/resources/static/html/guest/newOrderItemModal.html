@@ -1,0 +1,28 @@
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Add New Order Item</h4>
+</div>
+<div class="modal-body">
+    <form role="form">
+        <label for="menuSelect">Menu item</label>
+        <select class="form-control form-control-lg" ng-model="newOrderItem.menu" ng-options="menu.mName for menu in menus" id="menuSelect"></select>
+        <label for="menuSelect">Ready by arrival</label>
+        <input type="checkbox" style="margin-left: 30; margin-top: 20" ng-model="newOrderItem.oiReadyByArrival" value="false">
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="addOrderItem(newOrderItem)">Add</button>
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>

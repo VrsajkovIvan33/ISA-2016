@@ -112,7 +112,34 @@
     </div>
 
     <div ng-if="modalMode == 4">
-        <h3>Orders</h3>
+        <div class="container" style="margin-top: -45; margin-left: -10; margin-bottom: -45">
+            <div class="row">
+                <h3><div class="col-sm-1" style="margin-right: 350">Order items</div></h3>
+                <div class="col-sm-1"><button type="button" class="btn btn-success btn-md" ng-click="openNewItemModal()">Add  <span class="glyphicon glyphicon-plus"></span> </button></div>
+            </div>
+        </div>
+        <table class="responstable">
+            <thead>
+            <tr>
+                <th>Guest:</th>
+                <th>Menu:</th>
+                <th>Type:</th>
+                <th>Status:</th>
+                <th>Ready by arrival:</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="oi in order.orderItems">
+                <td>{{oi.user.name + " " + oi.user.surname}}</td>
+                <td>{{oi.menu.mName}}</td>
+                <td>{{oi.menu.mType}}</td>
+                <td>{{oi.oiStatus}}</td>
+                <td>{{oi.oiReadyByArrival}}</td>
+                <td><button class="btn btn-primary" ng-disabled="oi.oiStatus!='Waiting'" ng-click="removeItem(oi)">Remove</button></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
@@ -121,5 +148,6 @@
     <button type="button" class="btn btn-default" ng-click="changeModalMode(modalMode)" ng-if="modalMode == 2">Next</button>
     <button type="button" class="btn btn-default" ng-if="modalMode == 3" ng-click="changeModalMode(modalMode)">Order</button>
     <button type="button" class="btn btn-default" ng-if="modalMode == 3">Finish</button>
+    <button type="button" class="btn btn-default" ng-if="modalMode == 4">Finish</button>
     <button type="button" class="btn btn-default" ng-click="close()">Close</button>
 </div>
