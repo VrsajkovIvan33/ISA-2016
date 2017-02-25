@@ -1,17 +1,14 @@
 package ISAProject.controller;
 
 import ISAProject.model.*;
-import ISAProject.service.ReservationService;
-import ISAProject.service.RestaurantService;
-import ISAProject.service.RestaurantTableService;
+import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +28,12 @@ public class ReservationController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
     @MessageMapping("/getTables/{restaurantId}/{id}")
     @SendTo("/topic/tables/{id}")
@@ -70,6 +73,19 @@ public class ReservationController {
         }
 
         return (List<RestaurantTableReservationHelper>)returnTables;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addReservation", consumes = "application/json")
+    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation){
+        System.out.print("");
+        for(OrderItem item : reservation.getOrder().getOrderItems()){
+            orderItemService.save(item);
+        }
+        orderService.save(reservation.getOrder());
+
+        Reservation saved = reservationService.save(reservation);
+
+        return new ResponseEntity<Reservation>(saved, HttpStatus.OK);
     }
 
 }

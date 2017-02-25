@@ -105,17 +105,18 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.foundFriends = [];
                $scope.invitedFriends = [];
                $scope.order = {
-                   orderItems : [],
+                   orderItems : new Array(),
                    restaurantTable : null,
-                   oStatus : 'Waiting for waiter',
+                   oStatus : "Waiting for waiter",
                    oAssigned : false,
-                   waiters : [],
+                   waiters : new Array(),
                    currentWaiter : null,
                    year : 0,
                    month : 0,
                    day : 0,
                    hourOfArrival : 0,
-                   minuteOfArrival : 0
+                   minuteOfArrival : 0,
+                   billCreated : false
                };
            };
 
@@ -158,7 +159,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            $scope.selectTable = function(table){
                table.selected = true;
                if($scope.order.restaurantTable == null)
-                   $scope.order.restaurantTable = table;
+                   $scope.order.restaurantTable = table.table;
            }
 
            $scope.search = function(friendForSearch){
@@ -202,9 +203,9 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
 
            $scope.finish = function(){
                var selectedTables = [];
-               for(int i=0; i<$scope.tables.length; i++){
+               for(i=0; i<$scope.tables.length; i++){
                    if($scope.tables[i].selected)
-                       selectedTables.push($scope.tables[i]);
+                       selectedTables.push($scope.tables[i].table);
                }
                $scope.reservation = {
                    date: $scope.reservationHelper.date,
@@ -216,10 +217,14 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                    order: $scope.order,
                    host: $localStorage.logged,
                    pendingGuests: $scope.invitedFriends,
-                   acceptedGuests: [],
+                   acceptedGuests: new Array(),
                    tables:  selectedTables
                };
-               toastr.info('Tables reserved and invitation mails sent!');
+               GuestRestaurantsFactory.addReservation($scope.reservation).success(function(data){
+                   toastr.info('Tables reserved and invitation mails sent!');
+               });
+
+               $uibModalInstance.dismiss('cancel');
            }
 
            $scope.close = function(){

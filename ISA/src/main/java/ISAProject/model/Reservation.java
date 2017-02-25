@@ -1,11 +1,14 @@
 package ISAProject.model;
 
+import ISAProject.model.users.Guest;
 import ISAProject.model.users.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nole on 2/23/2017.
@@ -13,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "reservation")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Reservation implements Serializable {
 
     @Id
@@ -39,7 +43,7 @@ public class Reservation implements Serializable {
     private int durationM;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurantId", referencedColumnName = "rid")
+    @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -48,17 +52,17 @@ public class Reservation implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hostId", referencedColumnName = "id")
-    private User host;
+    private Guest host;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
-    private List<User> pendingGuests;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "reservationpendingguests", joinColumns = @JoinColumn(name = "reservationid", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "guestid", referencedColumnName = "id", nullable = false))
+    private Set<Guest> pendingGuests;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
-    private List<User> acceptedGuests;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "reservationacceptedguests", joinColumns = @JoinColumn(name = "reservationid", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "guestid", referencedColumnName = "id", nullable = false))
+    private Set<Guest> acceptedGuests;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "reservationtable", joinColumns = @JoinColumn(name = "reservationId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tableId", referencedColumnName = "rtid"))
     private List<RestaurantTable> tables;
 
@@ -127,5 +131,45 @@ public class Reservation implements Serializable {
 
     public void setTables(List<RestaurantTable> tables) {
         this.tables = tables;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Guest getHost() {
+        return host;
+    }
+
+    public void setHost(Guest host) {
+        this.host = host;
+    }
+
+    public Set<Guest> getPendingGuests() {
+        return pendingGuests;
+    }
+
+    public void setPendingGuests(Set<Guest> pendingGuests) {
+        this.pendingGuests = pendingGuests;
+    }
+
+    public Set<Guest> getAcceptedGuests() {
+        return acceptedGuests;
+    }
+
+    public void setAcceptedGuests(Set<Guest> acceptedGuests) {
+        this.acceptedGuests = acceptedGuests;
     }
 }

@@ -14,5 +14,9 @@ angular.module('restaurantApp.GuestRestaurantsFactory', [])
                return $http.get('/getRestaurants');
            }
 
+           factory.addReservation = function(reservation){
+               return $http.post('/addReservation',  reservation );
+           }
+
            return factory;
        });
