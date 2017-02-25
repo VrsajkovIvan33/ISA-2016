@@ -1,7 +1,9 @@
 package ISAProject.controller;
 
+import ISAProject.model.Offer;
 import ISAProject.model.Restaurant;
 import ISAProject.model.users.Provider;
+import ISAProject.service.OfferService;
 import ISAProject.service.ProviderService;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class ProviderController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @Autowired
+    private OfferService offerService;
+
 
     @RequestMapping(
             value = "/getProviders",
@@ -40,6 +45,15 @@ public class ProviderController {
     public ResponseEntity<Provider> removeProvider(@PathVariable("id") Long id) {
 
         Provider provider = providerService.findOne(id);
+
+        //delete offers
+        List<Offer> offers = offerService.findByOffProvider(provider);
+        for(Offer o: offers){
+            o.setOffProvider(null);
+            o.setOffStatus("Closed");
+            offerService.save(o);
+        }
+
         List<Restaurant> restaurants = provider.getRestaurants();
         for(Restaurant restaurant: restaurants){
             List<Provider> restaurantProviders = restaurant.getProviders();

@@ -135,7 +135,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 $rootScope.orderToBill = order;
                 $uibModal.open({
                     templateUrl : 'html/waiter/createBillModal.html',
-                    controller : 'AddNewOrderController'
+                    controller : 'CreateBillController'
                 }).result.then(function(){
                     OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
                         $scope.orders = data;
@@ -259,8 +259,8 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
         $scope.total = 0;
         var i = 0;
-        for (i = 0; i < orderToBill.orderItems.length; i++) {
-            $scope.total += orderToBill.orderItems[i].menu.mPrice;
+        for (i = 0; i < $scope.orderToBill.orderItems.length; i++) {
+            $scope.total += $scope.orderToBill.orderItems[i].menu.mPrice;
         }
 
         $scope.createBill = function() {

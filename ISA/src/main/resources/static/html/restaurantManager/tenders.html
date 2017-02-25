@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="RestaurantProvidersController">
+<div ng-cloak ng-controller="TenderController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -25,25 +25,27 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Restaurant Providers</h3>
+            <h3>Tenders</h3>
 
-            <a ng-click="openSearchModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
+            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add New Tender</a>
 
             <table class="responstable">
                 <thead>
                 <tr>
-                    <th>Provider name:</th>
-                    <th>Provider surname:</th>
-                    <th>Provider email:</th>
-                    <th>Delete:</th>
+                    <th>Tender start:</th>
+                    <th>Tender end:</th>
+                    <th>Tender status:</th>
+                    <th>Tender items:</th>
+                    <th>Cancel:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="p in restaurantProviders">
-                    <td>{{p.name}}</td>
-                    <td>{{p.surname}}</td>
-                    <td>{{p.email}}</td>
-                    <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <tr ng-repeat="t in tenders">
+                    <td>{{t.tStart | date}}</td>
+                    <td>{{t.tEnd | date}}</td>
+                    <td>{{t.tStatus}}</td>
+                    <td><a ng-click="zoomTender(t)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                    <td><a ng-if="t.tStatus == 'Active'" ng-click="removeTender(t)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,0 +1,35 @@
+<!-- Modal for user info update -->
+<style>
+    .modal {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h4 class="modal-title">Tender Items</h4>
+</div>
+<div class="modal-body">
+    <table class="responstable">
+        <thead>
+        <tr>
+            <th>Tender item name:</th>
+            <th>Tender item type:</th>
+            <th>Tender item quantity:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ti in tenderItemsList">
+            <td>{{ti.tiName}}</td>
+            <td>{{ti.tiType}}</td>
+            <td>{{ti.tiQuantity}}</td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+</div>
