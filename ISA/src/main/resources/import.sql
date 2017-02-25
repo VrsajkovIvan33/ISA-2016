@@ -162,3 +162,12 @@ INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (10, 'Coca Cola', 'Drink', '30 kom', 5, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (11, 'Jaja', 'Foodstuff', '200 kom', 5, 0);
 INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (2, 9);
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("WaiterName", "WaiterSurname", "waiter", "w.waiter@gmail.com", "WAITER", 0)
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1985-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="w.waiter@gmail.com" AND password="waiter"), 2)
+
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('1', "2017-01-02 00:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('2', "2017-01-03 00:00:00", '200', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('3', "2017-02-04 00:00:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('4', "2017-02-03 00:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('5', "2017-03-03 00:00:00", '1000', '0', '16');

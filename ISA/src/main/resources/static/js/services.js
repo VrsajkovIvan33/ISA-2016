@@ -34,5 +34,6 @@ angular.module('restaurantApp.services',[
                'restaurantApp.TenderItemService',
                'restaurantApp.VisitHistoryFactory',
                'restaurantApp.OfferService',
-               'restaurantApp.OfferItemService'
+               'restaurantApp.OfferItemService',
+               'restaurantApp.BillService'
 ]);

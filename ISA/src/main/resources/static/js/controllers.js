@@ -33,5 +33,6 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.TenderController',
     'restaurantApp.ProviderTendersController',
     'restaurantApp.OfferHistoryController',
-    'restaurantApp.RestaurantOffersController'
+    'restaurantApp.RestaurantOffersController',
+    'restaurantApp.ReportController'
 ]);
