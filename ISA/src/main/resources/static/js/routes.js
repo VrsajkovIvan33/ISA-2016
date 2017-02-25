@@ -92,6 +92,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/waiter/waitersOrders', {
             templateUrl : 'html/waiter/waitersOrders.html'
         })
+        .when('/waiter/profile', {
+            templateUrl : 'html/waiter/waiterProfile.html'
+        })
 
         //routing for the cook
         .when('/cook',{
@@ -106,6 +109,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/cook/unassignedOrderItems',{
             templateUrl : 'html/cook/unassignedOrderItems.html'
         })
+        .when('/cook/profile', {
+            templateUrl : 'html/cook/cookProfile.html'
+        })
 
         //routing for the bartender
         .when('/bartender',{
@@ -119,6 +125,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         })
         .when('/bartender/unassignedOrderItems',{
             templateUrl : 'html/bartender/unassignedOrderItems.html'
+        })
+        .when('/bartender/profile',{
+            templateUrl : 'html/bartender/bartenderProfile.html'
         })
 
         .when('/login', {

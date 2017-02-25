@@ -31,6 +31,9 @@ public class Bartender extends User implements Serializable {
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     private Restaurant restaurant;
 
+    @Column(name = "passwordChanged")
+    private Boolean passwordChanged;
+
     public Date getDate_of_birth() {
         return date_of_birth;
     }
@@ -61,5 +64,13 @@ public class Bartender extends User implements Serializable {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public Boolean getPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(Boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 }

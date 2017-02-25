@@ -3,8 +3,9 @@
  */
 
 angular.module('restaurantApp.WaiterFunctionsController',[])
-    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
+    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, $stomp, $log, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
         function init() {
+
             $scope.alertOnEventClick = function( date, jsEvent, view){
                 console.log("Kliknut dogadjaj!");
             };
@@ -35,8 +36,12 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 return name.concat(blankSpace.concat(surname));
             }
 
+            var ordersSubscription = null;
+            var orderItemsSubscription = null;
+
             WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
                 $scope.waiter = data;
+                $scope.checkPasswordChanged();
                 RestaurantTableFactory.getTablesByRestaurant($scope.waiter.restaurant).success(function(data) {
                     $scope.tables = data;
                 });
@@ -64,7 +69,42 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
                     $scope.orders = data;
                 });
+
+                $stomp.connect('/stomp', {})
+                    .then(function(frame){
+                        ordersSubscription = $stomp.subscribe('/topic/orders/' + $scope.waiter.restaurant.id, function(unimportantBoolean, headers, res){
+                            OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                                $scope.unassigned = data;
+                            });
+                            OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                                $scope.orders = data;
+                            });
+                        });
+                        orderItemsSubscription = $stomp.subscribe('/topic/orderItems/' + $scope.waiter.restaurant.id, function(unimportantBoolean, headers, res){
+                            OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                                $scope.unassigned = data;
+                            });
+                            OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                                $scope.orders = data;
+                            });
+                        });
+
+
+                    });
+
             })
+
+            $stomp.setDebug(function(args){
+                $log.debug(args);
+            });
+
+            $scope.disconnect = function(){
+                ordersSubscription.unsubscribe();
+                orderItemsSubscription.unsubscribe();
+                $stomp.disconnect().then(function(){
+                    $log.info('disconnected');
+                });
+            };
 
             $scope.openShowOrderItemsModal = function(order) {
                 $rootScope.orderToShowUnassigned = order;
@@ -81,9 +121,9 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                     templateUrl : 'html/waiter/showUpdateOrderItemsModal.html',
                     controller : 'ShowUpdateOrderItemsController'
                 }).result.then(function(){
-                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
-                        $scope.orders = data;
-                    });
+                    // OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                    //     $scope.orders = data;
+                    // });
                 });
             }
 
@@ -108,27 +148,29 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 for (i = 0; i < order.orderItems.length; i++) {
                     order.orderItems[i].oiStatus = "Waiting";
                 }
-                OrderFactory.updateOrder(order).success(function(data) {
-                    OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
-                        $scope.unassigned = data;
-                    });
-                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
-                        $scope.orders = data;
-                    });
-                });
+                $stomp.send('/app/updateOrder/' + $scope.waiter.restaurant.id, order);
+                // OrderFactory.updateOrder(order).success(function(data) {
+                //     OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                //         $scope.unassigned = data;
+                //     });
+                //     OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                //         $scope.orders = data;
+                //     });
+                // });
             }
 
             $scope.unassignOrder = function(order) {
                 order.oAssigned = false;
                 order.currentWaiter = null;
-                OrderFactory.updateOrder(order).success(function(data) {
-                    OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
-                        $scope.unassigned = data;
-                    });
-                    OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
-                        $scope.orders = data;
-                    });
-                });
+                $stomp.send('/app/updateOrder/' + $scope.waiter.restaurant.id, order);
+                // OrderFactory.updateOrder(order).success(function(data) {
+                //     OrderFactory.getUnassignedByUser($scope.waiter).success(function(data) {
+                //         $scope.unassigned = data;
+                //     });
+                //     OrderFactory.getOrdersByWaiter($scope.waiter).success(function(data) {
+                //         $scope.orders = data;
+                //     });
+                // });
             }
 
             $scope.openCreateBillModal = function(order) {
@@ -143,6 +185,33 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 });
             }
 
+            $scope.openUpdateProfileModal = function() {
+                $rootScope.updateWaiter = $scope.waiter;
+                $uibModal.open({
+                    templateUrl : 'html/waiter/updateWaiter.html',
+                    controller : 'UpdateWaiterProfileController'
+                }).result.then(function(){
+                    WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+                        $scope.waiter = data;
+                    })
+                });
+            }
+
+            $scope.checkPasswordChanged = function () {
+                if($scope.waiter.passwordChanged == false){
+                    $uibModal.open({
+                        templateUrl : 'html/waiter/waiterChangePassword.html',
+                        controller : 'ChangeWaiterPasswordController',
+                        backdrop: 'static',
+                        keyboard: false
+                    }).result.then(function(){
+                        WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+                            $scope.waiter = data;
+                        })
+                    });
+                }
+            }
+
         }
 
         init();
@@ -155,7 +224,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
             $uibModalInstance.dismiss('cancel');
         }
     })
-    .controller('ShowUpdateOrderItemsController', function ($localStorage, $scope, $location, $uibModal, $uibModalInstance, $rootScope, OrderFactory, OrderItemFactory)  {
+    .controller('ShowUpdateOrderItemsController', function ($localStorage, $scope, $location, $uibModal, $uibModalInstance, $rootScope, $stomp, $log, OrderFactory, OrderItemFactory)  {
 
         $scope.orderToShow = $rootScope.orderToShowUpdate;
 
@@ -165,7 +234,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                 templateUrl : 'html/waiter/addNewOrderItem.html',
                 controller : 'AddOrderItemsController'
             }).result.then(function(){
-                $scope.orderToShow = $rootScope.orderToShowUpdate;
+                //$scope.orderToShow = $rootScope.orderToShowUpdate;
             });
         }
 
@@ -173,28 +242,65 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
             OrderItemFactory.deleteOrderItem(orderItem).success(function(data) {
                 var index = $scope.orderToShow.orderItems.indexOf(orderItem);
                 $scope.orderToShow.orderItems.splice(index, 1);
-                OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
-                   $scope.orderToShow = data;
-                   $rootScope.orderToShowUpdate = data;
-                });
+                $stomp.send('/app/updateOrder/' + $scope.orderToShow.currentWaiter.restaurant.id, $scope.orderToShow);
+                // OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
+                //    $scope.orderToShow = data;
+                //    $rootScope.orderToShowUpdate = data;
+                // });
             });
         }
 
         $scope.close = function(){
             //$uibModalInstance.dismiss('cancel');
+            $stomp.send('/app/updateOrder/' + $scope.orderToShow.currentWaiter.restaurant.id, $scope.orderToShow);
+            $scope.disconnect();
             $uibModalInstance.close();
         }
 
         $scope.updateOrder = function(){
-            OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
-                if (data == null) {
-                    alert("Change not possible!")
-                }
-                $uibModalInstance.close();
+            // OrderFactory.updateOrder($scope.orderToShow).success(function(data) {
+            //     if (data == null) {
+            //         alert("Change not possible!")
+            //     }
+            //     $uibModalInstance.close();
+            // });
+            $stomp.send('/app/updateOrder/' + $scope.orderToShow.currentWaiter.restaurant.id, $scope.orderToShow);
+            $scope.disconnect();
+            $uibModalInstance.close();
+        };
+
+        var ordersSubscription = null;
+        var orderItemsSubscription = null;
+
+        $stomp.connect('/stomp', {})
+            .then(function(frame){
+                ordersSubscription = $stomp.subscribe('/topic/orders/' + $scope.orderToShow.currentWaiter.restaurant.id, function(unimportantBoolean, headers, res){
+                    OrderFactory.getOrderById($scope.orderToShow.id).success(function(data) {
+                        $scope.orderToShow = data;
+                        $rootScope.orderToShowUpdate = data;
+                    })
+                });
+                orderItemsSubscription = $stomp.subscribe('/topic/orderItems/' + $scope.orderToShow.currentWaiter.restaurant.id, function(unimportantBoolean, headers, res){
+                    OrderFactory.getOrderById($scope.orderToShow.id).success(function(data) {
+                        $scope.orderToShow = data;
+                        $rootScope.orderToShowUpdate = data;
+                    })
+                });
+            });
+
+        $stomp.setDebug(function(args){
+            $log.debug(args);
+        });
+
+        $scope.disconnect = function(){
+            ordersSubscription.unsubscribe();
+            orderItemsSubscription.unsubscribe();
+            $stomp.disconnect().then(function(){
+                $log.info('disconnected');
             });
         };
     })
-    .controller('AddOrderItemsController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, MenuService, OrderItemFactory) {
+    .controller('AddOrderItemsController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, $stomp, MenuService, OrderItemFactory, OrderFactory) {
 
         $scope.orderToShow = $rootScope.orderToShowUpdate;
         $scope.waiter = $rootScope.waiterForOrder;
@@ -218,7 +324,13 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
         $scope.addOrderItem = function() {
             $rootScope.orderToShowUpdate.orderItems.push($scope.newOrderItem);
+            $stomp.send('/app/updateOrder/' + $rootScope.orderToShowUpdate.currentWaiter.restaurant.id, $rootScope.orderToShowUpdate);
             $uibModalInstance.close();
+            // OrderFactory.updateOrder($rootScope.orderToShowUpdate).success(function(data) {
+            //     $scope.orderToShow = data;
+            //     $rootScope.orderToShowUpdate = data;
+            //     $uibModalInstance.close();
+            // });
         }
     })
     .controller('AddNewOrderController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantTableFactory, OrderFactory) {
@@ -273,6 +385,48 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
         }
+    })
+    .controller('UpdateWaiterProfileController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, WaiterService) {
+
+        function getWaiter(){
+            $scope.waiterToUpdate = jQuery.extend(true, {}, $rootScope.updateWaiter);
+            $scope.waiterToUpdate.date_of_birth = new Date($scope.waiterToUpdate.date_of_birth);
+        }
+        getWaiter();
+
+        $scope.updateWaiter = function (waiter) {
+            WaiterService.updateWaiter(waiter).success(function (data) {
+                $uibModalInstance.close();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+    })
+    .controller('ChangeWaiterPasswordController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, WaiterService) {
+
+        WaiterService.getWaiter($localStorage.logged.id).success(function(data) {
+            $scope.waiter = data;
+        });
+
+        $scope.newPassword = "";
+        $scope.repeatPassword = "";
+
+
+        $scope.updateWaiterPassword = function() {
+            if($scope.repeatPassword != $scope.newPassword){
+                alert("Passwords do not match!");
+            }else {
+                $scope.waiter.password = $scope.newPassword;
+                $scope.waiter.passwordChanged = true;
+                WaiterService.updateWaiter($scope.waiter).success(function(data) {
+                    $uibModalInstance.close(data);
+                })
+            }
+        }
+
     });
 
 
