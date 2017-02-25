@@ -3,6 +3,7 @@
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
 
+
                 <div class="menuBar">
                     <ul>
                         <li><a href="#waiter">Home</a></li>
@@ -20,8 +21,16 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <div style="background-color:black">
-                <h1>Welcome, {{waiter.name}}!</h1>
+            <div class="row">
+                <div class="span3 well">
+                    <img src="https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-9/11873354_700863073377511_1380696414796455218_n.jpg?oh=3f5de243471754f6ff341dae29b69f14&oe=58ECF3F5" name="aboutme" width="140" height="140" class="img-circle">
+                    <h3 style="color: black;">{{waiter.name}} {{waiter.surname}}</h3>
+                    <em style="color: black;">{{waiter.restaurant.rName}}</em>
+                    <br>
+                    <em style="color: black;">{{waiter.email}}</em>
+                    <br><br><br>
+                    <button type="button" class="btn btn-default" ng-click="openUpdateProfileModal()">Edit your info</button>
+                </div>
             </div>
         </div>
     </div>

@@ -38,6 +38,7 @@ angular.module('restaurantApp.BartenderFunctionsController',[])
 
             BartenderService.getBartender($localStorage.logged.id).success(function(data) {
                 $scope.bartender = data;
+                $scope.checkPasswordChanged();
                 CalendarEventFactory.getEventsByUser($scope.bartender).success(function(data) {
                     $scope.myEvents = [];
                     var i;
@@ -86,8 +87,77 @@ angular.module('restaurantApp.BartenderFunctionsController',[])
                     });
                 });
             }
+
+            $scope.openUpdateProfileModal = function() {
+                $rootScope.updateBartender = $scope.bartender;
+                $uibModal.open({
+                    templateUrl : 'html/bartender/updateBartender.html',
+                    controller : 'UpdateBartenderProfileController'
+                }).result.then(function(){
+                    BartenderService.getBartender($localStorage.logged.id).success(function(data) {
+                        $scope.bartender = data;
+                    });
+                });
+            }
+
+            $scope.checkPasswordChanged = function () {
+                if($scope.bartender.passwordChanged == false){
+                    $uibModal.open({
+                        templateUrl : 'html/bartender/bartenderChangePassword.html',
+                        controller : 'ChangeBartenderPasswordController',
+                        backdrop: 'static',
+                        keyboard: false
+                    }).result.then(function(){
+                        BartenderService.getBartender($localStorage.logged.id).success(function(data) {
+                            $scope.bartender = data;
+                        });
+                    });
+                }
+            }
+
         }
 
         init();
+
+    })
+    .controller('UpdateBartenderProfileController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, BartenderService, RestaurantService) {
+
+        function getBartender(){
+            $scope.bartenderToUpdate = jQuery.extend(true, {}, $rootScope.updateBartender);
+            $scope.bartenderToUpdate.date_of_birth = new Date($scope.bartenderToUpdate.date_of_birth);
+        }
+        getBartender();
+
+        $scope.updateBartender = function (bartender) {
+            BartenderService.updateBartender(bartender).success(function (data) {
+                $uibModalInstance.close();
+            });
+        }
+
+        $scope.close = function(){
+            $uibModalInstance.dismiss('cancel');
+        }
+
+    })
+    .controller('ChangeBartenderPasswordController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, BartenderService) {
+
+        BartenderService.getBartender($localStorage.logged.id).success(function(data) {
+            $scope.bartender = data;
+        });
+
+        $scope.newPassword = "";
+        $scope.repeatPassword = "";
+
+        $scope.updateBartenderPassword = function() {
+            if($scope.repeatPassword != $scope.newPassword){
+                alert("Passwords do not match!");
+            }else {
+                $scope.bartender.password = $scope.newPassword;
+                $scope.bartender.passwordChanged = true;
+                BartenderService.updateBartender($scope.bartender).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
+        }
 
     });
