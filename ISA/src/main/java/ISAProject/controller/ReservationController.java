@@ -5,6 +5,7 @@ import ISAProject.model.users.Guest;
 import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -38,6 +39,9 @@ public class ReservationController {
 
     @Autowired
     private MailManager mailManager;
+
+    @Autowired
+    private GuestService guestService;
 
     @MessageMapping("/getTables/{restaurantId}/{id}")
     @SendTo("/topic/tables/{id}")
@@ -95,9 +99,6 @@ public class ReservationController {
     @RequestMapping(method = RequestMethod.POST, value = "/addReservation", consumes = "application/json")
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation){
         System.out.print("");
-        for(OrderItem item : reservation.getOrder().getOrderItems()){
-            orderItemService.save(item);
-        }
         Date date = reservation.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -106,6 +107,12 @@ public class ReservationController {
         reservation.getOrder().setDay(cal.get(Calendar.DAY_OF_MONTH));
         reservation.getOrder().setHourOfArrival(reservation.getTimeH());
         reservation.getOrder().setMinuteOfArrival(reservation.getTimeM());
+        for(OrderItem item : reservation.getOrder().getOrderItems()){
+            //orderItemService.save(item);
+            item.setOrder(reservation.getOrder());
+            item.setHourOfArrival(reservation.getOrder().getHourOfArrival());
+            item.setMinuteOfArrival(reservation.getOrder().getMinuteOfArrival());
+        }
         orderService.save(reservation.getOrder());
 
         Reservation saved = reservationService.save(reservation);
@@ -117,4 +124,33 @@ public class ReservationController {
         return new ResponseEntity<Reservation>(saved, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Reservation> getReservation(@PathVariable("id") Long id){
+        Reservation reservation = reservationService.findOne(id);
+
+        return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/acceptInvitation/{guestId}/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> acceptInvitation(@PathVariable("guestId") Long guestId, @PathVariable("reservationId") Long reservationId){
+        Reservation reservation = reservationService.findOne(reservationId);
+        Guest guest = guestService.findOne(guestId);
+
+        reservation.getPendingGuests().remove(guest);
+        reservation.getAcceptedGuests().add(guest);
+        reservationService.save(reservation);
+
+        return new ResponseEntity<Long>(reservationId, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/declineInvitation/{guestId}/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> declineInvitation(@PathVariable("guestId") Long guestId, @PathVariable("reservationId") Long reservationId){
+        Reservation reservation = reservationService.findOne(reservationId);
+        Guest guest = guestService.findOne(guestId);
+
+        reservation.getPendingGuests().remove(guest);
+        reservationService.save(reservation);
+
+        return new ResponseEntity<Long>(reservationId, HttpStatus.OK);
+    }
 }

@@ -46,7 +46,7 @@ public class MailManager {
         simpleMailMessage.setFrom("restaurantscheduler2016@gmail.com");
         simpleMailMessage.setSubject("Invite");
 
-        String mailContent = "You are invited to event! To confirm or refuse follow this link:  localhost:9000/#/invite/" + id.toString();
+        String mailContent = "You are invited to event! To confirm or refuse follow this link:  localhost:9000/#/invite/" + id.toString() +"/" + user.getId();
         simpleMailMessage.setText(mailContent);
         javaMailSender.send(simpleMailMessage);
     }

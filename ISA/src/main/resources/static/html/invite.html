@@ -1,0 +1,34 @@
+<div ng-cloak ng-controller="InviteController">
+
+    <div class="container">
+        <div style="margin-left: 5%; margin-top: -20%" class="carousel-caption col-md-6">
+            <div class="container">
+                <div class="carousel-caption">
+                    <div class="row">
+                        <div class="span3 well">
+                            <h3 style="color: black">{{reservation.restaurant.rName}}</h3>
+                            <em style="color: black">Date : {{day}}.{{month}}.{{year}}</em>
+                            <br>
+                            <em style="color: black">Time : {{reservation.timeH}} : {{reservation.timeM}}</em>
+                            <br>
+                            <em style="color: black">Duration : {{reservation.durationH}}h {{reservation.durationM}}m</em>
+                            <br>
+                            <em style="color: black">Host : {{reservation.host.name}} {{reservation.host.surname}}</em>
+                            <br>
+                            <em style="color: black">Guests:</em>
+                            <br>
+                            <em style="color: black" ng-repeat="guest in reservation.acceptedGuests">{{guest.name}} {{guest.surname}}</em>
+                            <br>
+                            <div class="row">
+                                <button type="button" class="btn btn-success" ng-click="accept()">Accept</button>
+                                <button type="button" class="btn btn-danger" ng-click="decline()">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
