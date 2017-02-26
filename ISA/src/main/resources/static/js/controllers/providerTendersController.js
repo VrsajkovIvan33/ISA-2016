@@ -82,22 +82,41 @@ angular.module('restaurantApp.ProviderTendersController',[])
         }
 
         $scope.addOffer = function () {
-            if($scope.offer.offId == null) {
-                OfferService.addOffer($scope.offer).success(function (data) {
-                    var addedOffer = data;
+            if(validate($scope.offerItems)) {
+                if ($scope.offer.offId == null) {
+                    OfferService.addOffer($scope.offer).success(function (data) {
+                        var addedOffer = data;
+                        for (var i = 0; i < $scope.offerItems.length; i++) {
+                            $scope.offerItems[i].offiOffer = addedOffer;
+                            OfferItemService.addOfferItem($scope.offerItems[i]).success(function () {
+                                $uibModalInstance.close();
+                            });
+                        }
+                    });
+                } else {
                     for (var i = 0; i < $scope.offerItems.length; i++) {
-                        $scope.offerItems[i].offiOffer = addedOffer;
-                        OfferItemService.addOfferItem($scope.offerItems[i]).success(function () {
+                        OfferItemService.updateOfferItem($scope.offerItems[i]).success(function () {
                             $uibModalInstance.close();
                         });
                     }
-                });
-            }else{
-                for (var i = 0; i < $scope.offerItems.length; i++) {
-                    OfferItemService.updateOfferItem($scope.offerItems[i]).success(function () {
-                        $uibModalInstance.close();
-                    });
                 }
             }
+        }
+
+
+        function validate(offerItems) {
+            for(var i = 0; i < offerItems.length; i++) {
+                if(offerItems[i].offiPrice == undefined || offerItems[i].offiPrice == 0){
+                    alert('Price must be above 0 and below 10000000');
+                    return false;
+                }
+
+                if (offerItems[i].offiDeliveryTime == '') {
+                    alert('There are empty field');
+                    return false;
+                }
+            }
+
+            return true;
         }
     });

@@ -24,15 +24,13 @@ angular.module('restaurantApp.ProviderAccountController',[])
 
         $scope.init = function(){
             $scope.providerPasswordToChange = jQuery.extend(true, {}, $localStorage.logged);
-            $scope.providerPasswordToChange.password = null;
-            $scope.repeatPassword = null;
+            $scope.providerPasswordToChange.password = '';
+            $scope.repeatPassword = '';
         }
         $scope.init();
 
         $scope.updateProviderPassword = function (provider) {
-            if($scope.repeatPassword != $scope.providerPasswordToChange.password){
-                alert("Password does not match");
-            }else {
+            if(validate(provider)) {
                 $scope.providerPasswordToChange.pPasswordChanged = true;
                 ProviderService.updateProvider(provider).success(function (data) {
                     $uibModalInstance.close(data);
@@ -42,6 +40,22 @@ angular.module('restaurantApp.ProviderAccountController',[])
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+
+
+        function validate(provider) {
+            if(provider.password == ''){
+                alert('There are empty field');
+                return false;
+            }
+
+            if($scope.repeatPassword != provider.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     });
 
@@ -65,12 +79,38 @@ angular.module('restaurantApp.ProviderProfileController',[])
         $scope.providerAccountToUpdate = jQuery.extend(true, {}, $localStorage.logged);
 
         $scope.updateProviderAccount = function (provider) {
-            ProviderService.updateProvider(provider).success(function (data) {
-                $uibModalInstance.close(data);
-            });
+            if(validate(provider)) {
+                ProviderService.updateProvider(provider).success(function (data) {
+                    $uibModalInstance.close(data);
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+
+
+        $scope.repeatPassword = $scope.providerAccountToUpdate.password;
+
+        function validate(provider) {
+            if(provider.name == '' || provider.surname == '' || provider.email == '' || provider.password == ''){
+                alert('There are empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(provider.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            if($scope.repeatPassword != provider.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     });

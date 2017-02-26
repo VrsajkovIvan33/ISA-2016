@@ -144,8 +144,8 @@ INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_
 
 INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);
 
-INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (1, "2017-02-02 00:00:00", "2017-02-05 00:00:00", 'Closed', 1, 1);
-INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (2, "2017-02-07 00:00:00", "2017-02-11 00:00:00", 'Closed', 1, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (1, "2017-02-02 00:00:00", "2017-02-05 00:00:00", 'Canceled', 1, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (2, "2017-02-07 00:00:00", "2017-02-11 00:00:00", 'Canceled', 1, 1);
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (3, "2017-02-24 00:00:00", "2017-03-05 00:00:00", 'Active', 1, 0);
 
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (1, 'Pilece belo meso', 'Foodstuff', '20 kg', 1, 0);
@@ -158,7 +158,7 @@ INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (8, 'Sok od borovnice', 'Drink', '75 kom', 3, 0);
 
 INSERT INTO restaurant(rname, rtype, version) VALUES ("Restaurant 2", "Italian", 0);
-INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (4, "2017-02-04 00:00:00", "2017-02-10 00:00:00", 'Closed', 2, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (4, "2017-02-04 00:00:00", "2017-02-10 00:00:00", 'Canceled', 2, 1);
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (5, "2017-02-22 00:00:00", "2017-03-10 00:00:00", 'Active', 2, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (9, 'Sargarepa', 'Foodstuff', '7 kg', 4, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (10, 'Coca Cola', 'Drink', '30 kom', 5, 0);

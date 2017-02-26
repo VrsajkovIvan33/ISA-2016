@@ -29,16 +29,15 @@
                         <th>Restaurant name:</th>
                         <th>Restaurant type:</th>
                         <th>Edit:</th>
-                        <th>Delete:</th>
+                        <!--<th>Delete:</th>-->
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="r in restaurants">
                         <td>{{r.rName}}</td>
-                        <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
                         <td>{{r.rType}}</td>
                         <td><a ng-click="openUpdateModal(r)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a ng-click="removeRestaurant(r)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                        <!--<td><a ng-click="removeRestaurant(r)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>-->
                     </tr>
                 </tbody>
             </table>

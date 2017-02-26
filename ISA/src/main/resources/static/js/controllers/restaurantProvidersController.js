@@ -2,7 +2,7 @@
  * Created by Marko on 2/23/2017.
  */
 angular.module('restaurantApp.RestaurantProvidersController',[])
-    .controller('RestaurantProvidersController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService, RestaurantService) {
+    .controller('RestaurantProvidersController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService, RestaurantService, OfferService, TenderService) {
 
         $scope.providers = [];
         function getProviders(){
@@ -24,6 +24,21 @@ angular.module('restaurantApp.RestaurantProvidersController',[])
             RestaurantService.updateRestaurant($localStorage.logged.restaurant).success(function (data) {
                 $localStorage.logged.restaurant = data;
                 $scope.restaurantProviders = $scope.loggedRestaurantManager.restaurant.providers;
+
+                TenderService.getTendersByTRestaurantAndTStatus($localStorage.logged.restaurant.id, 'Active').success(function (data) {
+                    if(data.length != 0) {
+                        var activeTender = data[0];
+                        OfferService.getOffersByOffTenderAndOffProvider(activeTender.tId, provider.id).success(function (data) {
+                            var providerOffer = data;
+                            if(providerOffer != '') {
+                                providerOffer.offStatus = 'Canceled';
+                                OfferService.updateOffer(providerOffer).success(function (data) {
+
+                                });
+                            }
+                        });
+                    }
+                });
             });
         }
 

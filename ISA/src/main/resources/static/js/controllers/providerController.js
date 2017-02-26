@@ -44,26 +44,86 @@ angular.module('restaurantApp.ProviderController',[])
 
         $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', pPasswordChanged:false, version:0};
         $scope.addProvider = function (provider) {
-            ProviderService.addProvider(provider).success(function (data) {
-                $scope.newProvider = {id:null, name:'', surname:'', email:'', password:'', type:'PROVIDER', pPasswordChanged:false, version:0};
-                $uibModalInstance.close();
-            });
+            if(validate(provider)) {
+                ProviderService.addProvider(provider).success(function (data) {
+                    $scope.newProvider = {
+                        id: null,
+                        name: '',
+                        surname: '',
+                        email: '',
+                        password: '',
+                        type: 'PROVIDER',
+                        pPasswordChanged: false,
+                        version: 0
+                    };
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+
+        $scope.repeatPassword = '';
+
+        function validate(provider) {
+            if(provider.name == '' || provider.surname == '' || provider.email == '' || provider.password == ''){
+                alert('There are empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(provider.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            if($scope.repeatPassword != provider.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     })
     .controller('UpdateProviderController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, ProviderService) {
 
         $scope.providerToUpdate = jQuery.extend(true, {}, $rootScope.updateProvider);
         $scope.updateProvider = function (provider) {
-            ProviderService.updateProvider(provider).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(provider)) {
+                ProviderService.updateProvider(provider).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+
+
+        $scope.repeatPassword = $scope.providerToUpdate.password;
+
+        function validate(provider) {
+            if(provider.name == '' || provider.surname == '' || provider.email == '' || provider.password == ''){
+                alert('There are empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(provider.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            if($scope.repeatPassword != provider.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     });
