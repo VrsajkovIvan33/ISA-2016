@@ -19,6 +19,7 @@
                     <li><a href="#restaurantManager/tables">Table arrangement</a></li>
                     <li><a href="#restaurantManager/statement">Reviews</a></li>
                     <li><a href="#restaurantManager/reports">Report</a></li>
+                    <li><a href="#restaurantManager/chart">Chart</a></li>
                     <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
@@ -42,7 +43,7 @@
                     <input type="date" ng-model="minDate" ng-change="changeDate()">
                     <label>   </label>
                     <label>Restaurant payment end: </label>
-                    <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br></br>
+                    <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br>
                 </div>
 
 
@@ -55,14 +56,7 @@
                     <input type="date" ng-model="minDateWaiter" ng-change="changeDateWaiter()">
                     <label>   </label>
                     <label>Waiter payment end: </label>
-                    <input type="date" ng-model="maxDateWaiter" ng-change="changeDateWaiter()"></br></br></br>
-                </div>
-
-                <div fusioncharts
-                     width="600"
-                     height="400"
-                     type="column2d"
-                     dataSource="{{myDataSource}}" >
+                    <input type="date" ng-model="maxDateWaiter" ng-change="changeDateWaiter()"></br></br>
                 </div>
             </div>
         </div>
