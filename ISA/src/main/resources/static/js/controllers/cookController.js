@@ -46,10 +46,26 @@ angular.module('restaurantApp.CookController',[])
 
         $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null, passwordChanged:false};
         $scope.addCook = function (cook) {
-            CookService.addCook(cook).success(function (data) {
-                $scope.newCook = {id:null, name:'', surname:'', email:'', password:'', type:'COOK', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, typeCook:null};
-                $uibModalInstance.close();
-            });
+            if(validate(cook)) {
+                CookService.addCook(cook).success(function (data) {
+                    $scope.newCook = {
+                        id: null,
+                        name: '',
+                        surname: '',
+                        email: '',
+                        password: '',
+                        type: 'COOK',
+                        version: 0,
+                        date_of_birth: null,
+                        dress_size: 0,
+                        shoe_size: 0,
+                        restaurant: $localStorage.logged.restaurant,
+                        typeCook: null,
+                        passwordChanged: false
+                    };
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -66,6 +82,42 @@ angular.module('restaurantApp.CookController',[])
         getRestaurants();
 
         $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
+
+
+
+        $scope.repeatPassword = '';
+
+        function validate(cook) {
+            if(cook.name == '' || cook.surname == '' || cook.email == '' ||
+                cook.password == '' || cook.date_of_birth == null || cook.typeCook == null){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(cook.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            var date = new Date();
+            if(cook.date_of_birth > date){
+                alert('Date of birth must be before today');
+                return false;
+            }
+
+            if(cook.dress_size == undefined || cook.dress_size == 0 || cook.shoe_size == undefined || cook.shoe_size == 0){
+                alert('Dress size and shoe size must be above 0 and below 100');
+                return false;
+            }
+
+            if($scope.repeatPassword != cook.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
+        }
     })
     .controller('UpdateCookController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, CookService, RestaurantService) {
 
@@ -76,9 +128,11 @@ angular.module('restaurantApp.CookController',[])
         getCook();
 
         $scope.updateCook = function (cook) {
-            CookService.updateCook(cook).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(cook)) {
+                CookService.updateCook(cook).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -95,4 +149,40 @@ angular.module('restaurantApp.CookController',[])
         getRestaurants();
 
         $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
+
+
+
+        $scope.repeatPassword = $scope.cookToUpdate.password;
+
+        function validate(cook) {
+            if(cook.name == '' || cook.surname == '' || cook.email == '' ||
+                cook.password == '' || cook.date_of_birth == null || cook.typeCook == null){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(cook.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            var date = new Date();
+            if(cook.date_of_birth > date){
+                alert('Date of birth must be before today');
+                return false;
+            }
+
+            if(cook.dress_size == undefined || cook.dress_size == 0 || cook.shoe_size == undefined || cook.shoe_size == 0){
+                alert('Dress size and shoe size must be above 0 and below 100');
+                return false;
+            }
+
+            if($scope.repeatPassword != cook.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
+        }
     });

@@ -71,19 +71,12 @@ public class OrderController {
         CalendarEvent calendarEvent = calendarEventService.findByUserAndShift(userId, year, month, day, hour);
         List<Order> orders = new ArrayList<Order>();
         if (calendarEvent != null) {
-//            System.out.println("Calendar event is not null");
-//            System.out.println("Table Region: " + calendarEvent.getTableRegion().getId());
-//            System.out.println("Restaurant: " + waiter.getRestaurant().getId());
             //stolovi za koje je zaduzen u smeni
             List<RestaurantTable> restaurantTables = restaurantTableService.findByRestaurantAndTableRegion(waiter.getRestaurant(), calendarEvent.getTableRegion());
-//            System.out.println("Tables length: " + restaurantTables.size());
             if (!restaurantTables.isEmpty()) {
-//                System.out.println("Ima stolova!");
                 //vrati sve ordere za koje nema zaduzenog za sve stolove
                 for (RestaurantTable restaurantTable : restaurantTables) {
-//                    System.out.println("Za sto: " + restaurantTable.getId());
                     orders.addAll(orderService.findByAssignedAndRestaurantTableAndDate(false, restaurantTable, year, month, day));
-//                    System.out.println("Ima ih: " + orders.size());
                 }
             }
         }
@@ -117,29 +110,47 @@ public class OrderController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<Order> addOrder(@RequestBody Order order) throws Exception {
-        if (order.getYear() == 0) {
-            Calendar calendar = Calendar.getInstance();
-            order.setYear(calendar.get(Calendar.YEAR));
-            order.setMonth(calendar.get(Calendar.MONTH));
-            order.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-            order.setHourOfArrival(calendar.get(Calendar.HOUR_OF_DAY));
-            order.setMinuteOfArrival(calendar.get(Calendar.MINUTE));
+
+        Boolean validationResult = true;
+        Order newestOrder = null;
+
+        if (order.getBillCreated() == null || order.getoAssigned() == null || order.getoStatus() == null) {
+            validationResult = false;
         }
-        Order newOrder = new Order();
-        newOrder.setBillCreated(order.getBillCreated());
-        newOrder.setoAssigned(order.getoAssigned());
-        newOrder.setoStatus(order.getoStatus());
-        newOrder.setYear(order.getYear());
-        newOrder.setMonth(order.getMonth());
-        newOrder.setDay(order.getDay());
-        newOrder.setHourOfArrival(order.getHourOfArrival());
-        newOrder.setMinuteOfArrival(order.getMinuteOfArrival());
-        newOrder.setRestaurantTable(order.getRestaurantTable());
-        Order newerOrder = orderService.save(newOrder);
-        newerOrder.setCurrentWaiter(order.getCurrentWaiter());
-        newerOrder.setWaiters(order.getWaiters());
-        Order newestOrder = orderService.save(newerOrder);
-        //Order newOrder = orderService.save(order);
+        if (order.getoStatus() != null) {
+            if (!order.getoStatus().equals("Waiting for waiter") && !order.getoStatus().equals("Waiting") &&
+                    !order.getoStatus().equals("Currently making") && !order.getoStatus().equals("Ready")) {
+                validationResult = false;
+            }
+        }
+
+        if (validationResult == true) {
+            if (order.getYear() == 0) {
+                Calendar calendar = Calendar.getInstance();
+                order.setYear(calendar.get(Calendar.YEAR));
+                order.setMonth(calendar.get(Calendar.MONTH));
+                order.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                order.setHourOfArrival(calendar.get(Calendar.HOUR_OF_DAY));
+                order.setMinuteOfArrival(calendar.get(Calendar.MINUTE));
+            }
+            Order newOrder = new Order();
+            newOrder.setBillCreated(order.getBillCreated());
+            newOrder.setoAssigned(order.getoAssigned());
+            newOrder.setoStatus(order.getoStatus());
+            newOrder.setYear(order.getYear());
+            newOrder.setMonth(order.getMonth());
+            newOrder.setDay(order.getDay());
+            newOrder.setHourOfArrival(order.getHourOfArrival());
+            newOrder.setMinuteOfArrival(order.getMinuteOfArrival());
+            newOrder.setRestaurantTable(order.getRestaurantTable());
+            Order newerOrder = orderService.save(newOrder);
+            newerOrder.setCurrentWaiter(order.getCurrentWaiter());
+            newerOrder.setWaiters(order.getWaiters());
+            newestOrder = orderService.save(newerOrder);
+        }
+        else {
+            System.out.println("Validation failed for order addition!");
+        }
         return new ResponseEntity<Order>(newestOrder, HttpStatus.OK);
     }
 

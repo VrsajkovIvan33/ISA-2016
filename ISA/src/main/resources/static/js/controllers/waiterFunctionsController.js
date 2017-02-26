@@ -395,13 +395,59 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
         getWaiter();
 
         $scope.updateWaiter = function (waiter) {
-            WaiterService.updateWaiter(waiter).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if ($scope.validateWaiterProfile(waiter) == true) {
+                WaiterService.updateWaiter(waiter).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.validateWaiterProfile = function(waiter) {
+            if (waiter.name == "") {
+                alert("Name empty!");
+                return false;
+            }
+            if (waiter.surname == "") {
+                alert("Surname empty!");
+                return false;
+            }
+            if (waiter.email == "") {
+                alert("Email empty!");
+                return false;
+            }
+            if (waiter.email == undefined || waiter.email == null) {
+                alert("Incorrect email!");
+                return false;
+            }
+            if (waiter.password == "") {
+                alert("Password empty!");
+                return false;
+            }
+            if (waiter.date_of_birth == undefined) {
+                alert("Incorrect date!");
+                return false;
+            }
+            if (waiter.dress_size == null) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (waiter.dress_size <= 0) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (waiter.shoe_size == null) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            if (waiter.shoe_size <= 0) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            return true;
         }
 
     })
@@ -416,9 +462,14 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
 
         $scope.updateWaiterPassword = function() {
-            if($scope.repeatPassword != $scope.newPassword){
+
+            if ($scope.repeatPassword == "" || $scope.newPassword == "") {
+                alert("Password cannot be empty!");
+            }
+            else if($scope.repeatPassword != $scope.newPassword){
                 alert("Passwords do not match!");
-            }else {
+            }
+            else {
                 $scope.waiter.password = $scope.newPassword;
                 $scope.waiter.passwordChanged = true;
                 WaiterService.updateWaiter($scope.waiter).success(function(data) {

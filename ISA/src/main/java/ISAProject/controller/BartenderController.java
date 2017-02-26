@@ -2,6 +2,7 @@ package ISAProject.controller;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.users.Bartender;
+import ISAProject.model.users.UserType;
 import ISAProject.service.BartenderService;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,18 @@ public class BartenderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Bartender> createBartender(@RequestBody Bartender bartender) throws Exception {
-        Bartender savedBartender = bartenderService.save(bartender);
+        Bartender savedBartender = null;
+        Boolean validationResult = true;
+        if (bartender.getType() != UserType.BARTENDER || bartender.getName() == null || bartender.getPassword() == null ||
+                bartender.getDate_of_birth() == null || bartender.getRestaurant() == null || bartender.getSurname() == null) {
+            validationResult = false;
+        }
+        if (validationResult == true) {
+            savedBartender = bartenderService.save(bartender);
+        }
+        else {
+            System.out.println("Validation failed for bartender addition!");
+        }
         return new ResponseEntity<Bartender>(savedBartender, HttpStatus.CREATED);
     }
 
@@ -75,7 +87,18 @@ public class BartenderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Bartender> updateBartender(@RequestBody Bartender bartender) throws Exception {
-        Bartender savedBartender = bartenderService.save(bartender);
+        Bartender savedBartender = null;
+        Boolean validationResult = true;
+        if (bartender.getType() != UserType.BARTENDER || bartender.getName() == null || bartender.getPassword() == null ||
+                bartender.getDate_of_birth() == null || bartender.getRestaurant() == null || bartender.getSurname() == null) {
+            validationResult = false;
+        }
+        if (validationResult == true) {
+            savedBartender = bartenderService.save(bartender);
+        }
+        else {
+            System.out.println("Validation failed for bartender update!");
+        }
         return new ResponseEntity<Bartender>(savedBartender, HttpStatus.CREATED);
     }
 }

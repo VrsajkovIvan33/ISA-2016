@@ -168,9 +168,11 @@ angular.module('restaurantApp.CookFunctionsController',[])
         getCook();
 
         $scope.updateCook = function (cook) {
-            CookService.updateCook(cook).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if ($scope.validateCookProfile(cook) == true) {
+                CookService.updateCook(cook).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -178,6 +180,50 @@ angular.module('restaurantApp.CookFunctionsController',[])
         }
 
         $scope.cookTypes  = ["Salad", "Cooked Meal", "Grilled Dish", "All"];
+
+        $scope.validateCookProfile = function(cook) {
+            if (cook.name == "") {
+                alert("Name empty!");
+                return false;
+            }
+            if (cook.surname == "") {
+                alert("Surname empty!");
+                return false;
+            }
+            if (cook.email == "") {
+                alert("Email empty!");
+                return false;
+            }
+            if (cook.email == undefined || cook.email == null) {
+                alert("Incorrect email!");
+                return false;
+            }
+            if (cook.password == "") {
+                alert("Password empty!");
+                return false;
+            }
+            if (cook.date_of_birth == undefined) {
+                alert("Incorrect date!");
+                return false;
+            }
+            if (cook.dress_size == null) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (cook.dress_size <= 0) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (cook.shoe_size == null) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            if (cook.shoe_size <= 0) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            return true;
+        }
 
     })
     .controller('ChangeCookPasswordController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, CookService) {
@@ -191,9 +237,13 @@ angular.module('restaurantApp.CookFunctionsController',[])
 
 
         $scope.updateCookPassword = function() {
-            if($scope.repeatPassword != $scope.newPassword){
+            if ($scope.repeatPassword == "" || $scope.newPassword == "") {
+                alert("Password cannot be empty!");
+            }
+            else if($scope.repeatPassword != $scope.newPassword){
                 alert("Passwords do not match!");
-            }else {
+            }
+            else {
                 $scope.cook.password = $scope.newPassword;
                 $scope.cook.passwordChanged = true;
                 CookService.updateCook($scope.cook).success(function (data) {

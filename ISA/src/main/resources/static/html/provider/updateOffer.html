@@ -31,7 +31,7 @@
                 <td>{{oi.offiTenderItem.tiName}}</td>
                 <td>{{oi.offiTenderItem.tiType}}</td>
                 <td>{{oi.offiTenderItem.tiQuantity}}</td>
-                <td><input type="number" class="form-control form-control-lg" ng-model="oi.offiPrice"></td>
+                <td><input type="number" class="form-control form-control-lg" ng-model="oi.offiPrice" min="0" max="10000000"></td>
                 <td><input type="text" class="form-control form-control-lg" ng-model="oi.offiDeliveryTime"></td>
                 <td><input type="text" class="form-control form-control-lg" ng-model="oi.offiGuarantee"></td>
             </tr>
