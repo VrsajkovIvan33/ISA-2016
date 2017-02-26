@@ -83,7 +83,7 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         function validate(restaurantManager) {
             if(restaurantManager.name == '' || restaurantManager.surname == '' || restaurantManager.email == '' ||
                 restaurantManager.password == '' || restaurantManager.restaurant == null || restaurantManager.date_of_birth == null){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 
@@ -142,7 +142,7 @@ angular.module('restaurantApp.RestaurantmanagerController',[])
         function validate(restaurantManager) {
             if(restaurantManager.name == '' || restaurantManager.surname == '' || restaurantManager.email == '' ||
                 restaurantManager.password == '' || restaurantManager.restaurant == null || restaurantManager.date_of_birth == null){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 

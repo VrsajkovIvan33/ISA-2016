@@ -85,7 +85,7 @@ angular.module('restaurantApp.SystemmanagerController',[])
 
         function validate(systemManager) {
             if(systemManager.name == '' || systemManager.surname == '' || systemManager.email == '' || systemManager.password == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 
@@ -123,7 +123,7 @@ angular.module('restaurantApp.SystemmanagerController',[])
 
         function validate(systemManager) {
             if(systemManager.name == '' || systemManager.surname == '' || systemManager.email == '' || systemManager.password == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 

@@ -46,7 +46,7 @@ angular.module('restaurantApp.ProviderAccountController',[])
 
         function validate(provider) {
             if(provider.password == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 
@@ -96,7 +96,7 @@ angular.module('restaurantApp.ProviderProfileController',[])
 
         function validate(provider) {
             if(provider.name == '' || provider.surname == '' || provider.email == '' || provider.password == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 

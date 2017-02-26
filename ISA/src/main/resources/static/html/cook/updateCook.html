@@ -23,12 +23,14 @@
         <input type="email" class="form-control form-control-lg" ng-model="cookToUpdate.email" placeholder="Enter cook email">
         <label>Password</label>
         <input type="password" class="form-control form-control-lg" ng-model="cookToUpdate.password" placeholder="Enter cook password">
+        <label>Repeat password</label>
+        <input type="password" class="form-control form-control-lg" ng-model="repeatPassword" placeholder="Repeat cook password">
         <label>Date of Birth</label>
         <input type="date" class="form-control form-control-lg" ng-model="cookToUpdate.date_of_birth">
         <label>Dress Size</label>
-        <input type="number" class="form-control form-control-lg" ng-model="cookToUpdate.dress_size" placeholder="Enter cook dress size">
+        <input type="number" min="0" max="100" class="form-control form-control-lg" ng-model="cookToUpdate.dress_size" placeholder="Enter cook dress size">
         <label>Shoe Size</label>
-        <input type="number" class="form-control form-control-lg" ng-model="cookToUpdate.shoe_size" placeholder="Enter cook shoe size">
+        <input type="number" min="0" max="100" class="form-control form-control-lg" ng-model="cookToUpdate.shoe_size" placeholder="Enter cook shoe size">
         <!--<label>Restaurant</label>-->
         <!--<select class="form-control" ng-model="cookToUpdate.restaurant" ng-options="res as res.rName for res in restaurants track by res.rName"></select>-->
         <label>Type</label>

@@ -233,7 +233,7 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
 
         function validate(restaurant) {
             if(restaurant.rName == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 

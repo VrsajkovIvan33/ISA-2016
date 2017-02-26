@@ -166,7 +166,7 @@ INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (
 INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (2, 9);
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("WaiterName", "WaiterSurname", "waiter", "w.waiter@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1985-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="w.waiter@gmail.com" AND password="waiter"), 2)
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1985-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="w.waiter@gmail.com" AND password="waiter"), 2, FALSE)
 
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('1', "2017-01-02 00:00:00", '150', '0', '6');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('2', "2017-01-03 00:00:00", '200', '0', '6');

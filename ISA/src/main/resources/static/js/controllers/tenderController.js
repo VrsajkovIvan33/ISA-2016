@@ -157,7 +157,7 @@ angular.module('restaurantApp.TenderController',[])
 
             for(var i = 0; i < $scope.tenderItems.length; i++){
                 if($scope.tenderItems[i].tiName == '' || $scope.tenderItems[i].tiType == ''){
-                    alert('There are empty field in tender items');
+                    alert('There is empty field in tender items');
                     return false;
                 }
             }

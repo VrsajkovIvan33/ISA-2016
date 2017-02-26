@@ -47,10 +47,21 @@ angular.module('restaurantApp.MenuController',[])
 
         $scope.newMenu = {mId:null, mName:'', mType:'' , mDescription:'', mPrice:0, mReview:0, mRestaurant:$localStorage.logged.restaurant, version:0};
         $scope.addMenu = function (menu) {
-            MenuService.addMenu(menu).success(function (data) {
-                $scope.newMenu = {mId:null, mName:'', mType:'' , mDescription:'', mPrice:0, mReview:0, mRestaurant:$localStorage.logged.restaurant, version:0};
-                $uibModalInstance.close();
-            });
+            if(validate(menu)) {
+                MenuService.addMenu(menu).success(function (data) {
+                    $scope.newMenu = {
+                        mId: null,
+                        mName: '',
+                        mType: '',
+                        mDescription: '',
+                        mPrice: 0,
+                        mReview: 0,
+                        mRestaurant: $localStorage.logged.restaurant,
+                        version: 0
+                    };
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -67,15 +78,32 @@ angular.module('restaurantApp.MenuController',[])
         getRestaurants();
 
         $scope.menuTypes = ["Salad", "Cooked Meal", "Grilled Dish"];
+
+
+        function validate(menu) {
+            if(menu.mName == '' || menu.mType == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            if(menu.mPrice == undefined || menu.mPrice == 0){
+                alert('Price must be above 0 and below 10000000');
+                return false;
+            }
+
+            return true;
+        }
     })
     .controller('UpdateMenuController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, MenuService, RestaurantService) {
 
         $scope.menuToUpdate = jQuery.extend(true, {}, $rootScope.updateMenu);
 
         $scope.updateMenu = function (menu) {
-            MenuService.updateMenu(menu).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(menu)) {
+                MenuService.updateMenu(menu).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -92,4 +120,20 @@ angular.module('restaurantApp.MenuController',[])
         getRestaurants();
 
         $scope.menuTypes = ["Salad", "Cooked Meal", "Grilled Dish"];
+
+
+
+        function validate(menu) {
+            if(menu.mName == '' || menu.mType == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            if(menu.mPrice == undefined || menu.mPrice == 0){
+                alert('Price must be above 0 and below 10000000');
+                return false;
+            }
+
+            return true;
+        }
     });

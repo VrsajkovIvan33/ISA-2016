@@ -112,7 +112,7 @@ angular.module('restaurantApp.ProviderTendersController',[])
                 }
 
                 if (offerItems[i].offiDeliveryTime == '') {
-                    alert('There are empty field');
+                    alert('There is empty field');
                     return false;
                 }
             }

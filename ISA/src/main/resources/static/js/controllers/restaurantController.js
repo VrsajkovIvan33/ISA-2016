@@ -64,7 +64,7 @@ angular.module('restaurantApp.RestaurantController',[])
 
         function validate(restaurant) {
             if(restaurant.rName == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 
@@ -96,7 +96,7 @@ angular.module('restaurantApp.RestaurantController',[])
 
         function validate(restaurant) {
             if(restaurant.rName == ''){
-                alert('There are empty field');
+                alert('There is empty field');
                 return false;
             }
 
