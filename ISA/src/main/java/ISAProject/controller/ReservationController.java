@@ -6,6 +6,7 @@ import ISAProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -188,11 +189,72 @@ public class ReservationController {
     public ResponseEntity<Long> deleteReservation(@PathVariable("id") Long id){
         Reservation reservation = reservationService.findOne(id);
 
-        reservationService.delete(reservation.getId());
-        reservation.getOrder().getWaiters().clear();
-        orderService.save(reservation.getOrder());
-        orderService.delete(reservation.getOrder().getId());
+        Date today = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
 
-        return new ResponseEntity<Long>(id, HttpStatus.OK);
+        if(reservation.getOrder().getYear() == year && reservation.getOrder().getMonth() == month && reservation.getOrder().getDay() == day){
+            if(reservation.getOrder().getHourOfArrival()*60 + reservation.getOrder().getMinuteOfArrival() > hour*60+minute+30){
+                reservationService.delete(reservation.getId());
+                reservation.getOrder().getWaiters().clear();
+                orderService.save(reservation.getOrder());
+                orderService.delete(reservation.getOrder().getId());
+
+                return new ResponseEntity<Long>(id, HttpStatus.OK);
+            }
+        }else{
+            reservationService.delete(reservation.getId());
+            reservation.getOrder().getWaiters().clear();
+            orderService.save(reservation.getOrder());
+            orderService.delete(reservation.getOrder().getId());
+
+            return new ResponseEntity<Long>(id, HttpStatus.OK);
+        }
+        return new ResponseEntity<Long>(id, HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteOrderItem/{reservationId}/{oiId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> removeOrderItem(@PathVariable("reservationId") Long reservationId, @PathVariable("oiId") Long oiId){
+        Reservation reservation = reservationService.findOne(reservationId);
+        OrderItem oi = orderItemService.findOne(oiId);
+
+        Date today = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+
+        if(reservation.getOrder().getYear() == year && reservation.getOrder().getMonth() == month && reservation.getOrder().getDay() == day){
+            if(reservation.getOrder().getHourOfArrival()*60 + reservation.getOrder().getMinuteOfArrival() > hour*60+minute+30) {
+                if(!oi.getOiStatus().equals("Currently making") && !oi.getOiStatus().equals("Ready")) {
+                    reservation.getOrder().getOrderItems().remove(oi);
+                    orderItemService.delete(oiId);
+                    orderService.save(reservation.getOrder());
+                    reservationService.save(reservation);
+
+                    return new ResponseEntity<Long>(reservation.getId(), HttpStatus.OK);
+                }else
+                    return new ResponseEntity<Long>(oiId, HttpStatus.BAD_REQUEST);
+            }
+        }else{
+            if(!oi.getOiStatus().equals("Currently making") && !oi.getOiStatus().equals("Ready")) {
+                reservation.getOrder().getOrderItems().remove(oi);
+                orderItemService.delete(oiId);
+                orderService.save(reservation.getOrder());
+                reservationService.save(reservation);
+
+                return new ResponseEntity<Long>(reservation.getId(), HttpStatus.OK);
+            }else
+                return new ResponseEntity<Long>(oiId, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Long>(oiId, HttpStatus.BAD_REQUEST);
     }
 }

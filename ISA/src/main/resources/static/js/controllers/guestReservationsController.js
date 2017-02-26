@@ -22,7 +22,7 @@ angular.module('restaurantApp.GuestReservationsController', [])
                         var date = new Date($scope.reservations[i].date);
                         $scope.dates[$scope.reservations[i].id] = {
                             "date" : date.getDate(),
-                            "month" : date.getMonth(),
+                            "month" : date.getMonth()+1,
                             "year" : date.getFullYear()
                         };
                     }
@@ -71,6 +71,8 @@ angular.module('restaurantApp.GuestReservationsController', [])
                             temp.push($scope.reservations[i]);
                     }
                     $scope.reservations = temp;
+                }).error(function(){
+                    toastr.error('You can not cancel reservation!');
                 });
            }
 
@@ -101,6 +103,19 @@ angular.module('restaurantApp.GuestReservationsController', [])
                        toastr.success('Order added!');
                    });
                });
+           }
+
+           $scope.removeItem = function(reservationId, oiId){
+                GuestReservationsFactory.removeItem(reservationId, oiId).success(function(data){
+                    var temp = [];
+                    for(i=0; i<$scope.reservation.order.orderItems.length; i++){
+                        if(oiId != $scope.reservation.order.orderItems[i].id)
+                            temp.push($scope.reservation.order.orderItems[i]);
+                    }
+                    $scope.reservation.order.orderItems = temp;
+                }).error(function(){
+                    toastr.error('You can not remove this order item');
+                });
            }
 
            $scope.close = function(){

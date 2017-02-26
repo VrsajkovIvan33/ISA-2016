@@ -52,8 +52,8 @@
                 <td>{{oi.menu.mType}}</td>
                 <td>{{oi.oiStatus}}</td>
                 <td>{{oi.oiReadyByArrival}}</td>
-                <td><button class="btn btn-primary" ng-disabled="oi.oiStatus!='Waiting'" ng-click="removeItem(oi)" ng-if="logged.id == oi.user.id">Remove</button>
-                    <button class="btn btn-primary" ng-disabled="oi.oiStatus!='Waiting'" ng-click="removeItem(oi)" ng-if="logged.id != oi.user.id" disabled>Remove</button></td>
+                <td><button class="btn btn-primary" ng-click="removeItem(reservation.id, oi.id)" ng-if="loggedUser.id == oi.user.id">Remove</button>
+                    <button class="btn btn-primary" ng-click="removeItem(reservation.id, oi.id)" ng-if="loggedUser.id != oi.user.id" disabled>Remove</button></td>
             </tr>
             </tbody>
         </table>

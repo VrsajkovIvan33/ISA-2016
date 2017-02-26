@@ -22,5 +22,9 @@ angular.module('restaurantApp.GuestReservationsFactory', [])
                return $http.delete('/deleteReservation/' + id, {"id":id});
            }
 
+           factory.removeItem = function(reservationId, oiId){
+               return $http.delete('/deleteOrderItem/' + reservationId + '/' + oiId, {"reservationId":reservationId, "oiId":oiId});
+           }
+
            return factory;
        })
