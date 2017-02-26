@@ -183,4 +183,16 @@ public class ReservationController {
 
         return new ResponseEntity<Long>(saved.getId(), HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deleteReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> deleteReservation(@PathVariable("id") Long id){
+        Reservation reservation = reservationService.findOne(id);
+
+        reservationService.delete(reservation.getId());
+        reservation.getOrder().getWaiters().clear();
+        orderService.save(reservation.getOrder());
+        orderService.delete(reservation.getOrder().getId());
+
+        return new ResponseEntity<Long>(id, HttpStatus.OK);
+    }
 }

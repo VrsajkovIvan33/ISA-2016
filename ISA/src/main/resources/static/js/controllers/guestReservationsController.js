@@ -63,6 +63,17 @@ angular.module('restaurantApp.GuestReservationsController', [])
                 });
            };
 
+           $scope.cancelReservation = function(reservation){
+                GuestReservationsFactory.cancelReservation(reservation.id).success(function(data){
+                    var temp = [];
+                    for(i=0; i<$scope.reservations.length; i++){
+                        if($scope.reservations[i].id != reservation.id)
+                            temp.push($scope.reservations[i]);
+                    }
+                    $scope.reservations = temp;
+                });
+           }
+
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();
                acceptedFriendRequestSubscription.unsubscribe();

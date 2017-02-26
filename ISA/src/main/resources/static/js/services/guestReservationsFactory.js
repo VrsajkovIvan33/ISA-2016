@@ -18,5 +18,9 @@ angular.module('restaurantApp.GuestReservationsFactory', [])
                return $http.put('/updateReservation/' + id, orderItem);
            }
 
+           factory.cancelReservation = function(id){
+               return $http.delete('/deleteReservation/' + id, {"id":id});
+           }
+
            return factory;
        })
