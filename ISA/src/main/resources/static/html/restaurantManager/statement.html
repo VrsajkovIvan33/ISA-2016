@@ -19,6 +19,7 @@
                     <li><a href="#restaurantManager/tables">Table arrangement</a></li>
                     <li><a href="#restaurantManager/statement">Reviews</a></li>
                     <li><a href="#restaurantManager/reports">Report</a></li>
+                    <li><a href="#restaurantManager/chart">Chart</a></li>
                     <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
@@ -41,7 +42,7 @@
                     <input type="date" ng-model="minDate" ng-change="changeDate()">
                     <label>   </label>
                     <label>Restaurant review end: </label>
-                    <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br></br>
+                    <input type="date" ng-model="maxDate" ng-change="changeDate()"></br></br>
                 </div>
 
                 <div style="background-color: #59ffaa">
@@ -53,10 +54,10 @@
                     <input type="date" ng-model="minDateWaiter" ng-change="changeDateWaiter()">
                     <label>   </label>
                     <label>Waiter review end: </label>
-                    <input type="date" ng-model="maxDateWaiter" ng-change="changeDateWaiter()"></br></br></br>
+                    <input type="date" ng-model="maxDateWaiter" ng-change="changeDateWaiter()"></br></br>
                 </div>
 
-                <div style="background-color: #64cdff">
+                <div style="background-color: #f4ff89">
                     </br><label>Menu item: </label>
                     <select ng-model="menu" ng-options="m as m.mName for m in menus" ng-change="changeMenu()"></select>
                     <label> review: {{avgMenuReview | number: 2}} </label></br></br>
@@ -65,10 +66,10 @@
                     <input type="date" ng-model="minDateMenu" ng-change="changeDateMenu()">
                     <label>   </label>
                     <label>Menu review end: </label>
-                    <input type="date" ng-model="maxDateMenu" ng-change="changeDateMenu()"></br></br></br>
+                    <input type="date" ng-model="maxDateMenu" ng-change="changeDateMenu()"></br></br>
                 </div>
 
-                <div style="background-color: #f4ff89">
+                <div style="background-color: #64cdff">
                     </br><label>Cook: </label>
                     <select ng-model="cook" ng-options="c as c.name for c in cooks" ng-change="changeCook()"></select>
                     <label> review: {{avgCookReview | number: 2}} </label></br></br>
@@ -77,7 +78,7 @@
                     <input type="date" ng-model="minDateCook" ng-change="changeDateCook()">
                     <label>   </label>
                     <label>Cook review end: </label>
-                    <input type="date" ng-model="maxDateCook" ng-change="changeDateCook()"></br></br></br>
+                    <input type="date" ng-model="maxDateCook" ng-change="changeDateCook()"></br></br>
                 </div>
 
             </div>

@@ -173,3 +173,24 @@ INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUE
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('3', "2017-02-04 00:00:00", '140', '0', '7');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('4', "2017-02-03 00:00:00", '150', '0', '6');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('5', "2017-03-03 00:00:00", '1000', '0', '16');
+
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('6', "2017-02-26 20:17:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('7', "2017-02-26 16:00:00", '200', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('8', "2017-02-26 14:00:12", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('9', "2017-02-25 05:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('10', "2017-02-25 22:12:00", '450', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('11', "2017-02-24 09:00:17", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('12', "2017-02-24 17:17:00", '750', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('13', "2017-02-24 09:00:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('14', "2017-02-24 09:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('15', "2017-02-24 17:00:00", '220', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('16', "2017-02-23 17:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('17', "2017-02-22 13:00:00", '200', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('18', "2017-02-22 15:12:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('19', "2017-02-22 17:17:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('20', "2017-02-21 12:00:00", '330', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('21', "2017-02-21 12:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('22', "2017-02-21 17:17:00", '320', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('23', "2017-02-21 17:00:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('24', "2017-02-20 17:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('25', "2017-02-20 17:00:00", '110', '0', '7');

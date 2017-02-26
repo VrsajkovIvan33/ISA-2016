@@ -78,6 +78,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/restaurantManager/reports',{
             templateUrl : 'html/restaurantManager/reports.html'
         })
+        .when('/restaurantManager/chart',{
+            templateUrl : 'html/restaurantManager/chart.html'
+        })
 
         //routing for the waiter
         .when('/waiter',{

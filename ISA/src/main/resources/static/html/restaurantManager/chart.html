@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="RestaurantProvidersController">
+<div ng-cloak ng-controller="ChartController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -28,28 +28,21 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Restaurant Providers</h3>
+            <div style="background-color:white; color: black;">
+                <h3>Restaurant Visits Chart</h3>
 
-            <a ng-click="openSearchModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Provider</a>
+                <label>Manager name: {{loggedManager.name}} {{loggedManager.surname}}</label></br>
+                <label>Restaurant name: {{loggedManager.restaurant.rName}} </label></br>
+                <label>Restaurant type: {{loggedManager.restaurant.rType}} </label></br></br>
 
-            <table class="responstable">
-                <thead>
-                <tr>
-                    <th>Provider name:</th>
-                    <th>Provider surname:</th>
-                    <th>Provider email:</th>
-                    <th>Delete:</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="p in restaurantProviders">
-                    <td>{{p.name}}</td>
-                    <td>{{p.surname}}</td>
-                    <td>{{p.email}}</td>
-                    <td><a ng-click="removeProvider(p)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
-                </tr>
-                </tbody>
-            </table>
+
+                <div fusioncharts
+                     width="600"
+                     height="380"
+                     type="column2d"
+                     dataSource="{{myDataSource}}" >
+                </div>
+            </div>
         </div>
     </div>
 </div>
