@@ -88,36 +88,26 @@ angular.module('restaurantApp.TenderController',[])
 
         $scope.newTender = {tId:null, tStart:null, tEnd:null , tStatus:'Active', tRestaurant:$localStorage.logged.restaurant, version:0};
         $scope.addTender = function (tender) {
-            if(tender.tStart != null && tender.tEnd != null) {
-                if(tender.tStart < tender.tEnd) {
-                    if($scope.tenderItems.length != 0) {
-                        TenderService.addTender(tender).success(function (data) {
-                            var addedTender = data;
-                            for (var i = 0; i < $scope.tenderItems.length; i++) {
-                                $scope.tenderItems[i].tiTender = addedTender;
-                                TenderItemService.addTenderItem($scope.tenderItems[i]).success(function () {
+            if(validate(tender)) {
+                TenderService.addTender(tender).success(function (data) {
+                    var addedTender = data;
+                    for (var i = 0; i < $scope.tenderItems.length; i++) {
+                        $scope.tenderItems[i].tiTender = addedTender;
+                        TenderItemService.addTenderItem($scope.tenderItems[i]).success(function () {
 
-                                });
-                            }
-                            $scope.newTender = {
-                                tId: null,
-                                tStart: null,
-                                tEnd: null,
-                                tStatus: 'Active',
-                                tRestaurant: $localStorage.logged.restaurant,
-                                version: 0
-                            };
-                            $scope.tenderItems = [];
-                            $uibModalInstance.close();
                         });
-                    }else{
-                        alert('There must be at least one tender item');
                     }
-                }else{
-                    alert('Start date must be one or more days before end date');
-                }
-            }else{
-                alert('Please enter right dates');
+                    $scope.newTender = {
+                        tId: null,
+                        tStart: null,
+                        tEnd: null,
+                        tStatus: 'Active',
+                        tRestaurant: $localStorage.logged.restaurant,
+                        version: 0
+                    };
+                    $scope.tenderItems = [];
+                    $uibModalInstance.close();
+                });
             }
         }
 
@@ -140,6 +130,40 @@ angular.module('restaurantApp.TenderController',[])
 
 
         $scope.tenderItemTypes = ['Foodstuff', 'Drink'];
+
+
+
+        function validate(tender) {
+            if(tender.tStart == null || tender.tEnd == null){
+                alert('Please enter right dates');
+                return false;
+            }
+
+            var date = new Date();
+            if(tender.tEnd <= date){
+                alert('End date must be at least one day above today');
+                return false;
+            }
+
+            if(tender.tStart >= tender.tEnd){
+                alert('Start date must be one or more days before end date');
+                return false;
+            }
+
+            if($scope.tenderItems.length < 1){
+                alert('There must be at least one tender item');
+                return false;
+            }
+
+            for(var i = 0; i < $scope.tenderItems.length; i++){
+                if($scope.tenderItems[i].tiName == '' || $scope.tenderItems[i].tiType == ''){
+                    alert('There is empty field in tender items');
+                    return false;
+                }
+            }
+
+            return true;
+        }
     })
     .controller('UpdateTenderController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, TenderService) {
 

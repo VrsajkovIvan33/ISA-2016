@@ -23,12 +23,14 @@
         <input type="email" class="form-control form-control-lg" ng-model="newWaiter.email" placeholder="Enter waiter email">
         <label>Password</label>
         <input type="password" class="form-control form-control-lg" ng-model="newWaiter.password" placeholder="Enter waiter password">
+        <label>Repeat password</label>
+        <input type="password" class="form-control form-control-lg" ng-model="repeatPassword" placeholder="Repeat waiter password">
         <label>Date of Birth</label>
         <input type="date" class="form-control form-control-lg" ng-model="newWaiter.date_of_birth">
         <label>Dress Size</label>
-        <input type="number" class="form-control form-control-lg" ng-model="newWaiter.dress_size" placeholder="Enter waiter dress size">
+        <input type="number" min="0" max="100" class="form-control form-control-lg" ng-model="newWaiter.dress_size" placeholder="Enter waiter dress size">
         <label>Shoe Size</label>
-        <input type="number" class="form-control form-control-lg" ng-model="newWaiter.shoe_size" placeholder="Enter waiter shoe size">
+        <input type="number" min="0" max="100" class="form-control form-control-lg" ng-model="newWaiter.shoe_size" placeholder="Enter waiter shoe size">
         <!--<label>Restaurant</label>-->
         <!--<select class="form-control" ng-model="newWaiter.restaurant" ng-options="res as res.rName for res in restaurants"></select>-->
     </form>
