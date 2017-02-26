@@ -93,7 +93,24 @@ public class CookController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cook> createCook(@RequestBody Cook cook) throws Exception {
-        Cook savedCook = cookService.save(cook);
+        Cook savedCook = null;
+        Boolean validationResult = true;
+        if (cook.getName() == null || cook.getPassword() == null || cook.getTypeCook() == null || cook.getPasswordChanged() == null ||
+                cook.getSurname() == null || cook.getDate_of_birth() == null || cook.getRestaurant() == null || cook.getEmail() == null) {
+            validationResult = false;
+        }
+        if (cook.getTypeCook() != null) {
+            if (!cook.getTypeCook().equals("All") && !cook.getTypeCook().equals("Salad") && !cook.getTypeCook().equals("Cooked Meal") &&
+                    !cook.getTypeCook().equals("Grilled Dish")) {
+                validationResult = false;
+            }
+        }
+        if (validationResult == true) {
+            savedCook = cookService.save(cook);
+        }
+        else {
+            System.out.println("Validation failed for cook addition!");
+        }
         return new ResponseEntity<Cook>(savedCook, HttpStatus.CREATED);
     }
 
@@ -103,7 +120,24 @@ public class CookController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Cook> updateCook(@RequestBody Cook cook) throws Exception {
-        Cook savedCook = cookService.save(cook);
+        Cook savedCook = null;
+        Boolean validationResult = true;
+        if (cook.getName() == null || cook.getPassword() == null || cook.getTypeCook() == null || cook.getPasswordChanged() == null ||
+                cook.getSurname() == null || cook.getDate_of_birth() == null || cook.getRestaurant() == null || cook.getEmail() == null) {
+            validationResult = false;
+        }
+        if (cook.getTypeCook() != null) {
+            if (!cook.getTypeCook().equals("All") && !cook.getTypeCook().equals("Salad") && !cook.getTypeCook().equals("Cooked Meal") &&
+                    !cook.getTypeCook().equals("Grilled Dish")) {
+                validationResult = false;
+            }
+        }
+        if (validationResult == true) {
+            savedCook = cookService.save(cook);
+        }
+        else {
+            System.out.println("Validation for cook update failed!");
+        }
         return new ResponseEntity<Cook>(savedCook, HttpStatus.CREATED);
     }
 }

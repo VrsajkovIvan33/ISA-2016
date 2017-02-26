@@ -108,62 +108,106 @@ public class CalendarEventController {
             consumes = "application/json")
     public ResponseEntity<List<CalendarEvent>> addCalendarEvents(@RequestBody UnprocessedCalendarEvent unprocessedCalendarEvent) throws Exception {
 
-        //TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+        List<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
+        Boolean validationResult = true;
 
-        Calendar calendarStart = Calendar.getInstance();
-        Calendar calendarEnd = Calendar.getInstance();
-        Calendar endingCalendar = Calendar.getInstance();
-        endingCalendar.setTime(unprocessedCalendarEvent.getEndDate());
-
-        // push until the day of the week is the one we want
-        calendarStart.setTime(unprocessedCalendarEvent.getStartDate());
-        while (calendarStart.get(Calendar.DAY_OF_WEEK) != unprocessedCalendarEvent.getDayInWeek()) {
-            calendarStart.add(Calendar.DATE, 1);
+        if (unprocessedCalendarEvent.getStartDate() == null || unprocessedCalendarEvent.getEndDate() == null ||
+                unprocessedCalendarEvent.getUser() == null || unprocessedCalendarEvent.getTableRegion() == null) {
+            validationResult = false;
         }
 
-        // set the calendar to the shift beginning
-        String[] hourMinutesStart = unprocessedCalendarEvent.getShiftStart().split(":");
-        calendarStart.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
-                Integer.parseInt(hourMinutesStart[0]), Integer.parseInt(hourMinutesStart[1]));
-        //calendarStart.add(Calendar.HOUR, 1);
+        if (unprocessedCalendarEvent.getShiftStart().contains(":")) {
+            String[] validationShiftStart = unprocessedCalendarEvent.getShiftStart().split(":");
+            try {
+                int result = Integer.parseInt(validationShiftStart[0]);
+                if (result < 0 || result > 23) {
+                    validationResult = false;
+                }
+            } catch (NumberFormatException e) {
+                validationResult = false;
+            }
+            try {
+                int result = Integer.parseInt(validationShiftStart[1]);
+                if (result < 0 || result > 59) {
+                    validationResult = false;
+                }
+            } catch (NumberFormatException e) {
+                validationResult = false;
+            }
+        }
+        else {
+            validationResult = false;
+        }
 
-        // set the calendar to the shift end
-        String[] hourMinutesEnd = unprocessedCalendarEvent.getShiftEnd().split(":");
-        calendarEnd.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
-                Integer.parseInt(hourMinutesEnd[0]), Integer.parseInt(hourMinutesEnd[1]));
-        //calendarEnd.add(Calendar.HOUR, 1);
+        if (unprocessedCalendarEvent.getShiftEnd().contains(":")) {
+            String[] validationShiftEnd = unprocessedCalendarEvent.getShiftEnd().split(":");
+            try {
+                int result = Integer.parseInt(validationShiftEnd[0]);
+                if (result < 0 || result > 23) {
+                    validationResult = false;
+                }
+            } catch (NumberFormatException e) {
+                validationResult = false;
+            }
+            try {
+                int result = Integer.parseInt(validationShiftEnd[1]);
+                if (result < 0 || result > 59) {
+                    validationResult = false;
+                }
+            } catch (NumberFormatException e) {
+                validationResult = false;
+            }
+        }
+        else {
+            validationResult = false;
+        }
 
-        System.out.println("Calendar start: " + calendarStart.getTime());
-        System.out.println("Calendar end: " + calendarEnd.getTime());
-        // create an event in every week until the ending date is passed
-        List<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
-        while (endingCalendar.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
-            CalendarEvent calendarEvent = new CalendarEvent();
-            //calendarStart.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinutesStart[0]));
-            //calendarEnd.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinutesEnd[0]));
-            System.out.println(calendarStart.getTime());
-            System.out.println(calendarEnd.getTime());
-            System.out.println(calendarStart.get(Calendar.YEAR));
-            System.out.println(calendarStart.get(Calendar.MONTH));
-            System.out.println(calendarStart.get(Calendar.DAY_OF_MONTH));
-            System.out.println(calendarStart.get(Calendar.HOUR_OF_DAY));
-            System.out.println(calendarStart.get(Calendar.MINUTE));
-            //calendarEvent.setStart(calendarStart.getTime());
-            //calendarEvent.setEnd(calendarEnd.getTime());
-            calendarEvent.setYear(calendarStart.get(Calendar.YEAR));
-            calendarEvent.setMonth(calendarStart.get(Calendar.MONTH));
-            calendarEvent.setDay(calendarStart.get(Calendar.DAY_OF_MONTH));
-            calendarEvent.setStartHour(calendarStart.get(Calendar.HOUR_OF_DAY));
-            calendarEvent.setStartMinute(calendarStart.get(Calendar.MINUTE));
-            calendarEvent.setEndHour(calendarEnd.get(Calendar.HOUR_OF_DAY));
-            calendarEvent.setEndMinute(calendarEnd.get(Calendar.MINUTE));
+        if (validationResult == true) {
+            Calendar calendarStart = Calendar.getInstance();
+            Calendar calendarEnd = Calendar.getInstance();
+            Calendar endingCalendar = Calendar.getInstance();
+            endingCalendar.setTime(unprocessedCalendarEvent.getEndDate());
 
-            calendarEvent.setUser(unprocessedCalendarEvent.getUser());
-            calendarEvent.setTableRegion(unprocessedCalendarEvent.getTableRegion());
-            calendarEventService.save(calendarEvent);
-            calendarEvents.add(calendarEvent);
-            calendarStart.add(Calendar.DATE, 7);
-            calendarEnd.add(Calendar.DATE, 7);
+            // push until the day of the week is the one we want
+            calendarStart.setTime(unprocessedCalendarEvent.getStartDate());
+            while (calendarStart.get(Calendar.DAY_OF_WEEK) != unprocessedCalendarEvent.getDayInWeek()) {
+                calendarStart.add(Calendar.DATE, 1);
+            }
+
+            // set the calendar to the shift beginning
+            String[] hourMinutesStart = unprocessedCalendarEvent.getShiftStart().split(":");
+            calendarStart.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
+                    Integer.parseInt(hourMinutesStart[0]), Integer.parseInt(hourMinutesStart[1]));
+
+            // set the calendar to the shift end
+            String[] hourMinutesEnd = unprocessedCalendarEvent.getShiftEnd().split(":");
+            calendarEnd.set(calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH), calendarStart.get(Calendar.DAY_OF_MONTH),
+                    Integer.parseInt(hourMinutesEnd[0]), Integer.parseInt(hourMinutesEnd[1]));
+
+            System.out.println("Calendar start: " + calendarStart.getTime());
+            System.out.println("Calendar end: " + calendarEnd.getTime());
+            // create an event in every week until the ending date is passed
+
+            while (endingCalendar.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
+                CalendarEvent calendarEvent = new CalendarEvent();
+                calendarEvent.setYear(calendarStart.get(Calendar.YEAR));
+                calendarEvent.setMonth(calendarStart.get(Calendar.MONTH));
+                calendarEvent.setDay(calendarStart.get(Calendar.DAY_OF_MONTH));
+                calendarEvent.setStartHour(calendarStart.get(Calendar.HOUR_OF_DAY));
+                calendarEvent.setStartMinute(calendarStart.get(Calendar.MINUTE));
+                calendarEvent.setEndHour(calendarEnd.get(Calendar.HOUR_OF_DAY));
+                calendarEvent.setEndMinute(calendarEnd.get(Calendar.MINUTE));
+
+                calendarEvent.setUser(unprocessedCalendarEvent.getUser());
+                calendarEvent.setTableRegion(unprocessedCalendarEvent.getTableRegion());
+                calendarEventService.save(calendarEvent);
+                calendarEvents.add(calendarEvent);
+                calendarStart.add(Calendar.DATE, 7);
+                calendarEnd.add(Calendar.DATE, 7);
+            }
+        }
+        else {
+            System.out.println("Validation failed for calendar event addition!");
         }
 
         return new ResponseEntity<List<CalendarEvent>>(calendarEvents, HttpStatus.CREATED);

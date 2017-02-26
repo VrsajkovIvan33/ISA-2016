@@ -168,13 +168,59 @@ angular.module('restaurantApp.BartenderFunctionsController',[])
         getBartender();
 
         $scope.updateBartender = function (bartender) {
-            BartenderService.updateBartender(bartender).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if ($scope.validateBartenderProfile(bartender) == true) {
+                BartenderService.updateBartender(bartender).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.validateBartenderProfile = function(bartender) {
+            if (bartender.name == "") {
+                alert("Name empty!");
+                return false;
+            }
+            if (bartender.surname == "") {
+                alert("Surname empty!");
+                return false;
+            }
+            if (bartender.email == "") {
+                alert("Email empty!");
+                return false;
+            }
+            if (bartender.email == undefined || bartender.email == null) {
+                alert("Incorrect email!");
+                return false;
+            }
+            if (bartender.password == "") {
+                alert("Password empty!");
+                return false;
+            }
+            if (bartender.date_of_birth == undefined) {
+                alert("Incorrect date!");
+                return false;
+            }
+            if (bartender.dress_size == null) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (bartender.dress_size <= 0) {
+                alert("Incorrect dress size!");
+                return false;
+            }
+            if (bartender.shoe_size == null) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            if (bartender.shoe_size <= 0) {
+                alert("Incorrect shoe size!");
+                return false;
+            }
+            return true;
         }
 
     })
@@ -188,9 +234,13 @@ angular.module('restaurantApp.BartenderFunctionsController',[])
         $scope.repeatPassword = "";
 
         $scope.updateBartenderPassword = function() {
-            if($scope.repeatPassword != $scope.newPassword){
+            if ($scope.repeatPassword == "" || $scope.newPassword == "") {
+                alert("Password cannot be empty!");
+            }
+            else if($scope.repeatPassword != $scope.newPassword){
                 alert("Passwords do not match!");
-            }else {
+            }
+            else {
                 $scope.bartender.password = $scope.newPassword;
                 $scope.bartender.passwordChanged = true;
                 BartenderService.updateBartender($scope.bartender).success(function (data) {

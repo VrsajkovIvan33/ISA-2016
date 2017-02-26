@@ -57,6 +57,13 @@
                     <label>Waiter payment end: </label>
                     <input type="date" ng-model="maxDateWaiter" ng-change="changeDateWaiter()"></br></br></br>
                 </div>
+
+                <div fusioncharts
+                     width="600"
+                     height="400"
+                     type="column2d"
+                     dataSource="{{myDataSource}}" >
+                </div>
             </div>
         </div>
     </div>
