@@ -39,4 +39,15 @@ public class MailManager {
         javaMailSender.send(simpleMailMessage);
     }
 
+    @Async
+    public void sendInvitationMail(Long id, User user) throws  MailException{
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(user.getEmail());
+        simpleMailMessage.setFrom("restaurantscheduler2016@gmail.com");
+        simpleMailMessage.setSubject("Invite");
+
+        String mailContent = "You are invited to event! To confirm or refuse follow this link:  localhost:9000/#/invite/" + id.toString() +"/" + user.getId();
+        simpleMailMessage.setText(mailContent);
+        javaMailSender.send(simpleMailMessage);
+    }
 }

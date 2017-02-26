@@ -16,6 +16,10 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     List<Restaurant> findAll();
 
+    List<Restaurant> findByRName(String name);
+
+    List<Restaurant> findByRType(String type);
+
     void delete(Long id);
 
     Restaurant save(Restaurant restaurant);

@@ -1,9 +1,9 @@
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Boris", "Janjic", "boki", "cmd3395@yahoo.com", "GUEST", 0)
-INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Markovic", "marko", "marko@yahoo.com", "GUEST", 0)
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Markovic", "marko", "novicasarenac@gmail.com", "GUEST", 0)
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Jankovic", "janko", "janko@yahoo.com", "GUEST", 0)
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dejan", "Jankovic", "dejan", "dejan@yahoo.com", "GUEST", 0)
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="cmd3395@yahoo.com" AND password="boki"))
-INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="marko@yahoo.com" AND password="marko"))
+INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="novicasarenac@gmail.com" AND password="marko"))
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="janko@yahoo.com" AND password="janko"))
 INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="dejan@yahoo.com" AND password="dejan"))
 
@@ -11,6 +11,8 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("admin",
 INSERT INTO systemmanager(id) VALUES ((SELECT id FROM user WHERE email="admin@gmail.com"))
 
 INSERT INTO restaurant(rname, rtype, version) VALUES ("Bob's Country Bunker", "Country", 0)
+INSERT INTO restaurant(rname, rtype, version) VALUES ("McDonalds", "Vegan", 0)
+INSERT INTO restaurant(rname, rtype, version) VALUES ("Atina", "Italian", 0)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
 INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)

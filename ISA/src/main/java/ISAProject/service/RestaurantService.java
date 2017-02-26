@@ -12,6 +12,10 @@ public interface RestaurantService {
 
     Restaurant findOne(Long id);
 
+    List<Restaurant> findByName(String name);
+
+    List<Restaurant> findByType(String type);
+
     Restaurant save(Restaurant restaurant);
 
     void delete(Long id);
