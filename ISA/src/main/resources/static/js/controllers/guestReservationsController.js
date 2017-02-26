@@ -51,6 +51,18 @@ angular.module('restaurantApp.GuestReservationsController', [])
                    });
                });
 
+           $scope.getOrders = function(reservation){
+                $uibModal.open({
+                    templateUrl : 'html/guest/ordersModal.html',
+                    controller : 'OrdersModalController',
+                    resolve : {
+                        param : function(){
+                            return { 'reservation' : reservation };
+                        }
+                    }
+                });
+           };
+
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();
                acceptedFriendRequestSubscription.unsubscribe();
@@ -58,4 +70,54 @@ angular.module('restaurantApp.GuestReservationsController', [])
                    $log.info('disconnected');
                });
            };
+       })
+       .controller('OrdersModalController', function ($localStorage, $scope, $stomp, $uibModalInstance, $uibModal, param, $log, toastr, GuestReservationsFactory){
+            $scope.reservation = param.reservation;
+            $scope.loggedUser = $localStorage.logged;
+
+           $scope.openNewItemModal = function(){
+               $uibModal.open({
+                   templateUrl : 'html/guest/newOrderItemModal.html',
+                   controller : 'NewOrderItemController',
+                   resolve: {
+                       param : function(){
+                           return {'restaurant' : $scope.reservation.restaurant };
+                       }
+                   }
+               }).result.then(function(orderItem){
+                   $scope.reservation.order.orderItems.push(orderItem);
+                   GuestReservationsFactory.updateReservation($scope.reservation.id, orderItem).success(function(data){
+                       toastr.success('Order added!');
+                   });
+               });
+           }
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
+           }
+       })
+       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, MenuService){
+           $scope.newOrderItem = new Object();
+           $scope.newOrderItem.oiStatus = "Waiting";
+           $scope.newOrderItem.user = $localStorage.logged;
+           $scope.newOrderItem.order = null;
+           $scope.newOrderItem.hourOfArrival = 0;
+           $scope.newOrderItem.minuteOfArrival = 0;
+           $scope.newOrderItem.oiReadyByArrival = false;
+
+           $scope.restaurant = param.restaurant;
+
+           MenuService.getMenusByMRestaurant($scope.restaurant.id).success(function(data){
+               $scope.menus = data;
+               $scope.newOrderItem.menu = $scope.menus[0];
+           });
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
+           }
+
+           $scope.addOrderItem = function(orderItem){
+               $uibModalInstance.close(orderItem);
+           }
        });
+

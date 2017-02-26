@@ -63,7 +63,7 @@
                             <li ng-repeat="accepted in r.acceptedGuests">{{accepted.name}} {{accepted.surname}}</li>
                         </ul>
                     </td>
-                    <td><a class="btn btn-xs btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-search"></span>  Orders</a></td>
+                    <td><a class="btn btn-xs btn-primary" ng-click="getOrders(r)"><span class="glyphicon glyphicon-search"></span>  Orders</a></td>
                     <td><a class="btn btn-xs btn-danger" ng-click="bookNow(r)" ng-if="loggedUser.id == r.host.id"><span class="glyphicon glyphicon-remove"></span>  Cancel</a>
                     <a class="btn btn-xs btn-danger" ng-click="bookNow(r)" ng-if="loggedUser.id != r.host.id" disabled><span class="glyphicon glyphicon-remove"></span>  Cancel</a></td>
                 </tr>

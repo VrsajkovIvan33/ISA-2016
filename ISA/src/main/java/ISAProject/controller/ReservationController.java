@@ -169,4 +169,18 @@ public class ReservationController {
 
         return new ResponseEntity<List<Reservation>>((List<Reservation>)allReservations, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/updateReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> updateReservation(@PathVariable("id") Long id, @RequestBody OrderItem orderItem){
+        Reservation reservation = reservationService.findOne(id);
+        orderItem.setOrder(reservation.getOrder());
+        orderItem.setHourOfArrival(reservation.getOrder().getHourOfArrival());
+        orderItem.setMinuteOfArrival(reservation.getOrder().getMinuteOfArrival());
+        reservation.getOrder().getOrderItems().add(orderItem);
+
+        orderService.save(reservation.getOrder());
+        Reservation saved = reservationService.save(reservation);
+
+        return new ResponseEntity<Long>(saved.getId(), HttpStatus.OK);
+    }
 }

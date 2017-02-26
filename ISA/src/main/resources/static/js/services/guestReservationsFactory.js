@@ -14,5 +14,9 @@ angular.module('restaurantApp.GuestReservationsFactory', [])
                return $http.get('/getReservations/' + id, {"id":id});
            }
 
+           factory.updateReservation = function(id, orderItem){
+               return $http.put('/updateReservation/' + id, orderItem);
+           }
+
            return factory;
        })
