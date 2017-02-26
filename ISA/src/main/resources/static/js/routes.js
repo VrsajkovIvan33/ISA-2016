@@ -34,6 +34,9 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/guest/restaurants',{
             templateUrl : 'html/guest/guestRestaurants.html'
         })
+        .when('/guest/reservations',{
+            templateUrl : 'html/guest/guestReservations.html'
+        })
         .when('/invite/:reservationId/:guestId',{
             templateUrl : 'html/invite.html'
         })

@@ -2,6 +2,7 @@ package ISAProject.repository;
 
 import ISAProject.model.Reservation;
 import ISAProject.model.Restaurant;
+import ISAProject.model.users.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
     List<Reservation> findById(Long id);
 
     List<Reservation> findByDate(Date date);
+
+    List<Reservation> findByHost(Guest guest);
 
     List<Reservation> findAll();
 
