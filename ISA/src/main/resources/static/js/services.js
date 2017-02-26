@@ -7,6 +7,7 @@ angular.module('restaurantApp.services',[
                'restaurantApp.GuestRegisterFactory',
                'restaurantApp.GuestHomeFactory',
                'restaurantApp.GuestRestaurantsFactory',
+               'restaurantApp.GuestReservationsFactory',
                'restaurantApp.GuestFriendRequestsFactory',
                'restaurantApp.GuestFriendsFactory',
                'restaurantApp.ConfirmFactory',

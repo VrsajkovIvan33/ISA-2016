@@ -1,0 +1,75 @@
+<style>
+    .stylish-input-group .input-group-addon{
+        background: white !important;
+    }
+    .stylish-input-group .form-control{
+        border-right:0;
+        box-shadow:0 0 0;
+        border-color:#ccc;
+    }
+    .stylish-input-group button{
+        border:0;
+        background:transparent;
+    }
+    .responstable {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+</style>
+
+<div ng-cloak ng-controller="GuestReservationsController">
+    <header class="main_header" style="top : 70px">
+        <div class="container">
+            <nav class="navbar navbar_default" role="navigation">
+                <div class="menuBar">
+                    <li><a href="#/guest" ng-click="disconnect()">Home</a></li>
+                    <li><a href="#/guest/profile" ng-click="disconnect()">Profile</a></li>
+                    <li><a href="#/guest/friends" ng-click="disconnect()">Friends</a></li>
+                    <li><a href="#/guest/friendRequests" ng-click="disconnect()">Friend Requests<span class="badge" ng-if="showRequests" style="background-color: red">{{friendRequestsNumber}}</span></a></li>
+                    <li><a href="#/guest/restaurants" ng-click="disconnect()">Restaurants</a></li>
+                    <li class="active"><a href="#/guest/reservations">Reservations</a></li>
+                    <li><a href="#/" ng-click="disconnect()">Log out</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="carousel-caption">
+            <h3>Reservations</h3>
+
+            <table class="responstable">
+                <thead>
+                <tr>
+                    <th>Restaurant:</th>
+                    <th>Host:</th>
+                    <th>Date:</th>
+                    <th>Time:</th>
+                    <th>Guests:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="r in reservations">
+                    <td>{{r.restaurant.rName}}</td>
+                    <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
+                    <td>{{r.host.name}} {{r.host.surname}}</td>
+                    <td>{{dates[r.id].date}}.{{dates[r.id].month}}.{{dates[r.id].year}}</td>
+                    <td>{{r.timeH}} : {{r.timeM}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="accepted in r.acceptedGuests">{{accepted.name}} {{accepted.surname}}</li>
+                        </ul>
+                    </td>
+                    <td><a class="btn btn-xs btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-search"></span>  Orders</a></td>
+                    <td><a class="btn btn-xs btn-danger" ng-click="bookNow(r)" ng-if="loggedUser.id == r.host.id"><span class="glyphicon glyphicon-remove"></span>  Cancel</a>
+                    <a class="btn btn-xs btn-danger" ng-click="bookNow(r)" ng-if="loggedUser.id != r.host.id" disabled><span class="glyphicon glyphicon-remove"></span>  Cancel</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>

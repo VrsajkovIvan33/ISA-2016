@@ -153,4 +153,20 @@ public class ReservationController {
 
         return new ResponseEntity<Long>(reservationId, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getReservations/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Reservation>> getReservationsByUser(@PathVariable("id") Long id){
+        Guest host = guestService.findOne(id);
+        List<Reservation> reservationsByHost = reservationService.findByHost(host);
+        List<Reservation> allReservations = new ArrayList<Reservation>();
+
+        for(Reservation r : reservationsByHost){
+            allReservations.add(r);
+        }
+        for(Reservation r : host.getReservations()){
+            allReservations.add(r);
+        }
+
+        return new ResponseEntity<List<Reservation>>((List<Reservation>)allReservations, HttpStatus.OK);
+    }
 }

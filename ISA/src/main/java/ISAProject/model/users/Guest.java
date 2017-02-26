@@ -1,5 +1,6 @@
 package ISAProject.model.users;
 
+import ISAProject.model.Reservation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Nole on 11/16/2016.
@@ -31,10 +33,23 @@ public class Guest extends User implements Serializable{
     @JsonIgnore
     private List<Guest> sentList = new ArrayList<Guest>();
 
+    @ManyToMany(mappedBy = "acceptedGuests")
+    @JsonIgnore
+    private Set<Reservation> reservations;
+
     @Column(name = "active", nullable = false)
     private boolean active;
 
     public Guest() {
+    }
+
+    public Set<Reservation> getReservations() {
+
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public Guest(User user) {

@@ -12,6 +12,7 @@ angular.module('restaurantApp.controllers',[
     'restaurantApp.GuestProfileController',
     'restaurantApp.GuestFriendsController',
     'restaurantApp.GuestRestaurantsController',
+    'restaurantApp.GuestReservationsController',
     'restaurantApp.SystemmanagerController',
     'restaurantApp.RestaurantmanagerController',
     'restaurantApp.RestaurantController',

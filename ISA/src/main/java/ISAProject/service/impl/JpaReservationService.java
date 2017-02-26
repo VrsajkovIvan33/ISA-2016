@@ -1,6 +1,7 @@
 package ISAProject.service.impl;
 
 import ISAProject.model.Reservation;
+import ISAProject.model.users.Guest;
 import ISAProject.repository.ReservationRepository;
 import ISAProject.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class JpaReservationService implements ReservationService {
     @Override
     public List<Reservation> findByDate(Date date) {
         return reservationRepository.findByDate(date);
+    }
+
+    @Override
+    public List<Reservation> findByHost(Guest guest) {
+        return reservationRepository.findByHost(guest);
     }
 
     @Override

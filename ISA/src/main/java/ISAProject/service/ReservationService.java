@@ -1,6 +1,7 @@
 package ISAProject.service;
 
 import ISAProject.model.Reservation;
+import ISAProject.model.users.Guest;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ public interface ReservationService {
     Reservation findOne(Long id);
 
     List<Reservation> findByDate(Date date);
+
+    List<Reservation> findByHost(Guest guest);
 
     Reservation save(Reservation reservation);
 
