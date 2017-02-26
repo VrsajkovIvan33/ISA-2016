@@ -22,7 +22,7 @@
         <label>Description</label>
         <input type="text" class="form-control form-control-lg" ng-model="newMenu.mDescription" placeholder="Enter menu item description">
         <label>Price</label>
-        <input type="number" class="form-control form-control-lg" ng-model="newMenu.mPrice" placeholder="Enter menu item price">
+        <input type="number" min="0" max="10000000" class="form-control form-control-lg" ng-model="newMenu.mPrice" placeholder="Enter menu item price">
     </form>
 </div>
 <div class="modal-footer">

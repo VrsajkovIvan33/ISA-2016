@@ -46,10 +46,12 @@ angular.module('restaurantApp.RestaurantController',[])
 
         $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
         $scope.addRestaurant = function (restaurant) {
-            RestaurantService.addRestaurant(restaurant).success(function (data) {
-                $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
-                $uibModalInstance.close();
-            });
+            if(validate(restaurant)) {
+                RestaurantService.addRestaurant(restaurant).success(function (data) {
+                    $scope.newRestaurant = {id: null, rName: '', rType: 'Localcuisine', providers: null, version: 0};
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -57,14 +59,32 @@ angular.module('restaurantApp.RestaurantController',[])
         }
 
         $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
+
+
+
+        function validate(restaurant) {
+            if(restaurant.rName == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            for(var i = 0; i < $scope.restaurantTypes.length; i++){
+                if(restaurant.rType == $scope.restaurantTypes[i])
+                    return true;
+            }
+
+            return false;
+        }
     })
     .controller('UpdateRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, RestaurantService) {
 
         $scope.restaurantToUpdate = jQuery.extend(true, {}, $rootScope.updateRestaurant);
         $scope.updateRestaurant = function (restaurant) {
-            RestaurantService.updateRestaurant(restaurant).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(restaurant)) {
+                RestaurantService.updateRestaurant(restaurant).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -72,4 +92,19 @@ angular.module('restaurantApp.RestaurantController',[])
         }
 
         $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
+
+
+        function validate(restaurant) {
+            if(restaurant.rName == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            for(var i = 0; i < $scope.restaurantTypes.length; i++){
+                if(restaurant.rType == $scope.restaurantTypes[i])
+                    return true;
+            }
+
+            return false;
+        }
     });

@@ -44,7 +44,7 @@ angular.module('restaurantApp.SystemmanagerController',[])
             if(sm.email == "admin@gmail.com")
                 return false;
 
-            if(sm.email == $localStorage.logged.email)
+            if(sm.id == $localStorage.logged.id)
                 return false;
 
             return true;
@@ -61,26 +61,83 @@ angular.module('restaurantApp.SystemmanagerController',[])
 
         $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:0};
         $scope.addSystemManager = function (systemManager) {
-            SystemmanagerService.addSystemManager(systemManager).success(function (data) {
-                $scope.newSystemManager = {id:null, name:'', surname:'', email:'', password:'', type:'SYSTEMMANAGER', version:0};
-                $uibModalInstance.close();
-            });
+            if(validate(systemManager)) {
+                SystemmanagerService.addSystemManager(systemManager).success(function (data) {
+                    $scope.newSystemManager = {
+                        id: null,
+                        name: '',
+                        surname: '',
+                        email: '',
+                        password: '',
+                        type: 'SYSTEMMANAGER',
+                        version: 0
+                    };
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.repeatPassword = '';
+
+        function validate(systemManager) {
+            if(systemManager.name == '' || systemManager.surname == '' || systemManager.email == '' || systemManager.password == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(systemManager.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            if($scope.repeatPassword != systemManager.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     })
     .controller('UpdateSystemmanagerController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, SystemmanagerService) {
 
         $scope.systemManagerToUpdate = jQuery.extend(true, {}, $rootScope.updateSystemManager);
         $scope.updateSystemManager = function (systemManager) {
-            SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(systemManager)) {
+                SystemmanagerService.updateSystemManager(systemManager).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
             $uibModalInstance.dismiss('cancel');
+        }
+
+
+        $scope.repeatPassword = $scope.systemManagerToUpdate.password;
+
+        function validate(systemManager) {
+            if(systemManager.name == '' || systemManager.surname == '' || systemManager.email == '' || systemManager.password == ''){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(systemManager.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            if($scope.repeatPassword != systemManager.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
         }
     });

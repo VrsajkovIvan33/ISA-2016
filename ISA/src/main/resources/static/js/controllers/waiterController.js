@@ -107,12 +107,28 @@ angular.module('restaurantApp.WaiterController',[])
     })
     .controller('NewWaiterController', function ($localStorage, $scope, $location, $uibModalInstance, WaiterService, RestaurantService) {
 
-        $scope.newWaiter = {id:null, name:'', surname:'', email:'', password:'', type:'WAITER', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, review:0};
+        $scope.newWaiter = {id:null, name:'', surname:'', email:'', password:'', type:'WAITER', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, review:0, passwordChanged: false};
         $scope.addWaiter = function (waiter) {
-            WaiterService.addWaiter(waiter).success(function (data) {
-                $scope.newWaiter = {id:null, name:'', surname:'', email:'', password:'', type:'WAITER', version:0, date_of_birth:null, dress_size:0, shoe_size:0, restaurant:$localStorage.logged.restaurant, review:0};
-                $uibModalInstance.close();
-            });
+            if(validate(waiter)) {
+                WaiterService.addWaiter(waiter).success(function (data) {
+                    $scope.newWaiter = {
+                        id: null,
+                        name: '',
+                        surname: '',
+                        email: '',
+                        password: '',
+                        type: 'WAITER',
+                        version: 0,
+                        date_of_birth: null,
+                        dress_size: 0,
+                        shoe_size: 0,
+                        restaurant: $localStorage.logged.restaurant,
+                        review: 0,
+                        passwordChanged: false
+                    };
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -127,6 +143,41 @@ angular.module('restaurantApp.WaiterController',[])
         }
 
         getRestaurants();
+
+
+        $scope.repeatPassword = '';
+
+        function validate(waiter) {
+            if(waiter.name == '' || waiter.surname == '' || waiter.email == '' ||
+                waiter.password == '' || waiter.date_of_birth == null){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(waiter.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            var date = new Date();
+            if(waiter.date_of_birth > date){
+                alert('Date of birth must be before today');
+                return false;
+            }
+
+            if(waiter.dress_size == undefined || waiter.dress_size == 0 || waiter.shoe_size == undefined || waiter.shoe_size == 0){
+                alert('Dress size and shoe size must be above 0 and below 100');
+                return false;
+            }
+
+            if($scope.repeatPassword != waiter.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
+        }
     })
     .controller('UpdateWaiterController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, WaiterService, RestaurantService) {
 
@@ -137,9 +188,11 @@ angular.module('restaurantApp.WaiterController',[])
         getWaiter();
 
         $scope.updateWaiter = function (waiter) {
-            WaiterService.updateWaiter(waiter).success(function (data) {
-                $uibModalInstance.close();
-            });
+            if(validate(waiter)) {
+                WaiterService.updateWaiter(waiter).success(function (data) {
+                    $uibModalInstance.close();
+                });
+            }
         }
 
         $scope.close = function(){
@@ -154,4 +207,40 @@ angular.module('restaurantApp.WaiterController',[])
         }
 
         getRestaurants();
+
+
+
+        $scope.repeatPassword = $scope.waiterToUpdate.password;
+
+        function validate(waiter) {
+            if(waiter.name == '' || waiter.surname == '' || waiter.email == '' ||
+                waiter.password == '' || waiter.date_of_birth == null){
+                alert('There is empty field');
+                return false;
+            }
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(waiter.email)){
+                alert('Wrong email address');
+                return false;
+            }
+
+            var date = new Date();
+            if(waiter.date_of_birth > date){
+                alert('Date of birth must be before today');
+                return false;
+            }
+
+            if(waiter.dress_size == undefined || waiter.dress_size == 0 || waiter.shoe_size == undefined || waiter.shoe_size == 0){
+                alert('Dress size and shoe size must be above 0 and below 100');
+                return false;
+            }
+
+            if($scope.repeatPassword != waiter.password){
+                alert('Password does not match');
+                return false;
+            }
+
+            return true;
+        }
     });
