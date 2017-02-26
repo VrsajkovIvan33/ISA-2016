@@ -9,6 +9,7 @@
                     <li><a href="#restaurantManager">Home</a></li>
                     <li><a href="#/restaurantManager/providers">Providers</a></li>
                     <li><a href="#/restaurantManager/tenders">Tenders</a></li>
+                    <li><a href="#/restaurantManager/offers">Offers</a></li>
                     <li><a href="#/restaurantManager/waiters">Waiters</a></li>
                     <li><a href="#/restaurantManager/bartenders">Bartenders</a></li>
                     <li><a href="#/restaurantManager/cooks">Cooks</a></li>
@@ -16,7 +17,8 @@
                     <li><a href="#/restaurantManager/mapBeverage">Map Beverage</a></li>
                     <li><a href="#restaurantManager/calendar">Calendar</a></li>
                     <li><a href="#restaurantManager/tables">Table arrangement</a></li>
-                    <li><a href="#restaurantManager/statement">Statement</a></li>
+                    <li><a href="#restaurantManager/statement">Reviews</a></li>
+                    <li><a href="#restaurantManager/reports">Report</a></li>
                     <li><a href="#/">Log out</a></li>
                 </div>
             </nav>
@@ -36,6 +38,7 @@
                     <th>Tender end:</th>
                     <th>Tender status:</th>
                     <th>Tender items:</th>
+                    <th>Accepted offer:</th>
                     <th>Cancel:</th>
                 </tr>
                 </thead>
@@ -45,6 +48,7 @@
                     <td>{{t.tEnd | date}}</td>
                     <td>{{t.tStatus}}</td>
                     <td><a ng-click="zoomTender(t)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                    <td><a ng-if="t.tStatus == 'Closed'" ng-click="acceptedOffer(t)" class="btn btn-info"><span class="glyphicon glyphicon-list"></span></a></td>
                     <td><a ng-if="t.tStatus == 'Active'" ng-click="removeTender(t)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 </tbody>

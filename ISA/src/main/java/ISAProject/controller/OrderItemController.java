@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -124,4 +128,31 @@ public class OrderItemController {
         orderItemService.delete(id);
         return new ResponseEntity<OrderItem>(HttpStatus.NO_CONTENT);
     }
+
+    @MessageMapping("/updateOrderItem/{rid}")
+    @SendTo("/topic/orderItems/{rid}")
+    @Transactional
+    public Boolean updateOrderItemAsSocket(@DestinationVariable Long rid, OrderItem orderItem){
+        OrderItem originalOrderItem = orderItemService.findOne(orderItem.getId());
+        originalOrderItem.setUser(orderItem.getUser());
+        originalOrderItem.setMenu(orderItem.getMenu());
+        originalOrderItem.setOiReadyByArrival(orderItem.getOiReadyByArrival());
+        originalOrderItem.setOiStatus(orderItem.getOiStatus());
+        originalOrderItem.setStaff(orderItem.getStaff());
+        OrderItem newOrderItem = orderItemService.save(originalOrderItem);
+        //mark order as ready if all order
+        Order order = orderService.findById(originalOrderItem.getOrder().getId());
+        Boolean markAsReady = true;
+        for (OrderItem oi : order.getOrderItems()) {
+            if (!oi.getOiStatus().equals("Ready")) {
+                markAsReady = false;
+            }
+        }
+        if (markAsReady == true) {
+            order.setoStatus("Ready");
+            orderService.save(order);
+        }
+        return true;
+    }
+
 }

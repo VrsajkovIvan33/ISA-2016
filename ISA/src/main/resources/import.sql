@@ -15,10 +15,10 @@ INSERT INTO restaurant(rname, rtype, version) VALUES ("McDonalds", "Vegan", 0)
 INSERT INTO restaurant(rname, rtype, version) VALUES ("Atina", "Italian", 0)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Branko", "Brankovic", "barek", "b.brankovic@gmail.com", "WAITER", 0)
-INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1975-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="b.brankovic@gmail.com" AND password="barek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1975-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="b.brankovic@gmail.com" AND password="barek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Dick", "Steele", "BiggusDickus", "dickeyMoose@gmail.com", "RESTAURANTMANAGER", 0)
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1960-10-16 00:00:00", (SELECT id FROM user WHERE email="dickeyMoose@gmail.com"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"))
@@ -36,13 +36,13 @@ INSERT INTO user(name, surname, password, email, type, version) VALUES ("res", "
 INSERT INTO restaurantmanager(date_of_birth, id, rid) VALUES ("1970-05-16 00:00:00", (SELECT id FROM user WHERE email="res@gmail.com"), 1)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("bar", "man", "bar", "bar@gmail.com", "BARTENDER", 0)
-INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1)
+INSERT INTO bartender(date_of_birth, dress_size, shoe_size, id, rid, password_changed) VALUES ("1970-05-16 00:00:00", 56, 43, (SELECT id FROM user WHERE email="bar@gmail.com"), 1, false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Novica", "Sarenac", "nov", "ns@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad', (SELECT id FROM user WHERE email="ns@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid, password_changed) VALUES ("1994-08-12 00:00:00", 56, 41, 'Salad', (SELECT id FROM user WHERE email="ns@gmail.com"), 1, false)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Ivan", "Vrsajkov", "iva", "iv@gmail.com", "COOK", 0)
-INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish', (SELECT id FROM user WHERE email="iv@gmail.com"), 1)
+INSERT INTO cook(date_of_birth, dress_size, shoe_size, typecook, id, rid, password_changed) VALUES ("1994-03-04 00:00:00", 56, 39, 'Grilled Dish', (SELECT id FROM user WHERE email="iv@gmail.com"), 1, false)
 
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Indoors', 'blue')
 INSERT INTO restaurantsegment (version, rs_Name, rs_Color) VALUES (0, 'Smoking', 'red')
@@ -138,8 +138,38 @@ INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (4, 2, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 
-INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 24, 16, 0, false)
+INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 25, 16, 0, false)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 5, 1, "Waiting for waiter", false, 16, 0)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 1, 1, "Waiting for waiter", true, 16, 0)
 
 INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);
+
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (1, "2017-02-02 00:00:00", "2017-02-05 00:00:00", 'Closed', 1, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (2, "2017-02-07 00:00:00", "2017-02-11 00:00:00", 'Closed', 1, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (3, "2017-02-24 00:00:00", "2017-03-05 00:00:00", 'Active', 1, 0);
+
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (1, 'Pilece belo meso', 'Foodstuff', '20 kg', 1, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (2, 'Coca Cola', 'Drink', '50 kom', 1, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (3, 'Jagnjece meso', 'Foodstuff', '15 kg', 2, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (4, 'Sir', 'Foodstuff', '5 kg', 2, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (5, 'Sok od breskve', 'Drink', '100 kom', 2, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (6, 'Svinjsko meso', 'Foodstuff', '10 kg', 3, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (7, 'Zelena salata', 'Foodstuff', '3 kg', 3, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (8, 'Sok od borovnice', 'Drink', '75 kom', 3, 0);
+
+INSERT INTO restaurant(rname, rtype, version) VALUES ("Restaurant 2", "Italian", 0);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (4, "2017-02-04 00:00:00", "2017-02-10 00:00:00", 'Closed', 2, 1);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (5, "2017-02-22 00:00:00", "2017-03-10 00:00:00", 'Active', 2, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (9, 'Sargarepa', 'Foodstuff', '7 kg', 4, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (10, 'Coca Cola', 'Drink', '30 kom', 5, 0);
+INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (11, 'Jaja', 'Foodstuff', '200 kom', 5, 0);
+INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (2, 9);
+
+INSERT INTO user(name, surname, password, email, type, version) VALUES ("WaiterName", "WaiterSurname", "waiter", "w.waiter@gmail.com", "WAITER", 0)
+INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid) VALUES ("1985-01-05 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="w.waiter@gmail.com" AND password="waiter"), 2)
+
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('1', "2017-01-02 00:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('2', "2017-01-03 00:00:00", '200', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('3', "2017-02-04 00:00:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('4', "2017-02-03 00:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('5', "2017-03-03 00:00:00", '1000', '0', '16');

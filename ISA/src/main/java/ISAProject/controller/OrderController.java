@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -146,9 +149,6 @@ public class OrderController {
             consumes = "application/json")
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) throws Exception {
         Order originalOrder = orderService.findById(order.getId());
-//        for (OrderItem orderItem : originalOrder.getOrderItems()) {
-//            orderItemService.delete(orderItem.getId());
-//        }
         originalOrder.setOrderItems(order.getOrderItems());
         for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
@@ -156,7 +156,6 @@ public class OrderController {
             orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
         }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
-        //System.out.println("Order put, current waiter: " + originalOrder.getCurrentWaiter().getId());
         originalOrder.setoAssigned(order.getoAssigned());
         originalOrder.setoStatus(order.getoStatus());
         originalOrder.setRestaurantTable(order.getRestaurantTable());
@@ -273,6 +272,31 @@ public class OrderController {
 
         Order newOrder = orderService.save(originalOrder);
         return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+    }
+
+
+    @MessageMapping("/updateOrder/{rid}")
+    @SendTo("/topic/orders/{rid}")
+    public Boolean updateOrderAsSocket(@DestinationVariable Long rid, Order order){
+        Order originalOrder = orderService.findById(order.getId());
+        originalOrder.setOrderItems(order.getOrderItems());
+        for (OrderItem orderItem : order.getOrderItems()) {
+            orderItem.setOrder(order);
+            orderItem.setHourOfArrival(order.getHourOfArrival());
+            orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+        }
+        originalOrder.setCurrentWaiter(order.getCurrentWaiter());
+        originalOrder.setoAssigned(order.getoAssigned());
+        originalOrder.setoStatus(order.getoStatus());
+        originalOrder.setRestaurantTable(order.getRestaurantTable());
+        originalOrder.setWaiters(order.getWaiters());
+        originalOrder.setHourOfArrival(order.getHourOfArrival());
+        originalOrder.setMinuteOfArrival(order.getMinuteOfArrival());
+        originalOrder.setYear(order.getYear());
+        originalOrder.setMonth(order.getMonth());
+        originalOrder.setDay(order.getDay());
+        Order newOrder = orderService.save(originalOrder);
+        return true;
     }
 
 

@@ -1,4 +1,4 @@
-<div ng-cloak ng-controller="BartenderController">
+<div ng-cloak ng-controller="RestaurantOffersController">
     <header class="main_header" style="top : 70px">
         <div class="container">
             <nav class="navbar navbar_default" role="navigation">
@@ -20,7 +20,6 @@
                     <li><a href="#restaurantManager/statement">Reviews</a></li>
                     <li><a href="#restaurantManager/reports">Report</a></li>
                     <li><a href="#/">Log out</a></li>
-
                 </div>
             </nav>
         </div>
@@ -28,35 +27,25 @@
 
     <div class="container">
         <div class="carousel-caption">
-            <h3>Bartenders</h3>
-
-            <a ng-click="openAddModal()" class="btn btn-primary"><span class="glyphicon glyphicon-upload"></span> Add Bartender</a>
+            <h3>Offers</h3>
 
             <table class="responstable">
                 <thead>
                 <tr>
-                    <th>Bartender name:</th>
-                    <th>Bartender surname:</th>
-                    <th>Bartender email:</th>
-                    <th>Bartender date of birth:</th>
-                    <th>Bartender dress size:</th>
-                    <th>Bartender shoe size:</th>
-                    <!--<th>Bartender restaurant:</th>-->
-                    <th>Edit:</th>
-                    <th>Delete:</th>
+                    <th>Provider name:</th>
+                    <th>Provider surname:</th>
+                    <th>Provider email:</th>
+                    <th>Offer items:</th>
+                    <th>Accept:</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="b in bartenders">
-                    <td>{{b.name}}</td>
-                    <td>{{b.surname}}</td>
-                    <td>{{b.email}}</td>
-                    <td>{{b.date_of_birth | date}}</td>
-                    <td>{{b.dress_size}}</td>
-                    <td>{{b.shoe_size}}</td>
-                    <!--<td>{{b.restaurant.rName}}</td>-->
-                    <td><a ng-click="openUpdateModal(b)" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a ng-click="removeBartender(b)" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <tr ng-repeat="o in restaurantOffers">
+                    <td>{{o.offProvider.name}}</td>
+                    <td>{{o.offProvider.surname}}</td>
+                    <td>{{o.offProvider.email}}</td>
+                    <td><a ng-click="zoomRestaurantOffer(o)" class="btn btn-info"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                    <td><a ng-click="acceptOffer(o)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a></td>
                 </tr>
                 </tbody>
             </table>

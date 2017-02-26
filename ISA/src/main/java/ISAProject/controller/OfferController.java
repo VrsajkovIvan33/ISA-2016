@@ -103,6 +103,17 @@ public class OfferController {
     }
 
     @RequestMapping(
+            value = "/getOffersByOffTenderAndOffProvider/{tid}/{pid}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Offer> getOffersByOffTenderAndOffProvider(@PathVariable("tid") Long tenderId, @PathVariable("pid") Long providerId){
+        Tender tender = tenderService.findOne(tenderId);
+        Provider provider = providerService.findOne(providerId);
+        Offer offer = offerService.findByOffTenderAndOffProvider(tender, provider);
+        return new ResponseEntity<Offer>(offer, HttpStatus.OK);
+    }
+
+    @RequestMapping(
             value = "/removeOffer/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<Offer> removeOffer(@PathVariable("id") Long id) {
