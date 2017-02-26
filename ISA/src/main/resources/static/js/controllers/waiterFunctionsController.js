@@ -463,7 +463,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
         $scope.updateWaiterPassword = function() {
 
-            if ($scope.$scope.repeatPassword == "" || $scope.newPassword == "") {
+            if ($scope.repeatPassword == "" || $scope.newPassword == "") {
                 alert("Password cannot be empty!");
             }
             else if($scope.repeatPassword != $scope.newPassword){

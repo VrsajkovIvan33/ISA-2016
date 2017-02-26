@@ -198,6 +198,7 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
                             }
                         }
 
+                        uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
                         $scope.eventSources = [$scope.myEvents];
                         //JEBEM TI MAMU U PICKU DA TI JEBEM!
                         uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
