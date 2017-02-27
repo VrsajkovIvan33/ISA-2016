@@ -14,14 +14,22 @@
     <h4 class="modal-title">Add new Restaurant</h4>
 </div>
 <div class="modal-body">
-    <form role="form">
-        <label>Name</label>
-        <input type="text" class="form-control form-control-lg" ng-model="newRestaurant.rName" placeholder="Enter restaurant name">
-        <label>Type</label>
-        <select class="form-control" ng-model="newRestaurant.rType" ng-options="rt as rt for rt in restaurantTypes"></select>
-    </form>
+    <div ng-if="modalMode == 1">
+        <form role="form">
+            <label>Name</label>
+            <input type="text" class="form-control form-control-lg" ng-model="newRestaurant.rName" placeholder="Enter restaurant name">
+            <label>Type</label>
+            <select class="form-control" ng-model="newRestaurant.rType" ng-options="rt as rt for rt in restaurantTypes"></select>
+        </form>
+    </div>
+    <div ng-if="modalMode == 2">
+        <ng-map center="45.254742, 19.850407" on-click="placeMarker()">
+            <marker position="{{newRestaurant.latitude}}, {{newRestaurant.longitude}}"></marker>
+        </ng-map>
+    </div>
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-default" ng-click="addRestaurant(newRestaurant)">Add</button>
+    <button type="submit" class="btn btn-default" ng-click="addRestaurant(newRestaurant)" ng-if="modalMode == 2">Add</button>
+    <button type="submit" class="btn btn-default" ng-click="next()" ng-if="modalMode == 1">Next</button>
     <button type="button" class="btn btn-default" ng-click="close()">Close</button>
 </div>

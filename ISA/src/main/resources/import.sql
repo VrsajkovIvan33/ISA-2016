@@ -10,9 +10,9 @@ INSERT INTO guest(active, id) VALUES (true , (SELECT id FROM user WHERE email="d
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("admin", "admin", "admin", "admin@gmail.com", "SYSTEMMANAGER", 0)
 INSERT INTO systemmanager(id) VALUES ((SELECT id FROM user WHERE email="admin@gmail.com"))
 
-INSERT INTO restaurant(rname, rtype, version) VALUES ("Bob's Country Bunker", "Country", 0)
-INSERT INTO restaurant(rname, rtype, version) VALUES ("McDonalds", "Vegan", 0)
-INSERT INTO restaurant(rname, rtype, version) VALUES ("Atina", "Italian", 0)
+INSERT INTO restaurant(rname, rtype, version, latitude, longitude) VALUES ("Bob's Country Bunker", "Country", 0, 45.239597, 19.837972)
+INSERT INTO restaurant(rname, rtype, version, latitude, longitude) VALUES ("McDonalds", "Vegan", 0, 45.243963, 19.841126)
+INSERT INTO restaurant(rname, rtype, version, latitude, longitude) VALUES ("Atina", "Italian", 0, 45.251819, 19.836920)
 
 INSERT INTO user(name, surname, password, email, type, version) VALUES ("Marko", "Vjestica", "marek", "m.vjestica94@gmail.com", "WAITER", 0)
 INSERT INTO waiter(date_of_birth, dress_size, shoe_size, review, id, rid, password_changed) VALUES ("1960-10-16 00:00:00", 30, 40, 1, (SELECT id FROM user WHERE email="m.vjestica94@gmail.com" AND password="marek"), (SELECT rid FROM restaurant WHERE rname="Bob's Country Bunker"), false)
@@ -157,7 +157,7 @@ INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (7, 'Zelena salata', 'Foodstuff', '3 kg', 3, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (8, 'Sok od borovnice', 'Drink', '75 kom', 3, 0);
 
-INSERT INTO restaurant(rname, rtype, version) VALUES ("Restaurant 2", "Italian", 0);
+INSERT INTO restaurant(rname, rtype, version, latitude, longitude) VALUES ("Restaurant 2", "Italian", 0, 45.261350, 19.850138);
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (4, "2017-02-04 00:00:00", "2017-02-10 00:00:00", 'Canceled', 2, 1);
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (5, "2017-02-22 00:00:00", "2017-03-10 00:00:00", 'Active', 2, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (9, 'Sargarepa', 'Foodstuff', '7 kg', 4, 0);

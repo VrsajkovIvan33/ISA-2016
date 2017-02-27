@@ -39,6 +39,18 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                });
            }
 
+           $scope.openMapModal = function(restaurant){
+                $uibModal.open({
+                    templateUrl : 'html/guest/mapModal.html',
+                    controller : 'RestaurantMapController',
+                    resolve: {
+                        param : function(){
+                            return {'restaurant' : restaurant };
+                        }
+                    }
+                });
+           }
+
            $stomp.setDebug(function(args){
                $log.debug(args);
            });
@@ -95,6 +107,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                    $scope.restaurants = data;
                })
            }
+
        })
        .controller('GuestReservationController', function ($localStorage, $scope, $stomp, $uibModal, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
            function init(){
@@ -242,7 +255,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $uibModalInstance.dismiss('cancel');
            };
        })
-       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, MenuService){
+       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr,  MenuService){
            $scope.newOrderItem = new Object();
            $scope.newOrderItem.oiStatus = "Waiting";
            $scope.newOrderItem.user = $localStorage.logged;
@@ -264,5 +277,15 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
 
            $scope.addOrderItem = function(orderItem){
                $uibModalInstance.close(orderItem);
+           }
+       })
+       .controller('RestaurantMapController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, NgMap, $log, toastr) {
+           $scope.restaurant = param.restaurant;
+           NgMap.getMap().then(function(map){
+               console.log(map.getCenter());
+           });
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
            }
        })
