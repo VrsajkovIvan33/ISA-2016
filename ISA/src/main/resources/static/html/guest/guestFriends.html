@@ -24,6 +24,9 @@
                     <h3 class="text-muted prj-name">
                         <span class="fa fa-users fa-2x principal-title"></span>
                         <button type="button" class="btn btn-success btn-md" ng-click="openSearchPeopleModal()">Add <span class="glyphicon glyphicon-plus"></span></button>
+                        <button type="button" class="btn btn-primary btn-md" ng-click="sortByName()">Sort by name</button>
+                        <button type="button" class="btn btn-primary btn-md" ng-click="sortBySurname()">Sort by surname</button>
+                        <button type="button" class="btn btn-primary btn-md" ng-click="resetSort()">Reset</button>
                     </h3>
                 </div>
 
@@ -32,7 +35,27 @@
                         <li href="#" class="list-group-item title">
                             FRIENDS
                         </li>
-                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friends">
+                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friends" ng-if="viewMode == 'not'">
+                            <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
+                            <label class="name">
+                                {{friend.name}} {{friend.surname}}<br>
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" title="Delete" ng-click="delete(friend.id)"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friends | orderBy:'name'" ng-if="viewMode == 'name'">
+                            <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
+                            <label class="name">
+                                {{friend.name}} {{friend.surname}}<br>
+                            </label>
+                            <label class="pull-right">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" title="Delete" ng-click="delete(friend.id)"></a>
+                            </label>
+                            <div class="break"></div>
+                        </li>
+                        <li href="#" class="list-group-item text-left" ng-repeat="friend in friends | orderBy:'surname'" ng-if="viewMode == 'surname'">
                             <img class="img-thumbnail" src="http://worldartsme.com/images/troll-face-clipart-1.jpg">
                             <label class="name">
                                 {{friend.name}} {{friend.surname}}<br>

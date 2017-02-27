@@ -7,6 +7,7 @@ angular.module('restaurantApp.GuestFriendsController', [])
            function init(){
                $scope.loggedUser = $localStorage.logged;
                $scope.friends = [];
+               $scope.viewMode = 'not';
                GuestFriendsFactory.getFriends($scope.loggedUser.id).success(function(data){
                    if(data != null){
                        $scope.friends = data;
@@ -27,6 +28,18 @@ angular.module('restaurantApp.GuestFriendsController', [])
            var acceptedFriendRequestSubscription = null;
            var deleteFriendSubscription = null;
            init();
+
+           $scope.sortByName = function(){
+               $scope.viewMode = 'name';
+           }
+
+           $scope.sortBySurname = function(){
+               $scope.viewMode = 'surname';
+           }
+
+           $scope.resetSort = function(){
+               $scope.viewMode = 'not';
+           }
 
            $stomp.setDebug(function(args){
                $log.debug(args);
