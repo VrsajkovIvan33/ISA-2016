@@ -138,7 +138,7 @@ INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (4, 2, "2016-11-08 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 INSERT INTO menureview (mrid, mrreview, mrdate, uid, mid, rid, version) VALUES (5, 5, "2015-02-14 00:00:00", (SELECT id FROM user WHERE email="ns@gmail.com"), 3, 1, 0);
 
-INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created) VALUES (0, 1 , "Waiting for waiter", false, 2017, 1, 26, 16, 0, false)
+INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created) VALUES (0, 1 , "Waiting for waiter", false, 2017, 2, 2, 16, 0, false)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 5, 1, "Waiting for waiter", false, 16, 0)
 INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute) VALUES (0, 1, 1, 1, "Waiting for waiter", true, 16, 0)
 
@@ -194,3 +194,25 @@ INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUE
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('23', "2017-02-21 17:00:00", '140', '0', '7');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('24', "2017-02-20 17:00:00", '150', '0', '6');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('25', "2017-02-20 17:00:00", '110', '0', '7');
+
+
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('1', 'On hold', '0', '9', '3');
+
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('1', '1 day', '450', '0', '1', '6');
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiguarantee`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('2', '2 days', '10 days', '300', '0', '1', '7');
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('3', '1 day', '280', '0', '1', '8');
+
+INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 10);
+
+INSERT INTO calendarevent (ce_year, ce_month, ce_day, ce_start_hour, ce_start_minute, ce_end_hour, ce_end_minute, uid, trid, version) VALUES (2017, 2, 14, 12, 0, 20, 0, 6, 1, 0)
+INSERT INTO calendarevent (ce_year, ce_month, ce_day, ce_start_hour, ce_start_minute, ce_end_hour, ce_end_minute, uid, trid, version) VALUES (2017, 2, 21, 12, 0, 20, 0, 6, 1, 0)
+INSERT INTO calendarevent (ce_year, ce_month, ce_day, ce_start_hour, ce_start_minute, ce_end_hour, ce_end_minute, uid, trid, version) VALUES (2017, 2, 2, 08, 0, 20, 0, 6, 1, 0)
+
+INSERT INTO restaurantorder (version, rtid, o_Status, o_Assigned, o_Year, o_Month, o_Day, o_Hour, o_Minute, o_Bill_Created, wid) VALUES (0, 1 , "Ready", true, 2017, 1, 15, 16, 0, true, 6)
+INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute, staffid) VALUES (0, 1, 5, 1, "Ready", false, 16, 0, 15)
+INSERT INTO orderitem (version, uid, mid, oid, oi_Status, oi_ReadyByArrival, oi_Hour, oi_Minute, staffid) VALUES (0, 1, 1, 1, "Ready", true, 16, 0, 13)
+INSERT INTO waiterorders (orderid, waiterid) VALUES (2, 6)
+INSERT INTO bill (version, wid, bl_total, bl_date) VALUES (0, 6, 400, "2017-02-15 17:00:00")
+INSERT INTO visithistory (version, wid, gid, vh_restaurant_grade, vh_service_grade, vh_menu_grade, vh_date) VALUES (0, 6, 1, -1, -1, -1, "2017-02-15 17:00:00")
+INSERT INTO order_items_in_history (vhid, oiid) VALUES (1, 3)
+INSERT INTO order_items_in_history (vhid, oiid) VALUES (1, 4)
