@@ -11,6 +11,8 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $scope.showRequests = false;
                $scope.restaurants = [];
                $scope.sorted = 'not';
+               $scope.averageReviews = {};
+               $scope.friendsReviews = {};
                GuestRestaurantsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
                    $scope.friendRequestsNumber = data;
                    if(data > 0)
@@ -20,6 +22,24 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                 GuestRestaurantsFactory.getRestaurants().success(function (data) {
                     $scope.restaurants = data;
                 })
+
+               GuestRestaurantsFactory.getReviews().success(function(data){
+                   for(var i in data){
+                       if(isNaN(data[i]))
+                           $scope.averageReviews[i] = 'no reviews';
+                       else
+                           $scope.averageReviews[i] = data[i];
+                   }
+               });
+
+               GuestRestaurantsFactory.getFriendsReviews($scope.loggedUser.id).success(function(data){
+                   for(var i in data){
+                       if(isNaN(data[i]))
+                           $scope.friendsReviews[i] = 'no reviews';
+                       else
+                           $scope.friendsReviews[i] = data[i];
+                   }
+               });
            };
 
            var friendRequestSubscription = null;

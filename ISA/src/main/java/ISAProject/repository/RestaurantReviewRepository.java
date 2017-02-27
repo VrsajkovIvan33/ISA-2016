@@ -2,6 +2,7 @@ package ISAProject.repository;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantReview;
+import ISAProject.model.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,6 @@ public interface RestaurantReviewRepository extends JpaRepository<RestaurantRevi
     RestaurantReview save(RestaurantReview restaurantReview);
 
     List<RestaurantReview> findByRrRestaurant(Restaurant restaurant);
+
+    List<RestaurantReview> findByRrUser(User user);
 }
