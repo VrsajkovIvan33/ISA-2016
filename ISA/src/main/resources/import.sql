@@ -194,3 +194,11 @@ INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUE
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('23', "2017-02-21 17:00:00", '140', '0', '7');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('24', "2017-02-20 17:00:00", '150', '0', '6');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('25', "2017-02-20 17:00:00", '110', '0', '7');
+
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('1', 'On hold', '0', '9', '3');
+
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('1', '1 day', '450', '0', '1', '6');
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiguarantee`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('2', '2 days', '10 days', '300', '0', '1', '7');
+INSERT INTO `isa`.`offeritem` (`offiid`, `offideliverytime`, `offiprice`, `version`, `offid`, `tiid`) VALUES ('3', '1 day', '280', '0', '1', '8');
+
+INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 10);
