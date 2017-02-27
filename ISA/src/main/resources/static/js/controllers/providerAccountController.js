@@ -2,7 +2,7 @@
  * Created by Marko on 2/24/2017.
  */
 angular.module('restaurantApp.ProviderAccountController',[])
-    .controller('ProviderAccountController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService) {
+    .controller('ProviderAccountController', function ($localStorage, $scope, $location, $uibModal, $stomp,toastr, OfferService,$log,$rootScope, ProviderService) {
 
         $scope.currentProvider = $localStorage.logged;
         $scope.checkPasswordChanged = function () {
@@ -19,6 +19,52 @@ angular.module('restaurantApp.ProviderAccountController',[])
             }
         }
         $scope.checkPasswordChanged();
+
+        $scope.offerHistory = [];
+        function getOfferHistory(){
+            OfferService.getOffersByOffProvider($localStorage.logged.id).success(function (data) {
+                $scope.offerHistory = data;
+                for(i=0; i<$scope.offerHistory.length; i++){
+                    if($scope.offerHistory[i].offStatus == 'On hold')
+                        subscriptions[$scope.offerHistory[i].offTender.tId] = null;
+                }
+            });
+        }
+
+        getOfferHistory();
+
+        $stomp.setDebug(function(args){
+            $log.debug(args);
+        });
+
+        var subscriptions = {};
+
+        $stomp.connect('/stomp', {})
+            .then(function(frame){
+                for(var i in subscriptions){
+                    subscriptions[i] = $stomp.subscribe('/topic/offers/' + i, function(offerId, headers, res){
+                        var accepted = false;
+                        for(j =0; j < $scope.offerHistory.length; j++){
+                            if($scope.offerHistory[j].offId == offerId)
+                                accepted = true;
+
+                        }
+                        if(accepted)
+                            toastr.success('Your offer accepted');
+                        else
+                            toastr.error('Your offer declined');
+                        getOfferHistory();
+                    });
+                }
+            });
+        $scope.disconnect = function(){
+            for(var i in subscriptions){
+                subscriptions[i].unsubscribe();
+            }
+            $stomp.disconnect().then(function(){
+                $log.info('disconnected');
+            });
+        };
     })
     .controller('ChangeProviderPasswordController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, ProviderService) {
 
@@ -60,7 +106,7 @@ angular.module('restaurantApp.ProviderAccountController',[])
     });
 
 angular.module('restaurantApp.ProviderProfileController',[])
-    .controller('ProviderProfileController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService) {
+    .controller('ProviderProfileController', function ($localStorage, $scope, $location, $uibModal,$stomp, OfferService,$log,toastr, $rootScope, ProviderService) {
 
         $scope.currentProvider = $localStorage.logged;
 
@@ -73,6 +119,52 @@ angular.module('restaurantApp.ProviderProfileController',[])
                 $scope.currentProvider = data;
             });
         }
+
+        $scope.offerHistory = [];
+        function getOfferHistory(){
+            OfferService.getOffersByOffProvider($localStorage.logged.id).success(function (data) {
+                $scope.offerHistory = data;
+                for(i=0; i<$scope.offerHistory.length; i++){
+                    if($scope.offerHistory[i].offStatus == 'On hold')
+                        subscriptions[$scope.offerHistory[i].offTender.tId] = null;
+                }
+            });
+        }
+
+        getOfferHistory();
+
+        $stomp.setDebug(function(args){
+            $log.debug(args);
+        });
+
+        var subscriptions = {};
+
+        $stomp.connect('/stomp', {})
+            .then(function(frame){
+                for(var i in subscriptions){
+                    subscriptions[i] = $stomp.subscribe('/topic/offers/' + i, function(offerId, headers, res){
+                        var accepted = false;
+                        for(j =0; j < $scope.offerHistory.length; j++){
+                            if($scope.offerHistory[j].offId == offerId)
+                                accepted = true;
+
+                        }
+                        if(accepted)
+                            toastr.success('Your offer accepted');
+                        else
+                            toastr.error('Your offer declined');
+                        getOfferHistory();
+                    });
+                }
+            });
+        $scope.disconnect = function(){
+            for(var i in subscriptions){
+                subscriptions[i].unsubscribe();
+            }
+            $stomp.disconnect().then(function(){
+                $log.info('disconnected');
+            });
+        };
     })
     .controller('UpdateProviderAccountController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, ProviderService) {
 

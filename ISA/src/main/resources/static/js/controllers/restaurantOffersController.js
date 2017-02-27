@@ -2,7 +2,7 @@
  * Created by Marko on 2/25/2017.
  */
 angular.module('restaurantApp.RestaurantOffersController',[])
-    .controller('RestaurantOffersController', function ($localStorage, $scope, $location, $uibModal, $rootScope, OfferService, TenderService) {
+    .controller('RestaurantOffersController', function ($localStorage, $scope, $location, $uibModal, $rootScope, $log, $stomp, OfferService, TenderService) {
 
         $scope.restaurantOffers = [];
         $scope.activeTender = null;
@@ -19,6 +19,15 @@ angular.module('restaurantApp.RestaurantOffersController',[])
 
         getRestaurantOffers();
 
+        $stomp.setDebug(function(args){
+            $log.debug(args);
+        });
+
+        $stomp.connect('/stomp', {})
+              .then(function(frame){
+
+              });
+
         $scope.zoomRestaurantOffer = function (offer) {
             $rootScope.zoomROffer = offer;
             $uibModal.open({
@@ -29,8 +38,10 @@ angular.module('restaurantApp.RestaurantOffersController',[])
         }
 
         $scope.acceptOffer = function (offer) {
+            var offerToChange = null;
             for(var i = 0; i < $scope.restaurantOffers.length; i++){
                 if($scope.restaurantOffers[i].offId == offer.offId){
+                    offerToChange = $scope.restaurantOffers[i];
                     $scope.restaurantOffers[i].offStatus = 'Accepted';
                 }else{
                     $scope.restaurantOffers[i].offStatus = 'Rejected';
@@ -39,6 +50,7 @@ angular.module('restaurantApp.RestaurantOffersController',[])
 
                 });
             }
+            $stomp.send('/app/acceptOffer/'+offerToChange.offTender.tId, offerToChange);
 
             $scope.activeTender.tStatus = 'Closed';
             TenderService.updateTender($scope.activeTender).success(function (data) {
