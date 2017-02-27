@@ -43,7 +43,7 @@ public class CookServiceTest {
     @Test
     @Transactional
     public void testFindByRestaurant() {
-        Restaurant restaurant = restaurantService.findOne(1l);
+        Restaurant restaurant = restaurantService.findOne(1L);
         List<Cook> cooks = cookService.findByRestaurant(restaurant);
         Assert.assertNotNull(cooks);
         for (Cook cook : cooks) {
