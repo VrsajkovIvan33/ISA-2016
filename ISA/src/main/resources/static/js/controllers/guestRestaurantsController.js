@@ -3,13 +3,16 @@
  */
 
 angular.module('restaurantApp.GuestRestaurantsController', [])
-       .controller('GuestRestaurantsController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestRestaurantsFactory){
+       .controller('GuestRestaurantsController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, NgMap, GuestRestaurantsFactory){
            function init(){
                $scope.loggedUser = $localStorage.logged;
                $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
                $scope.friendRequestsNumber = 0;
                $scope.showRequests = false;
                $scope.restaurants = [];
+               $scope.sorted = 'not';
+               $scope.averageReviews = {};
+               $scope.friendsReviews = {};
                GuestRestaurantsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
                    $scope.friendRequestsNumber = data;
                    if(data > 0)
@@ -19,6 +22,24 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                 GuestRestaurantsFactory.getRestaurants().success(function (data) {
                     $scope.restaurants = data;
                 })
+
+               GuestRestaurantsFactory.getReviews().success(function(data){
+                   for(var i in data){
+                       if(isNaN(data[i]))
+                           $scope.averageReviews[i] = 'no reviews';
+                       else
+                           $scope.averageReviews[i] = data[i];
+                   }
+               });
+
+               GuestRestaurantsFactory.getFriendsReviews($scope.loggedUser.id).success(function(data){
+                   for(var i in data){
+                       if(isNaN(data[i]))
+                           $scope.friendsReviews[i] = 'no reviews';
+                       else
+                           $scope.friendsReviews[i] = data[i];
+                   }
+               });
            };
 
            var friendRequestSubscription = null;
@@ -37,6 +58,18 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                        }
                    }
                });
+           }
+
+           $scope.openMapModal = function(restaurant){
+                $uibModal.open({
+                    templateUrl : 'html/guest/mapModal.html',
+                    controller : 'RestaurantMapController',
+                    resolve: {
+                        param : function(){
+                            return {'restaurant' : restaurant };
+                        }
+                    }
+                });
            }
 
            $stomp.setDebug(function(args){
@@ -91,9 +124,31 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            };
 
            $scope.getRestaurants = function(){
+               $scope.sorted = 'not';
                GuestRestaurantsFactory.getRestaurants().success(function (data) {
                    $scope.restaurants = data;
                })
+           }
+
+           $scope.byName = function(){
+               $scope.sorted = 'byName';
+           }
+
+           $scope.byType = function(){
+               $scope.sorted = 'byType';
+           }
+           
+           $scope.byDistance = function(){
+               $scope.sorted = 'not';
+               navigator.geolocation.getCurrentPosition(function(pos){
+                   $scope.currentLatitude = pos.coords.latitude;
+                   $scope.currentLongitude = pos.coords.longitude;
+               });
+               var temp = {};
+               for(i = 0; i<$scope.restaurants.length; i++){
+                    var k = Math.sqrt(($scope.restaurants[i].latitude - $scope.currentLatitude)*($scope.restaurants[i].latitude - $scope.currentLatitude) + ($scope.restaurants[i].longitude - $scope.currentLongitude)*($scope.restaurants[i].longitude - $scope.currentLongitude));
+                    temp[k] = i;
+               }
            }
        })
        .controller('GuestReservationController', function ($localStorage, $scope, $stomp, $uibModal, $uibModalInstance, param, $log, toastr, GuestRestaurantsFactory) {
@@ -242,7 +297,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $uibModalInstance.dismiss('cancel');
            };
        })
-       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, MenuService){
+       .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr,  MenuService){
            $scope.newOrderItem = new Object();
            $scope.newOrderItem.oiStatus = "Waiting";
            $scope.newOrderItem.user = $localStorage.logged;
@@ -264,5 +319,15 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
 
            $scope.addOrderItem = function(orderItem){
                $uibModalInstance.close(orderItem);
+           }
+       })
+       .controller('RestaurantMapController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, NgMap, $log, toastr) {
+           $scope.restaurant = param.restaurant;
+           NgMap.getMap().then(function(map){
+               console.log(map.getCenter());
+           });
+
+           $scope.close = function(){
+               $uibModalInstance.dismiss('cancel');
            }
        })

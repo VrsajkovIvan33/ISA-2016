@@ -42,9 +42,9 @@ angular.module('restaurantApp.RestaurantController',[])
 
         $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
     })
-    .controller('NewRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, RestaurantService) {
-
-        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0};
+    .controller('NewRestaurantController', function ($localStorage, $scope, $location, $uibModalInstance, NgMap, RestaurantService) {
+        $scope.modalMode = 1;
+        $scope.newRestaurant = {id:null, rName:'', rType:'Localcuisine', providers:null, version:0, latitude:0, longitude:0};
         $scope.addRestaurant = function (restaurant) {
             if(validate(restaurant)) {
                 RestaurantService.addRestaurant(restaurant).success(function (data) {
@@ -52,6 +52,17 @@ angular.module('restaurantApp.RestaurantController',[])
                     $uibModalInstance.close();
                 });
             }
+        }
+        NgMap.getMap().then(function(map) {
+            $scope.map = map;
+        });
+        $scope.placeMarker = function(e) {
+            $scope.newRestaurant.latitude = e.latLng.lat();
+            $scope.newRestaurant.longitude = e.latLng.lng();
+        }
+
+        $scope.next = function(){
+            $scope.modalMode = 2;
         }
 
         $scope.close = function(){

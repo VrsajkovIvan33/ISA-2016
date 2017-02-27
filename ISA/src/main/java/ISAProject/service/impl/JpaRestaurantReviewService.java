@@ -2,6 +2,7 @@ package ISAProject.service.impl;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantReview;
+import ISAProject.model.users.User;
 import ISAProject.repository.RestaurantReviewRepository;
 import ISAProject.service.RestaurantReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class JpaRestaurantReviewService implements RestaurantReviewService {
     @Override
     public List<RestaurantReview> findByRrRestaurant(Restaurant restaurant) {
         return restaurantReviewRepository.findByRrRestaurant(restaurant);
+    }
+
+    @Override
+    public List<RestaurantReview> findByRrUser(User user) {
+        return restaurantReviewRepository.findByRrUser(user);
     }
 }

@@ -2,6 +2,8 @@ package ISAProject.controller;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantReview;
+import ISAProject.model.users.Guest;
+import ISAProject.service.GuestService;
 import ISAProject.service.RestaurantReviewService;
 import ISAProject.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +25,9 @@ public class RestaurantReviewController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private GuestService guestService;
 
     @RequestMapping(
             value = "/getRestaurantReviews",
@@ -51,6 +57,46 @@ public class RestaurantReviewController {
         return new ResponseEntity<List<RestaurantReview>>(restaurantReviews, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getAverageReviews", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<Long, Double>> getAverageReviews(){
+        List<Restaurant> restaurants = restaurantService.findAll();
+        HashMap<Long, Double> retMap = new HashMap<Long, Double>();
+        for(Restaurant restaurant : restaurants){
+            double sum = 0;
+            List<RestaurantReview> reviews = restaurantReviewService.findByRrRestaurant(restaurant);
+            for(RestaurantReview restaurantReview : reviews){
+                sum += restaurantReview.getRrReview();
+            }
+            double average = sum/reviews.size();
+            retMap.put(restaurant.getId(), average);
+        }
+
+        return new ResponseEntity<HashMap<Long, Double>>(retMap, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAverageFriendsReviews/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<Long, Double>> getAverageFriendsReviews(@PathVariable("id") Long id){
+        Guest user = guestService.findOne(id);
+        List<Guest> friends = user.getFriendList();
+        List<Restaurant> restaurants = restaurantService.findAll();
+        HashMap<Long, Double> retMap = new HashMap<Long, Double>();
+
+        for(Restaurant restaurant : restaurants){
+            double sum = 0;
+            double num = 0;
+            List<RestaurantReview> reviews = restaurantReviewService.findByRrRestaurant(restaurant);
+            for(RestaurantReview restaurantReview : reviews){
+                if(friends.contains(restaurantReview.getRrUser())) {
+                    sum += restaurantReview.getRrReview();
+                    num++;
+                }
+            }
+            double average = sum/num;
+            retMap.put(restaurant.getId(), average);
+        }
+
+        return new ResponseEntity<HashMap<Long, Double>>(retMap, HttpStatus.OK);
+    }
 
     @RequestMapping(
             value = "/removeRestaurantReview/{id}",

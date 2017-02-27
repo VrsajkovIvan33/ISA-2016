@@ -2,6 +2,7 @@ package ISAProject.service;
 
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantReview;
+import ISAProject.model.users.User;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface RestaurantReviewService {
     void delete(Long id);
 
     List<RestaurantReview> findByRrRestaurant(Restaurant restaurant);
+
+    List<RestaurantReview> findByRrUser(User user);
 }

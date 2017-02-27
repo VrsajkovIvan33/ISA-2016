@@ -13,4 +13,5 @@ var app = angular.module('restaurantApp', ['restaurantApp.routes',
                                            'ngAnimate',
                                            'ngStomp',
                                            'toastr',
-                                           'ng-fusioncharts']);
+                                           'ng-fusioncharts',
+                                           'ngMap']);

@@ -18,5 +18,13 @@ angular.module('restaurantApp.GuestRestaurantsFactory', [])
                return $http.post('/addReservation',  reservation );
            }
 
+           factory.getReviews = function(){
+               return $http.get('/getAverageReviews');
+           }
+
+           factory.getFriendsReviews = function(id){
+               return $http.get('/getAverageFriendsReviews/'+id, {"id":id});
+           }
+
            return factory;
        });

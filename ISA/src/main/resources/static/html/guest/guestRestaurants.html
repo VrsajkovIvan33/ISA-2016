@@ -44,6 +44,8 @@
                 <tr>
                     <th>Restaurant name:</th>
                     <th>Restaurant type:</th>
+                    <th>Review:</th>
+                    <th>Review by friends:</th>
                     <th></th>
                 </tr>
                 <tr>
@@ -67,16 +69,49 @@
                             </ul>
                         </div>
                     </th>
+                    <th></th>
+                    <th></th>
                     <th>
                         <a class="btn btn-primary" ng-click="getRestaurants()">Reset</a>
                     </th>
                 </tr>
+                <tr>
+                    <th>
+                        <a class="btn btn-primary" ng-click="byName()">Sort by name</a>
+                    </th>
+                    <th>
+                        <a class="btn btn-primary" ng-click="byType()">Sort by type</a>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <a class="btn btn-primary" ng-click="byDistance()">Sort by distance</a>
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="r in restaurants">
-                    <td>{{r.rName}}</td>
+                <tr ng-repeat="r in restaurants" ng-if="sorted == 'not'">
+                    <td><a ng-click="openMapModal(r)">{{r.rName}}</a></td>
                     <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
                     <td>{{r.rType}}</td>
+                    <td>{{averageReviews[r.id]}}</td>
+                    <td>{{friendsReviews[r.id]}}</td>
+                    <td><a class="btn btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-pencil"></span>  Book now</a></td>
+                </tr>
+                <tr ng-repeat="r in restaurants | orderBy:'rName'" ng-if="sorted == 'byName'">
+                    <td><a ng-click="openMapModal(r)">{{r.rName}}</a></td>
+                    <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
+                    <td>{{r.rType}}</td>
+                    <td>{{averageReviews[r.id]}}</td>
+                    <td>{{friendsReviews[r.id]}}</td>
+                    <td><a class="btn btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-pencil"></span>  Book now</a></td>
+                </tr>
+                <tr ng-repeat="r in restaurants | orderBy:'rType'" ng-if="sorted == 'byType'">
+                    <td><a ng-click="openMapModal(r)">{{r.rName}}</a></td>
+                    <!--<td><input ng-model="r.rType" type="text" class="form-control form-control-lg" placeholder="Enter restaurant type"></td>-->
+                    <td>{{r.rType}}</td>
+                    <td>{{averageReviews[r.id]}}</td>
+                    <td>{{friendsReviews[r.id]}}</td>
                     <td><a class="btn btn-primary" ng-click="bookNow(r)"><span class="glyphicon glyphicon-pencil"></span>  Book now</a></td>
                 </tr>
                 </tbody>

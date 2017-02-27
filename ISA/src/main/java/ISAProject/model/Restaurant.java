@@ -40,6 +40,11 @@ public class Restaurant implements Serializable {
     @JoinTable(name = "restaurantproviders", joinColumns = @JoinColumn(name = "restaurantid", referencedColumnName = "rid", nullable = false), inverseJoinColumns = @JoinColumn(name = "providerid", referencedColumnName = "id", nullable = false))
     private List<Provider> providers;
 
+    @Column(name = "latitude", nullable = false)
+    private Double latitude;
+
+    @Column(name = "longitude", nullable = false)
+    private Double longitude;
 
     //TODO proveriti za ocenu
     /*@Column(name = "rreview")
@@ -49,6 +54,22 @@ public class Restaurant implements Serializable {
     /*@OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "mid")
     private Menu mmenu;*/
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
     public Long getId() {
         return id;
