@@ -298,6 +298,8 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                };
                GuestRestaurantsFactory.addReservation($scope.reservation).success(function(data){
                    toastr.info('Tables reserved and invitation mails sent!');
+               }).error(function () {
+                   toastr.error('You can not reserve this tables!');
                });
 
                $uibModalInstance.dismiss('cancel');
