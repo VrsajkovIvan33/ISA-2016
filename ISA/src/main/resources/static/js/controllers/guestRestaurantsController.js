@@ -3,43 +3,51 @@
  */
 
 angular.module('restaurantApp.GuestRestaurantsController', [])
-       .controller('GuestRestaurantsController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, NgMap, GuestRestaurantsFactory){
+       .controller('GuestRestaurantsController', function($localStorage, $scope, $uibModal, $stomp,$location, $log, toastr, NgMap, GuestRestaurantsFactory){
            function init(){
-               $scope.loggedUser = $localStorage.logged;
-               $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
-               $scope.friendRequestsNumber = 0;
-               $scope.showRequests = false;
-               $scope.restaurants = [];
-               $scope.sorted = 'not';
-               $scope.averageReviews = {};
-               $scope.friendsReviews = {};
-               GuestRestaurantsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
-                   $scope.friendRequestsNumber = data;
-                   if(data > 0)
-                       $scope.showRequests = true;
-               });
+               if($localStorage.logged == null)
+                   $location.path("/");
+               else {
+                   if ($localStorage.logged.type != 'GUEST')
+                       $location.path("/")
+                   else {
+                       $scope.loggedUser = $localStorage.logged;
+                       $scope.restaurantTypes = ["Localcuisine", "Italian", "Chinese", "Vegan", "Country"];
+                       $scope.friendRequestsNumber = 0;
+                       $scope.showRequests = false;
+                       $scope.restaurants = [];
+                       $scope.sorted = 'not';
+                       $scope.averageReviews = {};
+                       $scope.friendsReviews = {};
+                       GuestRestaurantsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function (data) {
+                           $scope.friendRequestsNumber = data;
+                           if (data > 0)
+                               $scope.showRequests = true;
+                       });
 
-                GuestRestaurantsFactory.getRestaurants().success(function (data) {
-                    $scope.restaurants = data;
-                })
+                       GuestRestaurantsFactory.getRestaurants().success(function (data) {
+                           $scope.restaurants = data;
+                       })
 
-               GuestRestaurantsFactory.getReviews().success(function(data){
-                   for(var i in data){
-                       if(isNaN(data[i]))
-                           $scope.averageReviews[i] = 'no reviews';
-                       else
-                           $scope.averageReviews[i] = data[i];
+                       GuestRestaurantsFactory.getReviews().success(function (data) {
+                           for (var i in data) {
+                               if (isNaN(data[i]))
+                                   $scope.averageReviews[i] = 'no reviews';
+                               else
+                                   $scope.averageReviews[i] = data[i];
+                           }
+                       });
+
+                       GuestRestaurantsFactory.getFriendsReviews($scope.loggedUser.id).success(function (data) {
+                           for (var i in data) {
+                               if (isNaN(data[i]))
+                                   $scope.friendsReviews[i] = 'no reviews';
+                               else
+                                   $scope.friendsReviews[i] = data[i];
+                           }
+                       });
                    }
-               });
-
-               GuestRestaurantsFactory.getFriendsReviews($scope.loggedUser.id).success(function(data){
-                   for(var i in data){
-                       if(isNaN(data[i]))
-                           $scope.friendsReviews[i] = 'no reviews';
-                       else
-                           $scope.friendsReviews[i] = data[i];
-                   }
-               });
+               }
            };
 
            var friendRequestSubscription = null;
@@ -101,6 +109,12 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                        })
                    })
                });
+
+           $scope.logOut = function(){
+               $scope.disconnect();
+               $localStorage.logged = null;
+               $location.path("/");
+           };
 
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();

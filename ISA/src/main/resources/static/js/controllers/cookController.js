@@ -4,6 +4,18 @@
 angular.module('restaurantApp.CookController',[])
     .controller('CookController', function ($localStorage, $scope, $location, $uibModal, $rootScope, CookService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.cooks = [];
         function getCooksByRestaurant(){
             CookService.getCooksByRestaurant($localStorage.logged.restaurant.id).success(function (data) {

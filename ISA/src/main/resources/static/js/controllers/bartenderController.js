@@ -4,6 +4,18 @@
 angular.module('restaurantApp.BartenderController',[])
     .controller('BartenderController', function ($localStorage, $scope, $location, $uibModal, $rootScope, BartenderService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.bartenders = [];
         function getBartendersByRestaurant(){
             BartenderService.getBartendersByRestaurant($localStorage.logged.restaurant.id).success(function (data) {

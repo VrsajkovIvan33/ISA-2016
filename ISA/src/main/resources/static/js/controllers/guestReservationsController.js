@@ -3,30 +3,38 @@
  */
 
 angular.module('restaurantApp.GuestReservationsController', [])
-       .controller('GuestReservationsController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestReservationsFactory){
+       .controller('GuestReservationsController', function($localStorage, $scope, $uibModal, $stomp,$location, $log, toastr, GuestReservationsFactory){
             function init(){
-                $scope.loggedUser = $localStorage.logged;
-                $scope.friendRequestsNumber = 0;
-                $scope.showRequests = false;
-                $scope.reservations = [];
-                $scope.dates = {};
-                GuestReservationsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
-                    $scope.friendRequestsNumber = data;
-                    if(data > 0)
-                        $scope.showRequests = true;
-                });
+                if($localStorage.logged == null)
+                    $location.path("/");
+                else {
+                    if ($localStorage.logged.type != 'GUEST')
+                        $location.path("/")
+                    else {
+                        $scope.loggedUser = $localStorage.logged;
+                        $scope.friendRequestsNumber = 0;
+                        $scope.showRequests = false;
+                        $scope.reservations = [];
+                        $scope.dates = {};
+                        GuestReservationsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function (data) {
+                            $scope.friendRequestsNumber = data;
+                            if (data > 0)
+                                $scope.showRequests = true;
+                        });
 
-                GuestReservationsFactory.getReservations($localStorage.logged.id).success(function(data){
-                    $scope.reservations = data;
-                    for(i=0; i<$scope.reservations.length; i++){
-                        var date = new Date($scope.reservations[i].date);
-                        $scope.dates[$scope.reservations[i].id] = {
-                            "date" : date.getDate(),
-                            "month" : date.getMonth()+1,
-                            "year" : date.getFullYear()
-                        };
+                        GuestReservationsFactory.getReservations($localStorage.logged.id).success(function (data) {
+                            $scope.reservations = data;
+                            for (i = 0; i < $scope.reservations.length; i++) {
+                                var date = new Date($scope.reservations[i].date);
+                                $scope.dates[$scope.reservations[i].id] = {
+                                    "date": date.getDate(),
+                                    "month": date.getMonth() + 1,
+                                    "year": date.getFullYear()
+                                };
+                            }
+                        });
                     }
-                });
+                }
             }
 
             var friendRequestSubscription = null;
@@ -75,6 +83,12 @@ angular.module('restaurantApp.GuestReservationsController', [])
                     toastr.error('You can not cancel reservation!');
                 });
            }
+
+           $scope.logOut = function(){
+               $scope.disconnect();
+               $localStorage.logged = null;
+               $location.path("/");
+           };
 
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();

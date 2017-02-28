@@ -4,6 +4,19 @@
 angular.module('restaurantApp.ProviderAccountController',[])
     .controller('ProviderAccountController', function ($localStorage, $scope, $location, $uibModal, $stomp,toastr, OfferService,$log,$rootScope, ProviderService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'PROVIDER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $scope.disconnect();
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.currentProvider = $localStorage.logged;
         $scope.checkPasswordChanged = function () {
             if($localStorage.logged.pPasswordChanged == false){
@@ -108,7 +121,21 @@ angular.module('restaurantApp.ProviderAccountController',[])
 angular.module('restaurantApp.ProviderProfileController',[])
     .controller('ProviderProfileController', function ($localStorage, $scope, $location, $uibModal,$stomp, OfferService,$log,toastr, $rootScope, ProviderService) {
 
-        $scope.currentProvider = $localStorage.logged;
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'PROVIDER')
+                $location.path("/");
+            else {
+                $scope.currentProvider = $localStorage.logged;
+            }
+        }
+
+        $scope.logOut = function(){
+            $scope.disconnect();
+            $localStorage.logged = null;
+            $location.path("/");
+        };
 
         $scope.openUpdateModal = function () {
             $uibModal.open({

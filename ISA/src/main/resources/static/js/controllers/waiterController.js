@@ -5,6 +5,18 @@
 angular.module('restaurantApp.WaiterController',[])
     .controller('WaiterController', function ($localStorage, $scope, $location, $uibModal, $rootScope, WaiterService) {
         function init() {
+            if($localStorage.logged == null)
+                $location.path("/");
+            else {
+                if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                    $location.path("/");
+            }
+
+            $scope.logOut = function(){
+                $localStorage.logged = null;
+                $location.path("/");
+            };
+
             console.log("Kao neko registrovanje");
             var date = new Date();
             var d = date.getDate();

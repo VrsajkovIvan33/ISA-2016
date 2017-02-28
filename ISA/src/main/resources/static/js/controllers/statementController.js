@@ -4,7 +4,21 @@
 angular.module('restaurantApp.StatementController',[])
     .controller('StatementController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantReviewService, MenuReviewService, WaiterReviewService, MenuService, WaiterService, CookService) {
 
-        $scope.loggedManager = $localStorage.logged;
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+            else {
+                $scope.loggedManager = $localStorage.logged;
+
+            }
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
 
         $scope.restaurantReviews = [];
         $scope.avgReview = 0;
