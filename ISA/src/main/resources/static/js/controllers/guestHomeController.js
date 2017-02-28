@@ -3,21 +3,28 @@
  */
 
 angular.module('restaurantApp.GuestHomeController', [])
-       .controller('GuestHomeController', function($localStorage, $scope, $uibModal, $stomp, $log, toastr, $rootScope, GuestHomeFactory, VisitHistoryFactory){
+       .controller('GuestHomeController', function($localStorage, $location, $scope, $uibModal, $stomp, $log, toastr, $rootScope, GuestHomeFactory, VisitHistoryFactory){
            function init(){
-               $scope.loggedUser = $localStorage.logged;
-               $scope.friendRequestsNumber = 0;
-               $scope.showRequests = false;
-               GuestHomeFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
-                   $scope.friendRequestsNumber = data;
-                   if(data > 0)
-                       $scope.showRequests = true;
-               });
+               if($localStorage.logged == null)
+                   $location.path("/");
+               else{
+                   if($localStorage.logged.type != 'GUEST')
+                       $location.path("/");
+                   else{
+                       $scope.loggedUser = $localStorage.logged;
+                       $scope.friendRequestsNumber = 0;
+                       $scope.showRequests = false;
+                       GuestHomeFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
+                           $scope.friendRequestsNumber = data;
+                           if(data > 0)
+                               $scope.showRequests = true;
+                       });
 
-               VisitHistoryFactory.getHistoriesByGuest($scope.loggedUser).success(function(data) {
-                   $scope.histories = data;
-               })
-
+                       VisitHistoryFactory.getHistoriesByGuest($scope.loggedUser).success(function(data) {
+                           $scope.histories = data;
+                       })
+                   }
+               }
            };
 
            var friendRequestSubscription = null;
@@ -53,6 +60,12 @@ angular.module('restaurantApp.GuestHomeController', [])
                          toastr.info(friend.name + ' ' + friend.surname + ' accepted friend request.');
                      });
                  });
+
+           $scope.logOut = function(){
+               $scope.disconnect();
+               $localStorage.logged = null;
+               $location.path("/");
+           };
 
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();

@@ -3,16 +3,24 @@
  */
 
 angular.module('restaurantApp.GuestProfileController', [])
-       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal, $stomp, $log, toastr, GuestProfileFactory) {
+       .controller('GuestProfileController', function ($localStorage, $scope, $uibModal,$location, $stomp, $log, toastr, GuestProfileFactory) {
           function init(){
-              $scope.loggedUser = $localStorage.logged;
-              $scope.friendRequestsNumber = 0;
-              $scope.showRequests = false;
-              GuestProfileFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
-                  $scope.friendRequestsNumber = data;
-                  if(data > 0)
-                      $scope.showRequests = true;
-              });
+              if($localStorage.logged == null)
+                  $location.path("/");
+              else {
+                  if ($localStorage.logged.type != 'GUEST')
+                      $location.path("/")
+                  else {
+                      $scope.loggedUser = $localStorage.logged;
+                      $scope.friendRequestsNumber = 0;
+                      $scope.showRequests = false;
+                      GuestProfileFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function (data) {
+                          $scope.friendRequestsNumber = data;
+                          if (data > 0)
+                              $scope.showRequests = true;
+                      });
+                  }
+              }
           };
 
            var friendRequestSubscription = null;
@@ -36,6 +44,12 @@ angular.module('restaurantApp.GuestProfileController', [])
                        toastr.info(friend.name + ' ' + friend.surname + ' accepted friend request.');
                    });
                });
+
+           $scope.logOut = function(){
+               $scope.disconnect();
+               $localStorage.logged = null;
+               $location.path("/");
+           };
 
            $scope.disconnect = function(){
                friendRequestSubscription.unsubscribe();

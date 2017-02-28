@@ -3,25 +3,33 @@
  */
 
 angular.module('restaurantApp.GuestFriendsController', [])
-       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal, $stomp, $log,  toastr, GuestFriendsFactory){
+       .controller('GuestFriendsController', function ($localStorage, $scope, $uibModal,$location, $stomp, $log,  toastr, GuestFriendsFactory){
            function init(){
-               $scope.loggedUser = $localStorage.logged;
-               $scope.friends = [];
-               $scope.viewMode = 'not';
-               GuestFriendsFactory.getFriends($scope.loggedUser.id).success(function(data){
-                   if(data != null){
-                       $scope.friends = data;
-                   }else{
-                       alert("Error, try again!");
+               if($localStorage.logged == null)
+                   $location.path("/");
+               else {
+                   if ($localStorage.logged.type != 'GUEST')
+                       $location.path("/")
+                   else {
+                       $scope.loggedUser = $localStorage.logged;
+                       $scope.friends = [];
+                       $scope.viewMode = 'not';
+                       GuestFriendsFactory.getFriends($scope.loggedUser.id).success(function (data) {
+                           if (data != null) {
+                               $scope.friends = data;
+                           } else {
+                               alert("Error, try again!");
+                           }
+                       });
+                       $scope.friendRequestsNumber = 0;
+                       $scope.showRequests = false;
+                       GuestFriendsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function (data) {
+                           $scope.friendRequestsNumber = data;
+                           if (data > 0)
+                               $scope.showRequests = true;
+                       });
                    }
-               });
-               $scope.friendRequestsNumber = 0;
-               $scope.showRequests = false;
-               GuestFriendsFactory.getFriendRequestsNumber($scope.loggedUser.id).success(function(data){
-                   $scope.friendRequestsNumber = data;
-                   if(data > 0)
-                       $scope.showRequests = true;
-               });
+               }
            };
 
            var friendRequestsSubscription = null;
@@ -75,6 +83,12 @@ angular.module('restaurantApp.GuestFriendsController', [])
                          });
                      });
                  });
+
+           $scope.logOut = function(){
+               $scope.disconnect();
+               $localStorage.logged = null;
+               $location.path("/");
+           };
 
            $scope.disconnect = function(){
                friendRequestsSubscription.unsubscribe();

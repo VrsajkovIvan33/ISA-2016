@@ -3,6 +3,21 @@
  */
 angular.module('restaurantApp.RestaurantProvidersController',[])
     .controller('RestaurantProvidersController', function ($localStorage, $scope, $location, $uibModal, $rootScope, ProviderService, RestaurantService, OfferService, TenderService) {
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+            else {
+                $scope.loggedRestaurantManager = $localStorage.logged;
+                $scope.restaurantProviders = $scope.loggedRestaurantManager.restaurant.providers;
+            }
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
 
         $scope.providers = [];
         function getProviders(){
@@ -13,8 +28,6 @@ angular.module('restaurantApp.RestaurantProvidersController',[])
 
         getProviders();
 
-        $scope.loggedRestaurantManager = $localStorage.logged;
-        $scope.restaurantProviders = $scope.loggedRestaurantManager.restaurant.providers;
 
         $scope.removeProvider = function(provider){
             var index = $localStorage.logged.restaurant.providers.indexOf(provider);

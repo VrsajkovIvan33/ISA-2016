@@ -4,6 +4,18 @@
 angular.module('restaurantApp.TenderController',[])
     .controller('TenderController', function ($localStorage, $scope, $location, $uibModal, $rootScope, TenderService, OfferService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.tenders = [];
         $scope.active = false;
         function getTenders(){

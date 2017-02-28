@@ -4,6 +4,19 @@
 angular.module('restaurantApp.OfferHistoryController',[])
     .controller('OfferHistoryController', function ($localStorage, $scope, $location, $uibModal, $log, $rootScope, OfferService, $stomp, toastr, OfferItemService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'PROVIDER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $scope.disconnect();
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.offerHistory = [];
         function getOfferHistory(){
             OfferService.getOffersByOffProvider($localStorage.logged.id).success(function (data) {

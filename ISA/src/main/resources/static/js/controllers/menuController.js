@@ -4,6 +4,18 @@
 angular.module('restaurantApp.MenuController',[])
     .controller('MenuController', function ($localStorage, $scope, $location, $uibModal, $rootScope, MenuService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.menus = [];
         function getMenus(){
             MenuService.getMenusByMRestaurantAndMType($localStorage.logged.restaurant.id, "Menu").success(function (data) {
