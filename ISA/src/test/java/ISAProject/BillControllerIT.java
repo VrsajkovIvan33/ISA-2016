@@ -18,4 +18,15 @@ public class BillControllerIT extends AbstractIT {
                 .body("id", CoreMatchers.hasItems(1, 2, 4, 6, 7, 9, 10, 11, 12, 14, 16, 17, 19, 20, 21, 22, 24));
 
     }
+
+    @Test
+    public void testGetBillsByRestaurant(){
+        RestAssured.when()
+                .get("/getBillsByRestaurant/2")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .contentType(ContentType.JSON)
+                .body("id", CoreMatchers.hasItems(5));
+
+    }
 }
