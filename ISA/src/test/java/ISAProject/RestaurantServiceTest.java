@@ -57,6 +57,8 @@ public class RestaurantServiceTest {
         Restaurant restaurant = new Restaurant();
         restaurant.setrName("TestName");
         restaurant.setrType("Vegan");
+        restaurant.setLatitude(12.3654);
+        restaurant.setLongitude(15.8564);
 
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         Restaurant loadedRestaurant = restaurantService.findOne(savedRestaurant.getId());
@@ -71,6 +73,8 @@ public class RestaurantServiceTest {
         Restaurant restaurant = new Restaurant();
         restaurant.setrName("TestName");
         restaurant.setrType("Vegan");
+        restaurant.setLongitude(11.2546);
+        restaurant.setLatitude(9.3125);
 
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         restaurantService.delete(savedRestaurant.getId());
