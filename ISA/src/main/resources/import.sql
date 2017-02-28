@@ -216,3 +216,9 @@ INSERT INTO bill (version, wid, bl_total, bl_date) VALUES (0, 6, 400, "2017-02-1
 INSERT INTO visithistory (version, wid, gid, vh_restaurant_grade, vh_service_grade, vh_menu_grade, vh_date) VALUES (0, 6, 1, -1, -1, -1, "2017-02-15 17:00:00")
 INSERT INTO order_items_in_history (vhid, oiid) VALUES (1, 3)
 INSERT INTO order_items_in_history (vhid, oiid) VALUES (1, 4)
+
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('2', 'Canceled', '1', '9', '2');
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('3', 'Canceled', '1', '10', '2');
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('4', 'Canceled', '1', '9', '1');
+INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('5', 'Canceled', '1', '10', '1');
+
