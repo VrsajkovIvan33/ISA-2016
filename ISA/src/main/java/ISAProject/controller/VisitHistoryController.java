@@ -83,7 +83,7 @@ public class VisitHistoryController {
                 menuReview.setMrMenu(orderItem.getMenu());
                 menuReview.setMrUser(orderItem.getStaff());
                 menuReview.setMrRestaurant(originalHistory.getWaiter().getRestaurant());
-                menuReview.setMrReview(originalHistory.getMenuGrade());
+                menuReview.setMrReview(visitHistory.getMenuGrade());
                 menuReviewService.save(menuReview);
             }
         }
