@@ -3,7 +3,6 @@ package ISAProject;
 import com.jayway.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.internal.MethodSorter;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.boot.context.embedded.LocalServerPort;
