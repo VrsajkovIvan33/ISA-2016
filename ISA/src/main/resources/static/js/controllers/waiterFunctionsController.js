@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.WaiterFunctionsController',[])
-    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, $stomp, $log, uiCalendarConfig, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
+    .controller('WaiterFunctionsController', function ($localStorage, $scope, $location, $uibModal, $rootScope, $stomp, $log, uiCalendarConfig, toastr, WaiterService, RestaurantTableFactory, CalendarEventFactory, OrderFactory) {
         function init() {
 
             if($localStorage.logged == null)
@@ -87,7 +87,12 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                                         $scope.orders = data;
                                     });
                                 });
-                                orderItemsSubscription = $stomp.subscribe('/topic/orderItems/' + $scope.waiter.restaurant.id, function (unimportantBoolean, headers, res) {
+                                orderItemsSubscription = $stomp.subscribe('/topic/orderItems/' + $scope.waiter.restaurant.id, function (waiterID, headers, res) {
+
+                                    if (waiterID == $scope.waiter.id) {
+                                        toastr.success("Orders updated!");
+                                    }
+
                                     OrderFactory.getUnassignedByUser($scope.waiter).success(function (data) {
                                         $scope.unassigned = data;
                                     });

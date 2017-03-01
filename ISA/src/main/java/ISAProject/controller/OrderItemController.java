@@ -138,7 +138,7 @@ public class OrderItemController {
     @MessageMapping("/updateOrderItem/{rid}")
     @SendTo("/topic/orderItems/{rid}")
     @Transactional
-    public Boolean updateOrderItemAsSocket(@DestinationVariable Long rid, OrderItem orderItem){
+    public long updateOrderItemAsSocket(@DestinationVariable Long rid, OrderItem orderItem){
         OrderItem originalOrderItem = orderItemService.findOne(orderItem.getId());
         originalOrderItem.setUser(orderItem.getUser());
         originalOrderItem.setMenu(orderItem.getMenu());
@@ -158,7 +158,13 @@ public class OrderItemController {
             order.setoStatus("Ready");
             orderService.save(order);
         }
-        return true;
+
+        if (order.getCurrentWaiter() != null) {
+            return order.getCurrentWaiter().getId();
+        }
+        else {
+            return -1;
+        }
     }
 
 }
