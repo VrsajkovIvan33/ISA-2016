@@ -339,6 +339,7 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
 
         $scope.addOrderItem = function() {
             $rootScope.orderToShowUpdate.orderItems.push($scope.newOrderItem);
+            $rootScope.orderToShowUpdate.oStatus = "Waiting";
             $stomp.send('/app/updateOrder/' + $rootScope.orderToShowUpdate.currentWaiter.restaurant.id, $rootScope.orderToShowUpdate);
             $uibModalInstance.close();
             // OrderFactory.updateOrder($rootScope.orderToShowUpdate).success(function(data) {

@@ -1,6 +1,7 @@
 package ISAProject.service.impl;
 
 import ISAProject.model.Reservation;
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Guest;
 import ISAProject.repository.ReservationRepository;
 import ISAProject.service.ReservationService;
@@ -36,6 +37,11 @@ public class JpaReservationService implements ReservationService {
     @Override
     public List<Reservation> findByDate(Date date) {
         return reservationRepository.findByDate(date);
+    }
+
+    @Override
+    public List<Reservation> findLaterThanDateByRestaurant(Date date, Restaurant restaurant) {
+        return reservationRepository.findLaterThanDateByRestaurant(date, restaurant);
     }
 
     @Override
