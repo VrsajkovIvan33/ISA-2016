@@ -68,6 +68,18 @@ angular.module('restaurantApp.GuestReservationsController', [])
                             return { 'reservation' : reservation };
                         }
                     }
+                }).result.then(function(){
+                    GuestReservationsFactory.getReservations($localStorage.logged.id).success(function (data) {
+                        $scope.reservations = data;
+                        for (i = 0; i < $scope.reservations.length; i++) {
+                            var date = new Date($scope.reservations[i].date);
+                            $scope.dates[$scope.reservations[i].id] = {
+                                "date": date.getDate(),
+                                "month": date.getMonth() + 1,
+                                "year": date.getFullYear()
+                            };
+                        }
+                    });
                 });
            };
 
@@ -136,7 +148,7 @@ angular.module('restaurantApp.GuestReservationsController', [])
            }
 
            $scope.close = function(){
-               $uibModalInstance.dismiss('cancel');
+               $uibModalInstance.close();
            }
        })
        .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr, MenuService){
