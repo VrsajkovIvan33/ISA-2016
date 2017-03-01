@@ -3,6 +3,7 @@ package ISAProject.controller;
 import ISAProject.model.Offer;
 import ISAProject.model.Restaurant;
 import ISAProject.model.users.Provider;
+import ISAProject.model.users.UserType;
 import ISAProject.service.OfferService;
 import ISAProject.service.ProviderService;
 import ISAProject.service.RestaurantService;
@@ -77,8 +78,17 @@ public class ProviderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Provider> createProvider(@RequestBody Provider provider) throws Exception {
-        Provider savedProvider = providerService.save(provider);
-        return new ResponseEntity<Provider>(savedProvider, HttpStatus.CREATED);
+        boolean validationResult = true;
+        Provider savedProvider = null;
+        if(provider.getType() != UserType.PROVIDER || provider.getName() == null || provider.getSurname() == null || provider.getPassword() == null)
+            validationResult = false;
+        if(validationResult){
+            savedProvider = providerService.save(provider);
+            return new ResponseEntity<Provider>(savedProvider, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<Provider>(HttpStatus.FORBIDDEN);
+        }
+
     }
 
     @RequestMapping(
@@ -87,8 +97,16 @@ public class ProviderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Provider> updateProvider(@RequestBody Provider provider) throws Exception {
-        Provider savedProvider = providerService.save(provider);
-        return new ResponseEntity<Provider>(savedProvider, HttpStatus.CREATED);
+        boolean validationResult = true;
+        Provider savedProvider = null;
+        if(provider.getType() != UserType.PROVIDER || provider.getName() == null || provider.getSurname() == null || provider.getPassword() == null)
+            validationResult = false;
+        if(validationResult) {
+            savedProvider = providerService.save(provider);
+            return new ResponseEntity<Provider>(savedProvider, HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<Provider>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(

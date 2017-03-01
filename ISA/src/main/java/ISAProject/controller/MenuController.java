@@ -101,7 +101,13 @@ public class MenuController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> createMenu(@RequestBody Menu menu) throws Exception {
-        Menu savedMenu = menuService.save(menu);
+        Menu savedMenu = null;
+        boolean validationResult = true;
+        if(menu.getmName() == null || menu.getmType() == null)
+            validationResult = false;
+        if(validationResult)
+            savedMenu = menuService.save(menu);
+        else return new ResponseEntity<Menu>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Menu>(savedMenu, HttpStatus.CREATED);
     }
 
@@ -111,7 +117,13 @@ public class MenuController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> updateMenu(@RequestBody Menu menu) throws Exception {
-        Menu savedMenu = menuService.save(menu);
+        Menu savedMenu = null;
+        boolean validationResult = true;
+        if(menu.getmName() == null || menu.getmType() == null)
+            validationResult = false;
+        if(validationResult)
+            savedMenu = menuService.save(menu);
+        else return new ResponseEntity<Menu>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<Menu>(savedMenu, HttpStatus.CREATED);
     }
 }

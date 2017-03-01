@@ -1,6 +1,7 @@
 package ISAProject.controller;
 
 import ISAProject.model.users.RestaurantManager;
+import ISAProject.model.users.UserType;
 import ISAProject.service.RestaurantmanagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,9 @@ public class RestaurantmanagerController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantManager> createRestaurantManager(@RequestBody RestaurantManager restaurantManager) throws Exception {
+        if(restaurantManager.getType() != UserType.RESTAURANTMANAGER || restaurantManager.getName() == null || restaurantManager.getSurname() == null || restaurantManager.getPassword() == null)
+            return new ResponseEntity<RestaurantManager>(HttpStatus.FORBIDDEN);
+
         RestaurantManager savedRestaurantManager = restaurantmanagerService.save(restaurantManager);
         return new ResponseEntity<RestaurantManager>(savedRestaurantManager, HttpStatus.CREATED);
     }
@@ -60,6 +64,9 @@ public class RestaurantmanagerController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantManager> updateRestaurantManager(@RequestBody RestaurantManager restaurantManager) throws Exception {
+        if(restaurantManager.getType() != UserType.RESTAURANTMANAGER || restaurantManager.getName() == null || restaurantManager.getSurname() == null || restaurantManager.getPassword() == null)
+            return new ResponseEntity<RestaurantManager>(HttpStatus.FORBIDDEN);
+
         RestaurantManager savedRestaurantManager = restaurantmanagerService.save(restaurantManager);
         return new ResponseEntity<RestaurantManager>(savedRestaurantManager, HttpStatus.CREATED);
     }

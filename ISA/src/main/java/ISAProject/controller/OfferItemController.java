@@ -82,12 +82,18 @@ public class OfferItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OfferItem> addOfferItem(@RequestBody OfferItem offerItem) throws Exception {
-        if(offerItem.getOffiOffer().getOffTender().gettStatus().equals("Active")) {
-            OfferItem savedOfferItem = offerItemService.save(offerItem);
-            return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        boolean validationResult = true;
+        if(offerItem.getOffiDeliveryTime() == null)
+            validationResult = false;
+        if(validationResult) {
+            if (offerItem.getOffiOffer().getOffTender().gettStatus().equals("Active")) {
+                OfferItem savedOfferItem = offerItemService.save(offerItem);
+                return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }else
+            return new ResponseEntity<OfferItem>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(
@@ -96,11 +102,17 @@ public class OfferItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OfferItem> updateOfferItem(@RequestBody OfferItem offerItem) throws Exception {
-        if(offerItem.getOffiOffer().getOffStatus().equals("On hold")) {
-            OfferItem savedOfferItem = offerItemService.save(offerItem);
-            return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        boolean validationResult = true;
+        if(offerItem.getOffiDeliveryTime() == null)
+            validationResult = false;
+        if(validationResult) {
+            if (offerItem.getOffiOffer().getOffStatus().equals("On hold")) {
+                OfferItem savedOfferItem = offerItemService.save(offerItem);
+                return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }else
+            return new ResponseEntity<OfferItem>(HttpStatus.FORBIDDEN);
     }
 }

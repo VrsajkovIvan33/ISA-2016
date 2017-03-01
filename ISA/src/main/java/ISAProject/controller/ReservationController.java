@@ -103,6 +103,9 @@ public class ReservationController {
 
         List<Reservation> reservations = reservationService.findByDate(reservation.getDate());
 
+        if(reservation.getDate() == null)
+            return new ResponseEntity<Reservation>(HttpStatus.FORBIDDEN);
+
         //transaction check
         for(Reservation r : reservations){
             if(((reservation.getTimeH() + reservation.getTimeM()/60 + reservation.getDurationH() + reservation.getDurationM()/60) > (r.getTimeH() + r.getTimeM()/60)) &&
@@ -189,10 +192,12 @@ public class ReservationController {
         List<Reservation> allReservations = new ArrayList<Reservation>();
 
         for(Reservation r : reservationsByHost){
-            allReservations.add(r);
+            if(r.getOrder().getoStatus().equals("Waiting for waiter"))
+                allReservations.add(r);
         }
         for(Reservation r : host.getReservations()){
-            allReservations.add(r);
+            if(r.getOrder().getoStatus().equals("Waiting for waiter"))
+                allReservations.add(r);
         }
 
         return new ResponseEntity<List<Reservation>>((List<Reservation>)allReservations, HttpStatus.OK);
@@ -201,6 +206,10 @@ public class ReservationController {
     @RequestMapping(method = RequestMethod.PUT, value = "/updateReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> updateReservation(@PathVariable("id") Long id, @RequestBody OrderItem orderItem){
         Reservation reservation = reservationService.findOne(id);
+
+        if(orderItem.getOiStatus() == null || orderItem.getOiReadyByArrival() == null)
+            return new ResponseEntity<Long>(HttpStatus.FORBIDDEN);
+
         orderItem.setOrder(reservation.getOrder());
         orderItem.setHourOfArrival(reservation.getOrder().getHourOfArrival());
         orderItem.setMinuteOfArrival(reservation.getOrder().getMinuteOfArrival());

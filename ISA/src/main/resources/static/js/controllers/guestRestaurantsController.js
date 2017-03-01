@@ -329,7 +329,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                }
 
                var date = new Date();
-               date.setHours(23,59,59,0);
+               date.setHours(0,0,0,0);
                if(date > reservationHelper.date){
                    alert('Reservation date must be one or more days after today');
                    return false;
