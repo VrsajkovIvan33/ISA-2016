@@ -146,7 +146,7 @@ INSERT INTO restaurantproviders (restaurantid, providerid) VALUES (1, 9);
 
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (1, "2017-02-02 00:00:00", "2017-02-05 00:00:00", 'Canceled', 1, 1);
 INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (2, "2017-02-07 00:00:00", "2017-02-11 00:00:00", 'Canceled', 1, 1);
-INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (3, "2017-02-24 00:00:00", "2017-03-05 00:00:00", 'Active', 1, 0);
+INSERT INTO tender (tid, tstart, tend, tstatus, rid, version) VALUES (3, "2017-02-24 00:00:00", "2017-03-01 00:00:00", 'Active', 1, 0);
 
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (1, 'Pilece belo meso', 'Foodstuff', '20 kg', 1, 0);
 INSERT INTO tenderitem (tiid, tiname, titype, tiquantity, tid, version) VALUES (2, 'Coca Cola', 'Drink', '50 kom', 1, 0);
@@ -185,15 +185,15 @@ INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUE
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('14', "2017-02-24 09:00:00", '150', '0', '6');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('15', "2017-02-24 17:00:00", '220', '0', '7');
 INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('16', "2017-02-23 17:00:00", '150', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('17', "2017-02-22 13:00:00", '200', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('18', "2017-02-22 15:12:00", '140', '0', '7');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('19', "2017-02-22 17:17:00", '150', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('20', "2017-02-21 12:00:00", '330', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('21', "2017-02-21 12:00:00", '150', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('22', "2017-02-21 17:17:00", '320', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('23', "2017-02-21 17:00:00", '140', '0', '7');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('24', "2017-02-20 17:00:00", '150', '0', '6');
-INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('25', "2017-02-20 17:00:00", '110', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('17', "2017-03-01 13:00:00", '200', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('18', "2017-03-01 15:12:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('19', "2017-03-01 17:17:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('20', "2017-02-28 12:00:00", '330', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('21', "2017-02-28 12:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('22', "2017-02-28 17:17:00", '320', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('23', "2017-02-28 17:00:00", '140', '0', '7');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('24', "2017-02-27 17:00:00", '150', '0', '6');
+INSERT INTO `isa`.`bill` (`blid`, `bl_date`, `bl_total`, `version`, `wid`) VALUES ('25', "2017-02-27 17:00:00", '110', '0', '7');
 
 
 INSERT INTO `isa`.`offer` (`offid`, `offstatus`, `version`, `pid`, `tid`) VALUES ('1', 'On hold', '0', '9', '3');
