@@ -112,8 +112,11 @@ angular.module('restaurantApp.GuestReservationsController', [])
                        }
                    }
                }).result.then(function(orderItem){
-                   $scope.reservation.order.orderItems.push(orderItem);
+                   //$scope.reservation.order.orderItems.push(orderItem);
                    GuestReservationsFactory.updateReservation($scope.reservation.id, orderItem).success(function(data){
+                       GuestReservationsFactory.getReservation($scope.reservation.id).success(function (data) {
+                           $scope.reservation = data;
+                       })
                        toastr.success('Order added!');
                    });
                });
