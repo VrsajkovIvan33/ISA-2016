@@ -4,6 +4,18 @@
 angular.module('restaurantApp.RestaurantmanagerController',[])
     .controller('RestaurantmanagerController', function ($localStorage, $scope, $location, $uibModal, $rootScope, RestaurantmanagerService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'SYSTEMMANAGER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.restaurantManagers = [];
         function getRestaurantManagers(){
             RestaurantmanagerService.getRestaurantManagers().success(function (data) {

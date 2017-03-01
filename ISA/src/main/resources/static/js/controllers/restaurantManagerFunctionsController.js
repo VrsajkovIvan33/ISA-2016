@@ -3,67 +3,75 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage, $uibModal, uiCalendarConfig, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage,$location, $uibModal, uiCalendarConfig, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
         function init() {
-            console.log("Restaurant Manager init()");
-
-            $scope.selectedEvent = undefined;
-
-            $scope.alertOnEventClick = function( date, jsEvent, view){
-                console.log("Kliknut dogadjaj!");
-                $scope.selectedEvent = date;
-            };
-
-            $scope.uiConfig = {
-                calendar: {
-                    height: 450,
-                    editable: true,
-                    header: {
-                        left: 'month basicWeek basicDay agendaWeek agendaDay',
-                        center: 'title',
-                        right: 'today prev, next'
-                    },
-                    eventClick: $scope.alertOnEventClick
-                }
-            }
-
-            $scope.removeEvent = function() {
-                if ($scope.selectedEvent == undefined) {
-                    alert("No event selected!");
-                }
+            if($localStorage.logged == null)
+                $location.path("/");
+            else {
+                if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                    $location.path("/");
                 else {
-                    CalendarEventFactory.removeCalendarEvent($scope.selectedEvent.id).success(function(data) {
-                        CalendarEventFactory.getEventsByRestaurant($scope.restaurantManager.restaurant).success(function(data) {
-                            $scope.myEvents = [];
-                            var i;
-                            for (i = 0; i < data.length; i++) {
-                                if (data[i].user.type == "WAITER") {
-                                    $scope.myEvents.push({
-                                        title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname).concat(" - ".concat(data[i].tableRegion.trMark)),
-                                        start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
-                                        end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
-                                        allDay: false,
-                                        id: data[i].id
-                                    })
-                                }
-                                else {
-                                    $scope.myEvents.push({
-                                        title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
-                                        start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
-                                        end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
-                                        allDay: false,
-                                        id: data[i].id
-                                    })
-                                }
-                            }
+                    console.log("Restaurant Manager init()");
 
-                            $scope.eventSources = [$scope.myEvents];
-                            //JEBEM TI MAMU U PICKU DA TI JEBEM!
-                            uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
-                            uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
-                            $scope.selectedEvent = undefined;
-                        });
-                    });
+                    $scope.selectedEvent = undefined;
+
+                    $scope.alertOnEventClick = function (date, jsEvent, view) {
+                        console.log("Kliknut dogadjaj!");
+                        $scope.selectedEvent = date;
+                    };
+
+                    $scope.uiConfig = {
+                        calendar: {
+                            height: 450,
+                            editable: true,
+                            header: {
+                                left: 'month basicWeek basicDay agendaWeek agendaDay',
+                                center: 'title',
+                                right: 'today prev, next'
+                            },
+                            eventClick: $scope.alertOnEventClick
+                        }
+                    }
+
+                    $scope.removeEvent = function () {
+                        if ($scope.selectedEvent == undefined) {
+                            alert("No event selected!");
+                        }
+                        else {
+                            CalendarEventFactory.removeCalendarEvent($scope.selectedEvent.id).success(function (data) {
+                                CalendarEventFactory.getEventsByRestaurant($scope.restaurantManager.restaurant).success(function (data) {
+                                    $scope.myEvents = [];
+                                    var i;
+                                    for (i = 0; i < data.length; i++) {
+                                        if (data[i].user.type == "WAITER") {
+                                            $scope.myEvents.push({
+                                                title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname).concat(" - ".concat(data[i].tableRegion.trMark)),
+                                                start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                                end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                                allDay: false,
+                                                id: data[i].id
+                                            })
+                                        }
+                                        else {
+                                            $scope.myEvents.push({
+                                                title: $scope.combineNameAndSurname(data[i].user.name, data[i].user.surname),
+                                                start: new Date(data[i].year, data[i].month, data[i].day, data[i].startHour, data[i].startMinute),
+                                                end: new Date(data[i].year, data[i].month, data[i].day, data[i].endHour, data[i].endMinute),
+                                                allDay: false,
+                                                id: data[i].id
+                                            })
+                                        }
+                                    }
+
+                                    $scope.eventSources = [$scope.myEvents];
+                                    //JEBEM TI MAMU U PICKU DA TI JEBEM!
+                                    uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
+                                    uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', $scope.myEvents);
+                                    $scope.selectedEvent = undefined;
+                                });
+                            });
+                        }
+                    }
                 }
             }
 
@@ -209,6 +217,11 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
         }
 
         init();
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
 
         $scope.loggedManager = $localStorage.logged;
         $scope.openUpdateModal = function () {

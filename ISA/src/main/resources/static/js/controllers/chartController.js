@@ -4,7 +4,20 @@
 angular.module('restaurantApp.ChartController',[])
     .controller('ChartController', function ($localStorage, $scope, $location, $uibModal, $rootScope, BillService) {
 
-        $scope.loggedManager = $localStorage.logged;
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'RESTAURANTMANAGER')
+                $location.path("/");
+            else {
+                $scope.loggedManager = $localStorage.logged;
+            }
+        }
+
+        $scope.logOut = function(){
+            $localStorage.logged = null;
+            $location.path("/");
+        };
 
         $scope.restaurantBills = [];
         $scope.visits = [];

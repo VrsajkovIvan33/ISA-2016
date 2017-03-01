@@ -4,6 +4,19 @@
 angular.module('restaurantApp.ProviderTendersController',[])
     .controller('ProviderTendersController', function ($localStorage, $scope, $location, $uibModal,toastr, $rootScope,$stomp,$log, OfferService, TenderService, RestaurantService) {
 
+        if($localStorage.logged == null)
+            $location.path("/");
+        else {
+            if ($localStorage.logged.type != 'PROVIDER')
+                $location.path("/");
+        }
+
+        $scope.logOut = function(){
+            $scope.disconnect();
+            $localStorage.logged = null;
+            $location.path("/");
+        };
+
         $scope.providerTenders = [];
         function getProviderTenders(){
             RestaurantService.getRestaurants().success(function (data) {

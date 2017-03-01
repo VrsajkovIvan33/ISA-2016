@@ -11,12 +11,6 @@ app.config(['$routeProvider','$httpProvider', function ($routeProvider, $httpPro
         .when('/register',{
             templateUrl : 'html/guestRegister.html'
         })
-        .when('/bartender',{
-            templateUrl : 'html/bartender.html'
-        })
-        .when('/cook',{
-            templateUrl : 'html/cook.html'
-        })
 
         //routing for the guest
         .when('/guest',{
