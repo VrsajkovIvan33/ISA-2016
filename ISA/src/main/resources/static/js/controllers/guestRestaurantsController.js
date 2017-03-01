@@ -257,7 +257,14 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            }
 
            $scope.changeModalMode = function(mode){
-               $scope.modalMode += 1;
+               if($scope.modalMode == 2){
+                   if($scope.order.restaurantTable == null){
+                       toastr.error('You have to select table(s)!');
+                   }else{
+                       $scope.modalMode += 1;
+                   }
+               }else
+                    $scope.modalMode += 1;
            }
 
            $scope.openNewItemModal = function(){
@@ -315,8 +322,6 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                $uibModalInstance.dismiss('cancel');
            };
 
-
-
            function validate(reservationHelper) {
                if(reservationHelper.date == null){
                    alert('Please enter reservation date');
@@ -324,7 +329,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                }
 
                var date = new Date();
-               date.setHours(23,59,59,0);
+               date.setHours(0,0,0,0);
                if(date > reservationHelper.date){
                    alert('Reservation date must be one or more days after today');
                    return false;

@@ -153,6 +153,9 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) throws Exception {
         Restaurant savedRestaurant = restaurantService.save(restaurant);
 
+        if(restaurant.getrName() == null || restaurant.getrType() == null)
+            return new ResponseEntity<Restaurant>(HttpStatus.FORBIDDEN);
+
         for (int pos = 0; pos < 50 ; pos++) {
             RestaurantTable restaurantTable = new RestaurantTable();
             restaurantTable.setRestaurant(savedRestaurant);
@@ -175,6 +178,9 @@ public class RestaurantController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant) throws Exception {
+        if(restaurant.getrName() == null || restaurant.getrType() == null)
+            return new ResponseEntity<Restaurant>(HttpStatus.FORBIDDEN);
+
         Restaurant savedRestaurant = restaurantService.save(restaurant);
         return new ResponseEntity<Restaurant>(savedRestaurant, HttpStatus.CREATED);
     }
