@@ -69,7 +69,7 @@ angular.module('restaurantApp.GuestProfileController', [])
            }
 
        })
-       .controller('UpdateGuestProfileController', function ($localStorage, $scope, $uibModalInstance, $location, GuestProfileFactory) {
+       .controller('UpdateGuestProfileController', function ($localStorage, $scope, toastr, $uibModalInstance, $location, GuestProfileFactory) {
            function init(){
                $scope.userToUpdate = jQuery.extend(true, {}, $localStorage.logged);
            };
@@ -77,18 +77,42 @@ angular.module('restaurantApp.GuestProfileController', [])
            init();
 
            $scope.update = function(user){
-                  GuestProfileFactory.updateGuest(user).success(function(data){
-                      if(data != null) {
-                          $localStorage.logged = data;
-                          $scope.userToUpdate = $localStorage.logged;
-                          $uibModalInstance.close($localStorage.logged);
-                      }else{
-                          alert("It is not possible to change info");
-                      }
-                  });
+               if(validateUser(user)) {
+                   GuestProfileFactory.updateGuest(user).success(function (data) {
+                       if (data != null) {
+                           $localStorage.logged = data;
+                           $scope.userToUpdate = $localStorage.logged;
+                           $uibModalInstance.close($localStorage.logged);
+                       } else {
+                           alert("It is not possible to change info");
+                       }
+                   });
+               }
            };
 
            $scope.close = function(){
                $uibModalInstance.dismiss('cancel');
            };
+
+           function validateUser(user){
+               var checked = true;
+               if(user.name == '') {
+                   checked = false;
+                   toastr.error('Name must not be empty');
+               }
+               if(user.surname == '') {
+                   checked = false;
+                   toastr.error('Surname must not be empty')
+               }
+               if(user.email == '') {
+                   checked = false;
+                   toastr.error('Email must not be empty')
+               }
+               var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+               if(!re.test(user.email)){
+                   toastr.error('Wrong email address');
+                   checked = false;
+               }
+               return checked;
+           }
        });

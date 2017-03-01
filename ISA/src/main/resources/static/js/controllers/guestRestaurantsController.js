@@ -257,7 +257,14 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
            }
 
            $scope.changeModalMode = function(mode){
-               $scope.modalMode += 1;
+               if($scope.modalMode == 2){
+                   if($scope.order.restaurantTable == null){
+                       toastr.error('You have to select table(s)!');
+                   }else{
+                       $scope.modalMode += 1;
+                   }
+               }else
+                    $scope.modalMode += 1;
            }
 
            $scope.openNewItemModal = function(){
@@ -314,8 +321,6 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                })
                $uibModalInstance.dismiss('cancel');
            };
-
-
 
            function validate(reservationHelper) {
                if(reservationHelper.date == null){
