@@ -56,7 +56,7 @@ angular.module('restaurantApp.ProviderTendersController',[])
                 templateUrl : 'html/provider/updateOffer.html',
                 controller : 'UpdateOfferController',
                 size: 'lg'
-            })
+            });
         }
 
         $scope.offerHistory = [];
@@ -105,7 +105,7 @@ angular.module('restaurantApp.ProviderTendersController',[])
             });
         };
     })
-    .controller('UpdateOfferController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, TenderService, TenderItemService, OfferService, OfferItemService) {
+    .controller('UpdateOfferController', function ($localStorage, $scope, $location, $uibModalInstance, $rootScope, TenderService, TenderItemService, OfferService, OfferItemService, toastr) {
 
         $scope.tenderItems = [];
         $scope.offer = null;
@@ -148,16 +148,26 @@ angular.module('restaurantApp.ProviderTendersController',[])
                         for (var i = 0; i < $scope.offerItems.length; i++) {
                             $scope.offerItems[i].offiOffer = addedOffer;
                             OfferItemService.addOfferItem($scope.offerItems[i]).success(function () {
-                                $uibModalInstance.close();
+
                             });
                         }
+                        $uibModalInstance.close();
+                    }).error(function(){
+                        toastr.error('Tender has been closed or canceled');
+                        $uibModalInstance.close();
                     });
                 } else {
                     for (var i = 0; i < $scope.offerItems.length; i++) {
                         OfferItemService.updateOfferItem($scope.offerItems[i]).success(function () {
-                            $uibModalInstance.close();
+
+                        }).error(function () {
+                            if(i == $scope.offerItems.length) {
+                                toastr.error('Tender has been closed or canceled');
+                                i = 0;
+                            }
                         });
                     }
+                    $uibModalInstance.close();
                 }
             }
         }

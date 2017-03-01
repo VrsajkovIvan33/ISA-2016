@@ -139,8 +139,14 @@ public class OfferController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> addOffer(@RequestBody Offer offer) throws Exception {
-        Offer savedOffer = offerService.save(offer);
-        return new ResponseEntity<Offer>(savedOffer, HttpStatus.CREATED);
+        Tender tender = tenderService.findOne(offer.getOffTender().gettId());
+        if(tender.gettStatus().equals("Active")) {
+            System.out.println(tender.gettStatus());
+            Offer savedOffer = offerService.save(offer);
+            return new ResponseEntity<Offer>(savedOffer, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<Offer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(
@@ -149,8 +155,19 @@ public class OfferController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> updateOffer(@RequestBody Offer offer) throws Exception {
-        Offer savedOffer = offerService.save(offer);
-        return new ResponseEntity<Offer>(savedOffer, HttpStatus.CREATED);
+        Tender tender = tenderService.findOne(offer.getOffTender().gettId());
+        if(tender.gettStatus().equals("Active")) {
+            //System.out.println(offer.getOffTender().gettStatus());
+            Offer savedOffer = offerService.save(offer);
+        /*List<OfferItem> offerItems = offerItemService.findByOffiOffer(savedOffer);
+        for(OfferItem offerItem: offerItems){
+            offerItem.setVersion(offerItem.getVersion() + 1);
+            offerItemService.save(offerItem);
+        }*/
+            return new ResponseEntity<Offer>(savedOffer, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<Offer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @MessageMapping("/acceptOffer/{id}")

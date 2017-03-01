@@ -2,19 +2,19 @@
     <div class="container">
         <div style="margin-left: 18%" class="carousel-caption col-xs-3">
             <form role="form">
-                <p><input type="text" class="form-control form-control-lg" ng-model="newGuest.gName"
+                <p><input type="text" class="form-control form-control-lg" ng-model="newGuest.name"
                           placeholder="Enter your name"></p>
-                <p><input type="text" class="form-control form-control-lg" ng-model="newGuest.gSurname"
+                <p><input type="text" class="form-control form-control-lg" ng-model="newGuest.surname"
                           placeholder="Enter your surname"></p>
-                <p><input type="email" class="form-control form-control-lg" ng-model="newGuest.gEmail"
+                <p><input type="email" class="form-control form-control-lg" ng-model="newGuest.email"
                           placeholder="Enter your email"></p>
-                <p><input type="password" class="form-control form-control-lg" ng-model="newGuest.gPassword"
+                <p><input type="password" class="form-control form-control-lg" ng-model="newGuest.password"
                           placeholder="Enter your password"></p>
                 <p>
                 <p><input type="password" class="form-control form-control-lg"
                           placeholder="Repeat your password" ng-model="repeatedPassword"></p>
                 <p>
-                    <button type="submit" class="btn btn-primary btn-md" ng-click="registerGuest(newGuest, repeatedPassword)">Register</button>
+                    <button type="submit" class="btn btn-primary btn-md" ng-click="registerGuest(newGuest)">Register</button>
                 </p>
             </form>
         </div>

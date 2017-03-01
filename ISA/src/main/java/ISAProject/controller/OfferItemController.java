@@ -6,6 +6,7 @@ import ISAProject.model.TenderItem;
 import ISAProject.service.OfferItemService;
 import ISAProject.service.OfferService;
 import ISAProject.service.TenderItemService;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -81,8 +82,12 @@ public class OfferItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OfferItem> addOfferItem(@RequestBody OfferItem offerItem) throws Exception {
-        OfferItem savedOfferItem = offerItemService.save(offerItem);
-        return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+        if(offerItem.getOffiOffer().getOffTender().gettStatus().equals("Active")) {
+            OfferItem savedOfferItem = offerItemService.save(offerItem);
+            return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(
@@ -91,7 +96,11 @@ public class OfferItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OfferItem> updateOfferItem(@RequestBody OfferItem offerItem) throws Exception {
-        OfferItem savedOfferItem = offerItemService.save(offerItem);
-        return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+        if(offerItem.getOffiOffer().getOffStatus().equals("On hold")) {
+            OfferItem savedOfferItem = offerItemService.save(offerItem);
+            return new ResponseEntity<OfferItem>(savedOfferItem, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<OfferItem>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
