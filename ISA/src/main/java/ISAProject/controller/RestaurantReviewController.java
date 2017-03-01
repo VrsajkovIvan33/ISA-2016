@@ -112,8 +112,13 @@ public class RestaurantReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantReview> addRestaurantReview(@RequestBody RestaurantReview restaurantReview) throws Exception {
-        RestaurantReview savedRestaurantReview = restaurantReviewService.save(restaurantReview);
-        return new ResponseEntity<RestaurantReview>(savedRestaurantReview, HttpStatus.CREATED);
+        if (restaurantReview.getRrDate() != null && restaurantReview.getRrReview() >= 1 && restaurantReview.getRrReview() <= 5) {
+            RestaurantReview savedRestaurantReview = restaurantReviewService.save(restaurantReview);
+            return new ResponseEntity<RestaurantReview>(savedRestaurantReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<RestaurantReview>(restaurantReview, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -122,7 +127,12 @@ public class RestaurantReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantReview> updateRestaurantReview(@RequestBody RestaurantReview restaurantReview) throws Exception {
-        RestaurantReview savedRestaurantReview = restaurantReviewService.save(restaurantReview);
-        return new ResponseEntity<RestaurantReview>(savedRestaurantReview, HttpStatus.CREATED);
+        if (restaurantReview.getRrDate() != null && restaurantReview.getRrReview() >= 1 && restaurantReview.getRrReview() <= 5) {
+            RestaurantReview savedRestaurantReview = restaurantReviewService.save(restaurantReview);
+            return new ResponseEntity<RestaurantReview>(savedRestaurantReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<RestaurantReview>(restaurantReview, HttpStatus.FORBIDDEN);
+        }
     }
 }

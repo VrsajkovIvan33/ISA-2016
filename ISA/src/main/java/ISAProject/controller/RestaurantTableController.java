@@ -78,6 +78,17 @@ public class RestaurantTableController {
         //Restaurant restaurantById = restaurantService.findOne(restaurantId);
         // save the tables separately
         Boolean updateFailed = false;
+
+        for (int i = 0; i <restaurantTables.size(); i++) {
+            if (restaurantTables.get(i).getRestaurantSegment() == null || restaurantTables.get(i).getTableRegion() == null || restaurantTables.get(i).getRtActive() == null) {
+                updateFailed = true;
+                break;
+            }
+        }
+        if (updateFailed == true) {
+            return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.FORBIDDEN);
+        }
+
         for (int i = 0; i < restaurantTables.size(); i++) {
             RestaurantTable restaurantTable = restaurantTableService.findById(
                     restaurantTables.get(i).getId());

@@ -81,8 +81,13 @@ public class WaiterReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WaiterReview> addWaiterReview(@RequestBody WaiterReview waiterReview) throws Exception {
-        WaiterReview savedWaiterReview = waiterReviewService.save(waiterReview);
-        return new ResponseEntity<WaiterReview>(savedWaiterReview, HttpStatus.CREATED);
+        if (waiterReview.getWrDate() != null && waiterReview.getWrReview() >= 1 && waiterReview.getWrReview() <= 5) {
+            WaiterReview savedWaiterReview = waiterReviewService.save(waiterReview);
+            return new ResponseEntity<WaiterReview>(savedWaiterReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<WaiterReview>(waiterReview, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -91,7 +96,12 @@ public class WaiterReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WaiterReview> updateWaiterReview(@RequestBody WaiterReview waiterReview) throws Exception {
-        WaiterReview savedWaiterReview = waiterReviewService.save(waiterReview);
-        return new ResponseEntity<WaiterReview>(savedWaiterReview, HttpStatus.CREATED);
+        if (waiterReview.getWrDate() != null && waiterReview.getWrReview() >= 1 && waiterReview.getWrReview() <= 5) {
+            WaiterReview savedWaiterReview = waiterReviewService.save(waiterReview);
+            return new ResponseEntity<WaiterReview>(savedWaiterReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<WaiterReview>(waiterReview, HttpStatus.FORBIDDEN);
+        }
     }
 }

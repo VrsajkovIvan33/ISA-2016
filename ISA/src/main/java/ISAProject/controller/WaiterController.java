@@ -92,8 +92,13 @@ public class WaiterController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Waiter> createProvider(@RequestBody Waiter waiter) throws Exception {
-        Waiter savedWaiter = waiterService.save(waiter);
-        return new ResponseEntity<Waiter>(savedWaiter, HttpStatus.CREATED);
+        if (waiter.getName() != null && waiter.getSurname() != null && waiter.getEmail() != null && waiter.getPassword() != null) {
+            Waiter savedWaiter = waiterService.save(waiter);
+            return new ResponseEntity<Waiter>(savedWaiter, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<Waiter>(waiter, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -102,7 +107,12 @@ public class WaiterController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Waiter> updateWaiter(@RequestBody Waiter waiter) throws Exception {
-        Waiter savedWaiter = waiterService.save(waiter);
-        return new ResponseEntity<Waiter>(savedWaiter, HttpStatus.CREATED);
+        if (waiter.getName() != null && waiter.getSurname() != null && waiter.getEmail() != null && waiter.getPassword() != null) {
+            Waiter savedWaiter = waiterService.save(waiter);
+            return new ResponseEntity<Waiter>(savedWaiter, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<Waiter>(waiter, HttpStatus.FORBIDDEN);
+        }
     }
 }
