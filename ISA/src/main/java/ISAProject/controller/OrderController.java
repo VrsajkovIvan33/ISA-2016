@@ -161,14 +161,21 @@ public class OrderController {
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) throws Exception {
         Order originalOrder = orderService.findById(order.getId());
         originalOrder.setOrderItems(order.getOrderItems());
+        Boolean markAsReady = true;
         for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
             orderItem.setHourOfArrival(order.getHourOfArrival());
             orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+            if (!orderItem.getOiStatus().equals("Ready")) {
+                markAsReady = false;
+            }
         }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
         originalOrder.setoAssigned(order.getoAssigned());
         originalOrder.setoStatus(order.getoStatus());
+        if (markAsReady == true) {
+            originalOrder.setoStatus("Ready");
+        }
         originalOrder.setRestaurantTable(order.getRestaurantTable());
         originalOrder.setWaiters(order.getWaiters());
         originalOrder.setHourOfArrival(order.getHourOfArrival());
@@ -291,14 +298,21 @@ public class OrderController {
     public Boolean updateOrderAsSocket(@DestinationVariable Long rid, Order order){
         Order originalOrder = orderService.findById(order.getId());
         originalOrder.setOrderItems(order.getOrderItems());
+        Boolean markAsReady = true;
         for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
             orderItem.setHourOfArrival(order.getHourOfArrival());
             orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+            if (!orderItem.getOiStatus().equals("Ready")) {
+                markAsReady = false;
+            }
         }
         originalOrder.setCurrentWaiter(order.getCurrentWaiter());
         originalOrder.setoAssigned(order.getoAssigned());
         originalOrder.setoStatus(order.getoStatus());
+        if (markAsReady == true) {
+            originalOrder.setoStatus("Ready");
+        }
         originalOrder.setRestaurantTable(order.getRestaurantTable());
         originalOrder.setWaiters(order.getWaiters());
         originalOrder.setHourOfArrival(order.getHourOfArrival());
