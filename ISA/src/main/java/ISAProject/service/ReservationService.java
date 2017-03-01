@@ -1,6 +1,7 @@
 package ISAProject.service;
 
 import ISAProject.model.Reservation;
+import ISAProject.model.Restaurant;
 import ISAProject.model.users.Guest;
 
 import java.util.Date;
@@ -16,6 +17,8 @@ public interface ReservationService {
     Reservation findOne(Long id);
 
     List<Reservation> findByDate(Date date);
+
+    List<Reservation> findLaterThanDateByRestaurant(Date date, Restaurant restaurant);
 
     List<Reservation> findByHost(Guest guest);
 

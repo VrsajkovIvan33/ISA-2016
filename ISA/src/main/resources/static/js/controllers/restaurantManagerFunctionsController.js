@@ -3,7 +3,7 @@
  */
 
 angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
-    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage,$location, $uibModal, uiCalendarConfig, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
+    .controller('RestaurantManagerFunctionsController', function ($scope, $rootScope, $localStorage,$location, $uibModal, uiCalendarConfig, toastr, RestaurantTableFactory, RestaurantmanagerService, RestaurantSegmentFactory, TableRegionFactory, RestaurantUsersFactory, CalendarEventFactory) {
         function init() {
             if($localStorage.logged == null)
                 $location.path("/");
@@ -130,7 +130,9 @@ angular.module('restaurantApp.RestaurantManagerFunctionsController',[])
 
             $scope.saveChangesOnTables = function() {
                 if ($scope.validateTables() == true) {
-                    RestaurantTableFactory.setTablesByRestaurant($scope.tables);
+                    RestaurantTableFactory.setTablesByRestaurant($scope.tables).error(function() {
+                        toastr.error('Unable to update tables fully!');
+                    });
                 }
             }
 

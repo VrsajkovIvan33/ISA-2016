@@ -125,8 +125,25 @@ public class OrderItemController {
             value = "/removeOrderItem/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<OrderItem> removeOrderItem(@PathVariable("id") Long id) {
-        orderItemService.delete(id);
-        return new ResponseEntity<OrderItem>(HttpStatus.NO_CONTENT);
+        OrderItem orderItem = orderItemService.findOne(id);
+        if (orderItem.getOiStatus().equals("Waiting for waiter") || orderItem.getOiStatus().equals("Waiting")) {
+            orderItemService.delete(id);
+            Order order = orderService.findById(orderItem.getOrder().getId());
+            Boolean markAsReady = true;
+            for (OrderItem oi : order.getOrderItems()) {
+                if (!oi.getOiStatus().equals("Ready")) {
+                    markAsReady = false;
+                }
+            }
+            if (markAsReady == true) {
+                order.setoStatus("Ready");
+                orderService.save(order);
+            }
+            return new ResponseEntity<OrderItem>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<OrderItem>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @MessageMapping("/updateOrderItem/{rid}")
