@@ -26,5 +26,9 @@ angular.module('restaurantApp.GuestReservationsFactory', [])
                return $http.delete('/deleteOrderItem/' + reservationId + '/' + oiId, {"reservationId":reservationId, "oiId":oiId});
            }
 
+           factory.getReservation = function(id){
+               return $http.get('/getReservation/' + id);
+           }
+
            return factory;
        })
