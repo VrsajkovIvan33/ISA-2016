@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +60,22 @@ public class TenderController {
     public ResponseEntity<List<Tender>> getTendersByTRestaurant(@PathVariable("id") Long restaurantId){
         Restaurant restaurant = restaurantService.findOne(restaurantId);
         List<Tender> tenders = tenderService.findByTRestaurant(restaurant);
+
+        Date currentDate = new Date();
+        for(Tender tender:tenders){
+            if(tender.gettStatus().equals("Active") && currentDate.after(tender.gettEnd())){
+                List<Offer> offers = offerService.findByOffTender(tender);
+                for(Offer offer: offers){
+                    offer.setOffStatus("Expired");
+                    offerService.save(offer);
+                }
+
+                tender.settStatus("Expired");
+                tenderService.save(tender);
+            }
+        }
+        tenders = tenderService.findByTRestaurant(restaurant);
+
         return new ResponseEntity<List<Tender>>(tenders, HttpStatus.OK);
     }
 
@@ -73,6 +90,28 @@ public class TenderController {
             return new ResponseEntity<List<Tender>>(tenders, HttpStatus.OK);
         }else{
             List<Tender> tenders = tenderService.findByTRestaurantAndTStatus(restaurant, tStatus);
+
+            if(tStatus.equals("Active")) {
+                Date currentDate = new Date();
+                List<Tender> activeAndNotEnded = new ArrayList<>();
+                for (Tender tender : tenders) {
+                    if (currentDate.after(tender.gettStart()) && currentDate.before(tender.gettEnd())) {
+                        activeAndNotEnded.add(tender);
+                    }
+
+                    if (currentDate.after(tender.gettEnd())) {
+                        List<Offer> offers = offerService.findByOffTender(tender);
+                        for (Offer offer : offers) {
+                            offer.setOffStatus("Expired");
+                            offerService.save(offer);
+                        }
+
+                        tender.settStatus("Expired");
+                        tenderService.save(tender);
+                    }
+                }
+                return new ResponseEntity<List<Tender>>(activeAndNotEnded, HttpStatus.OK);
+            }
             return new ResponseEntity<List<Tender>>(tenders, HttpStatus.OK);
         }
     }

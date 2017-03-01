@@ -224,8 +224,10 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                  });
 
            $scope.getFreeTables = function(reservationHelper){
-               $scope.modalMode += 1;
-               $stomp.send('/app/getTables/' + $scope.restaurant.id + '/' + $localStorage.logged.id, reservationHelper);
+               if(validate(reservationHelper)) {
+                   $scope.modalMode += 1;
+                   $stomp.send('/app/getTables/' + $scope.restaurant.id + '/' + $localStorage.logged.id, reservationHelper);
+               }
            }
 
            $scope.selectTable = function(table) {
@@ -298,6 +300,8 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                };
                GuestRestaurantsFactory.addReservation($scope.reservation).success(function(data){
                    toastr.info('Tables reserved and invitation mails sent!');
+               }).error(function () {
+                   toastr.error('You can not reserve this tables!');
                });
 
                $uibModalInstance.dismiss('cancel');
@@ -310,6 +314,44 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
                })
                $uibModalInstance.dismiss('cancel');
            };
+
+
+
+           function validate(reservationHelper) {
+               if(reservationHelper.date == null){
+                   alert('Please enter reservation date');
+                   return false;
+               }
+
+               var date = new Date();
+               date.setHours(23,59,59,0);
+               if(date > reservationHelper.date){
+                   alert('Reservation date must be one or more days after today');
+                   return false;
+               }
+
+               if(reservationHelper.timeH == null){
+                   alert('Reservation time hours must be between 0 and 23');
+                   return false;
+               }
+
+               if(reservationHelper.timeM == null){
+                   alert('Reservation time minutes must be between 0 and 59');
+                   return false;
+               }
+
+               if(reservationHelper.durationH == null){
+                   alert('Reservation duration hours must be between 0 and 23');
+                   return false;
+               }
+
+               if(reservationHelper.durationM == null){
+                   alert('Reservation duration minutes must be between 0 and 59');
+                   return false;
+               }
+
+               return true;
+           }
        })
        .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr,  MenuService){
            $scope.newOrderItem = new Object();

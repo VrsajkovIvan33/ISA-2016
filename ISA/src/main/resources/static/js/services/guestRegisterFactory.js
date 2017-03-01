@@ -8,7 +8,7 @@ angular.module('restaurantApp.GuestRegisterFactory',[])
         var factory = {};
 
         factory.postGuest = function(newGuest) {
-            return $http.post('/registerGuest', {"name": newGuest.gName, "surname": newGuest.gSurname, "password": newGuest.gPassword, "email": newGuest.gEmail});
+            return $http.post('/registerGuest', newGuest);
         }
 
         return factory;

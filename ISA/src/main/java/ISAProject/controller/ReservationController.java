@@ -100,6 +100,33 @@ public class ReservationController {
     @RequestMapping(method = RequestMethod.POST, value = "/addReservation", consumes = "application/json")
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation){
         System.out.print("");
+
+        List<Reservation> reservations = reservationService.findByDate(reservation.getDate());
+
+        //transaction check
+        for(Reservation r : reservations){
+            if(((reservation.getTimeH() + reservation.getTimeM()/60 + reservation.getDurationH() + reservation.getDurationM()/60) > (r.getTimeH() + r.getTimeM()/60)) &&
+                    (reservation.getTimeH() + reservation.getTimeM()/60 + reservation.getDurationH() + reservation.getDurationM()/60) < (r.getTimeH() + r.getTimeM()/60 + r.getDurationH() + r.getDurationM()/60) ){
+
+                for(RestaurantTable rt : r.getTables()){
+                    for(RestaurantTable restaurantTable : reservation.getTables()){
+                        if(rt.getId().equals(restaurantTable.getId()))
+                            return new ResponseEntity<Reservation>(HttpStatus.FORBIDDEN);
+                    }
+                }
+            }
+            if(((reservation.getTimeH() + reservation.getTimeM()/60) < (r.getTimeH() + r.getTimeM()/60 + r.getDurationH() + r.getDurationM()/60)) &&
+                    ((reservation.getTimeH() + reservation.getTimeM()/60) > (r.getTimeH() + r.getTimeM()/60))){
+
+                for(RestaurantTable rt : r.getTables()){
+                    for(RestaurantTable restaurantTable : reservation.getTables()){
+                        if(rt.getId().equals(restaurantTable.getId()))
+                            return new ResponseEntity<Reservation>(HttpStatus.FORBIDDEN);
+                    }
+                }
+            }
+        }
+
         Date date = reservation.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

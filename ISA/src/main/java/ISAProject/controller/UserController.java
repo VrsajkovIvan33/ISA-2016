@@ -64,14 +64,12 @@ public class UserController {
     @RequestMapping(
             value = "/registerGuest",
             method = RequestMethod.POST,
-            consumes = "application/json")
-    public ResponseEntity<User> registerUser(@RequestBody User newUser) throws Exception {
-        newUser.setType(UserType.GUEST);
-        Guest guest = new Guest(newUser);
-        guest.setActive(false);
-        Guest saved = guestService.save(guest);
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Guest> registerUser(@RequestBody Guest guest) throws Exception {
+        Guest savedGuest = guestService.save(guest);
         mailManager.sendMail(guest);
-        return new ResponseEntity<User>(guest, HttpStatus.CREATED);
+        return new ResponseEntity<Guest>(savedGuest, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST, consumes = "application/json")
