@@ -96,8 +96,13 @@ public class MenuReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuReview> addMenuReview(@RequestBody MenuReview menuReview) throws Exception {
-        MenuReview savedMenuReview = menuReviewService.save(menuReview);
-        return new ResponseEntity<MenuReview>(savedMenuReview, HttpStatus.CREATED);
+        if (menuReview.getMrDate() != null && menuReview.getMrReview() >= 1 && menuReview.getMrReview() <= 5) {
+            MenuReview savedMenuReview = menuReviewService.save(menuReview);
+            return new ResponseEntity<MenuReview>(savedMenuReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<MenuReview>(menuReview, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -106,7 +111,12 @@ public class MenuReviewController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuReview> updateMenuReview(@RequestBody MenuReview menuReview) throws Exception {
-        MenuReview savedMenuReview = menuReviewService.save(menuReview);
-        return new ResponseEntity<MenuReview>(savedMenuReview, HttpStatus.CREATED);
+        if (menuReview.getMrDate() != null && menuReview.getMrReview() >= 1 && menuReview.getMrReview() <= 5) {
+            MenuReview savedMenuReview = menuReviewService.save(menuReview);
+            return new ResponseEntity<MenuReview>(savedMenuReview, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<MenuReview>(menuReview, HttpStatus.FORBIDDEN);
+        }
     }
 }

@@ -44,8 +44,13 @@ public class SystemmanagerController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SystemManager> createSystemManager(@RequestBody SystemManager systemManager) throws Exception {
-        SystemManager savedSystemManager = systemmanagerService.save(systemManager);
-        return new ResponseEntity<SystemManager>(savedSystemManager, HttpStatus.CREATED);
+        if (systemManager.getName() != null && systemManager.getEmail() != null && systemManager.getSurname() != null && systemManager.getPassword() != null) {
+            SystemManager savedSystemManager = systemmanagerService.save(systemManager);
+            return new ResponseEntity<SystemManager>(savedSystemManager, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<SystemManager>(systemManager, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -54,7 +59,12 @@ public class SystemmanagerController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SystemManager> updateSystemManager(@RequestBody SystemManager systemManager) throws Exception {
-        SystemManager savedSystemManager = systemmanagerService.save(systemManager);
-        return new ResponseEntity<SystemManager>(savedSystemManager, HttpStatus.CREATED);
+        if (systemManager.getName() != null && systemManager.getEmail() != null && systemManager.getSurname() != null && systemManager.getPassword() != null) {
+            SystemManager savedSystemManager = systemmanagerService.save(systemManager);
+            return new ResponseEntity<SystemManager>(savedSystemManager, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<SystemManager>(systemManager, HttpStatus.FORBIDDEN);
+        }
     }
 }

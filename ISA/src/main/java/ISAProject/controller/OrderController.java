@@ -147,11 +147,13 @@ public class OrderController {
             newerOrder.setCurrentWaiter(order.getCurrentWaiter());
             newerOrder.setWaiters(order.getWaiters());
             newestOrder = orderService.save(newerOrder);
+            return new ResponseEntity<Order>(newestOrder, HttpStatus.OK);
         }
         else {
             System.out.println("Validation failed for order addition!");
+            return new ResponseEntity<Order>(order, HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<Order>(newestOrder, HttpStatus.OK);
+
     }
 
     @RequestMapping(
@@ -159,25 +161,54 @@ public class OrderController {
             method = RequestMethod.PUT,
             consumes = "application/json")
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) throws Exception {
-        Order originalOrder = orderService.findById(order.getId());
-        originalOrder.setOrderItems(order.getOrderItems());
-        for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrder(order);
-            orderItem.setHourOfArrival(order.getHourOfArrival());
-            orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+
+        Boolean validationResult = true;
+        Order newOrder = null;
+
+        if (order.getBillCreated() == null || order.getoAssigned() == null || order.getoStatus() == null) {
+            validationResult = false;
         }
-        originalOrder.setCurrentWaiter(order.getCurrentWaiter());
-        originalOrder.setoAssigned(order.getoAssigned());
-        originalOrder.setoStatus(order.getoStatus());
-        originalOrder.setRestaurantTable(order.getRestaurantTable());
-        originalOrder.setWaiters(order.getWaiters());
-        originalOrder.setHourOfArrival(order.getHourOfArrival());
-        originalOrder.setMinuteOfArrival(order.getMinuteOfArrival());
-        originalOrder.setYear(order.getYear());
-        originalOrder.setMonth(order.getMonth());
-        originalOrder.setDay(order.getDay());
-        Order newOrder = orderService.save(originalOrder);
-        return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+        if (order.getoStatus() != null) {
+            if (!order.getoStatus().equals("Waiting for waiter") && !order.getoStatus().equals("Waiting") &&
+                    !order.getoStatus().equals("Currently making") && !order.getoStatus().equals("Ready")) {
+                validationResult = false;
+            }
+        }
+
+        if (validationResult == true) {
+            Order originalOrder = orderService.findById(order.getId());
+            originalOrder.setOrderItems(order.getOrderItems());
+            Boolean markAsReady = true;
+            for (OrderItem orderItem : order.getOrderItems()) {
+                orderItem.setOrder(order);
+                orderItem.setHourOfArrival(order.getHourOfArrival());
+                orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+                if (!orderItem.getOiStatus().equals("Ready")) {
+                    markAsReady = false;
+                }
+            }
+            originalOrder.setCurrentWaiter(order.getCurrentWaiter());
+            originalOrder.setoAssigned(order.getoAssigned());
+            originalOrder.setoStatus(order.getoStatus());
+            if (markAsReady == true) {
+                originalOrder.setoStatus("Ready");
+            }
+            originalOrder.setRestaurantTable(order.getRestaurantTable());
+            originalOrder.setWaiters(order.getWaiters());
+            originalOrder.setHourOfArrival(order.getHourOfArrival());
+            originalOrder.setMinuteOfArrival(order.getMinuteOfArrival());
+            originalOrder.setYear(order.getYear());
+            originalOrder.setMonth(order.getMonth());
+            originalOrder.setDay(order.getDay());
+            newOrder = orderService.save(originalOrder);
+            return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+        }
+        else {
+            System.out.println("Validation failed for order addition!");
+            return new ResponseEntity<Order>(order, HttpStatus.FORBIDDEN);
+        }
+
+
     }
 
     @RequestMapping(
@@ -197,6 +228,11 @@ public class OrderController {
             method = RequestMethod.PUT,
             consumes = "application/json")
     public ResponseEntity<Order> finalizeOrder(@RequestBody Order order) throws Exception {
+
+        if (order.getCurrentWaiter() == null || order.getWaiters() == null || order.getoStatus() == null || order.getBillCreated() == null) {
+            return new ResponseEntity<Order>(order, HttpStatus.FORBIDDEN);
+        }
+
         Order originalOrder = orderService.findById(order.getId());
         originalOrder.setoStatus(order.getoStatus());
         originalOrder.setBillCreated(order.getBillCreated());
@@ -289,25 +325,53 @@ public class OrderController {
     @MessageMapping("/updateOrder/{rid}")
     @SendTo("/topic/orders/{rid}")
     public Boolean updateOrderAsSocket(@DestinationVariable Long rid, Order order){
-        Order originalOrder = orderService.findById(order.getId());
-        originalOrder.setOrderItems(order.getOrderItems());
-        for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrder(order);
-            orderItem.setHourOfArrival(order.getHourOfArrival());
-            orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+
+        Boolean validationResult = true;
+        Order newOrder = null;
+
+        if (order.getBillCreated() == null || order.getoAssigned() == null || order.getoStatus() == null) {
+            validationResult = false;
         }
-        originalOrder.setCurrentWaiter(order.getCurrentWaiter());
-        originalOrder.setoAssigned(order.getoAssigned());
-        originalOrder.setoStatus(order.getoStatus());
-        originalOrder.setRestaurantTable(order.getRestaurantTable());
-        originalOrder.setWaiters(order.getWaiters());
-        originalOrder.setHourOfArrival(order.getHourOfArrival());
-        originalOrder.setMinuteOfArrival(order.getMinuteOfArrival());
-        originalOrder.setYear(order.getYear());
-        originalOrder.setMonth(order.getMonth());
-        originalOrder.setDay(order.getDay());
-        Order newOrder = orderService.save(originalOrder);
-        return true;
+        if (order.getoStatus() != null) {
+            if (!order.getoStatus().equals("Waiting for waiter") && !order.getoStatus().equals("Waiting") &&
+                    !order.getoStatus().equals("Currently making") && !order.getoStatus().equals("Ready")) {
+                validationResult = false;
+            }
+        }
+
+        if (validationResult == true) {
+            Order originalOrder = orderService.findById(order.getId());
+            originalOrder.setOrderItems(order.getOrderItems());
+            Boolean markAsReady = true;
+            for (OrderItem orderItem : order.getOrderItems()) {
+                orderItem.setOrder(order);
+                orderItem.setHourOfArrival(order.getHourOfArrival());
+                orderItem.setMinuteOfArrival(order.getMinuteOfArrival());
+                if (!orderItem.getOiStatus().equals("Ready")) {
+                    markAsReady = false;
+                }
+            }
+            originalOrder.setCurrentWaiter(order.getCurrentWaiter());
+            originalOrder.setoAssigned(order.getoAssigned());
+            originalOrder.setoStatus(order.getoStatus());
+            if (markAsReady == true) {
+                originalOrder.setoStatus("Ready");
+            }
+            originalOrder.setRestaurantTable(order.getRestaurantTable());
+            originalOrder.setWaiters(order.getWaiters());
+            originalOrder.setHourOfArrival(order.getHourOfArrival());
+            originalOrder.setMinuteOfArrival(order.getMinuteOfArrival());
+            originalOrder.setYear(order.getYear());
+            originalOrder.setMonth(order.getMonth());
+            originalOrder.setDay(order.getDay());
+            newOrder = orderService.save(originalOrder);
+            return true;
+        }
+        else {
+            System.out.println("Validation failed for order addition!");
+            return false;
+        }
+
     }
 
 
