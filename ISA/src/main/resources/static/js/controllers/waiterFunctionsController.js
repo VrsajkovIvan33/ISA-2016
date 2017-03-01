@@ -158,7 +158,9 @@ angular.module('restaurantApp.WaiterFunctionsController',[])
                         order.oStatus = "Waiting";
                         var i = 0;
                         for (i = 0; i < order.orderItems.length; i++) {
-                            order.orderItems[i].oiStatus = "Waiting";
+                            if (order.orderItems[i].oiStatus = "Waiting for waiter") {
+                                order.orderItems[i].oiStatus = "Waiting";
+                            }
                         }
                         $stomp.send('/app/updateOrder/' + $scope.waiter.restaurant.id, order);
                         // OrderFactory.updateOrder(order).success(function(data) {

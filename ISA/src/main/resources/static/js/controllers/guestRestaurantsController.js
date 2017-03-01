@@ -360,7 +360,7 @@ angular.module('restaurantApp.GuestRestaurantsController', [])
        })
        .controller('NewOrderItemController', function ($localStorage, $scope, $stomp, $uibModalInstance, param, $log, toastr,  MenuService){
            $scope.newOrderItem = new Object();
-           $scope.newOrderItem.oiStatus = "Waiting";
+           $scope.newOrderItem.oiStatus = "Waiting for waiter";
            $scope.newOrderItem.user = $localStorage.logged;
            $scope.newOrderItem.order = null;
            $scope.newOrderItem.hourOfArrival = 0;
