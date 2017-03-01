@@ -1,11 +1,10 @@
 package ISAProject.controller;
 
+import ISAProject.model.Reservation;
 import ISAProject.model.Restaurant;
 import ISAProject.model.RestaurantTable;
-import ISAProject.service.RestaurantSegmentService;
-import ISAProject.service.RestaurantService;
-import ISAProject.service.RestaurantTableService;
-import ISAProject.service.TableRegionService;
+import ISAProject.service.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +14,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -35,6 +35,9 @@ public class RestaurantTableController {
 
     @Autowired
     private TableRegionService tableRegionService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @RequestMapping(
             value = "/RestaurantTablesByRestaurant/{id}",
@@ -74,18 +77,48 @@ public class RestaurantTableController {
         //Long restaurantId = restaurantTables.get(0).getRestaurant().getId();
         //Restaurant restaurantById = restaurantService.findOne(restaurantId);
         // save the tables separately
+        Boolean updateFailed = false;
+
+        for (int i = 0; i <restaurantTables.size(); i++) {
+            if (restaurantTables.get(i).getRestaurantSegment() == null || restaurantTables.get(i).getTableRegion() == null || restaurantTables.get(i).getRtActive() == null) {
+                updateFailed = true;
+                break;
+            }
+        }
+        if (updateFailed == true) {
+            return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.FORBIDDEN);
+        }
+
         for (int i = 0; i < restaurantTables.size(); i++) {
             RestaurantTable restaurantTable = restaurantTableService.findById(
                     restaurantTables.get(i).getId());
             restaurantTable.setRtNumber(restaurantTables.get(i).getRtNumber());
-            restaurantTable.setRtActive(restaurantTables.get(i).getRtActive());
             restaurantTable.setRestaurantSegment(restaurantSegmentService.findByRsId(restaurantTables.get(i).getRestaurantSegment().getRsId()));
             restaurantTable.setTableRegion(tableRegionService.findById(restaurantTables.get(i).getTableRegion().getId()));
+            if (restaurantTable.getRtActive() == true && restaurantTables.get(i).getRtActive() == false) {
+                //provera da li postoji rezervacija
+                List<Reservation> reservations = reservationService.findLaterThanDateByRestaurant(Calendar.getInstance().getTime(), restaurantTable.getRestaurant());
+                Boolean tableFound = false;
+                for (Reservation reservation : reservations) {
+                    if (reservation.getTables().contains(restaurantTable)) {
+                        tableFound = true;
+                        updateFailed = true;
+                        break;
+                    }
+                }
+                if (!tableFound) {
+                    restaurantTable.setRtActive(restaurantTables.get(i).getRtActive());
+                }
+            }
             restaurantTableService.save(restaurantTable);
         }
 
-
-        return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.OK);
+        if (updateFailed) {
+            return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.FORBIDDEN);
+        }
+        else {
+            return new ResponseEntity<List<RestaurantTable>>(restaurantTables, HttpStatus.OK);
+        }
     }
 
 }

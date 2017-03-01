@@ -147,8 +147,13 @@ public class TenderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tender> addTender(@RequestBody Tender tender) throws Exception {
-        Tender savedTender = tenderService.save(tender);
-        return new ResponseEntity<Tender>(savedTender, HttpStatus.CREATED);
+        if (tender.gettStart() != null && tender.gettEnd() != null && tender.gettStatus() != null) {
+            Tender savedTender = tenderService.save(tender);
+            return new ResponseEntity<Tender>(savedTender, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<Tender>(tender, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -157,7 +162,12 @@ public class TenderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tender> updateTender(@RequestBody Tender tender) throws Exception {
-        Tender savedTender = tenderService.save(tender);
-        return new ResponseEntity<Tender>(savedTender, HttpStatus.CREATED);
+        if (tender.gettStart() != null && tender.gettEnd() != null && tender.gettStatus() != null) {
+            Tender savedTender = tenderService.save(tender);
+            return new ResponseEntity<Tender>(savedTender, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<Tender>(tender, HttpStatus.FORBIDDEN);
+        }
     }
 }

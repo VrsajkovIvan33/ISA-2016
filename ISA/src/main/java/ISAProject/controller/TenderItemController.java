@@ -80,8 +80,13 @@ public class TenderItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenderItem> addTenderItem(@RequestBody TenderItem tenderItem) throws Exception {
-        TenderItem savedTenderItem = tenderItemService.save(tenderItem);
-        return new ResponseEntity<TenderItem>(savedTenderItem, HttpStatus.CREATED);
+        if (tenderItem.getTiName() != null && tenderItem.getTiType() != null) {
+            TenderItem savedTenderItem = tenderItemService.save(tenderItem);
+            return new ResponseEntity<TenderItem>(savedTenderItem, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<TenderItem>(tenderItem, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -90,7 +95,12 @@ public class TenderItemController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TenderItem> updateTenderItem(@RequestBody TenderItem tenderItem) throws Exception {
-        TenderItem savedTenderItem = tenderItemService.save(tenderItem);
-        return new ResponseEntity<TenderItem>(savedTenderItem, HttpStatus.CREATED);
+        if (tenderItem.getTiName() != null && tenderItem.getTiType() != null) {
+            TenderItem savedTenderItem = tenderItemService.save(tenderItem);
+            return new ResponseEntity<TenderItem>(savedTenderItem, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<TenderItem>(tenderItem, HttpStatus.FORBIDDEN);
+        }
     }
 }

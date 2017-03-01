@@ -90,8 +90,13 @@ public class OrderItemController {
             method = RequestMethod.POST,
             consumes = "application/json")
     public ResponseEntity<OrderItem> addOrderItem(@RequestBody OrderItem orderItem) throws Exception {
-        OrderItem newOrderItem = orderItemService.save(orderItem);
-        return new ResponseEntity<OrderItem>(newOrderItem, HttpStatus.OK);
+        if (orderItem.getOiStatus() != null && orderItem.getOiReadyByArrival() != null) {
+            OrderItem newOrderItem = orderItemService.save(orderItem);
+            return new ResponseEntity<OrderItem>(newOrderItem, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<OrderItem>(orderItem, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
@@ -99,6 +104,11 @@ public class OrderItemController {
             method = RequestMethod.PUT,
             consumes = "application/json")
     public ResponseEntity<OrderItem> updateOrderItem(@RequestBody OrderItem orderItem) throws Exception {
+
+        if (orderItem.getOiStatus() == null || orderItem.getOiReadyByArrival() == null) {
+            return new ResponseEntity<OrderItem>(orderItem, HttpStatus.FORBIDDEN);
+        }
+
         OrderItem originalOrderItem = orderItemService.findOne(orderItem.getId());
         originalOrderItem.setUser(orderItem.getUser());
         originalOrderItem.setMenu(orderItem.getMenu());
@@ -125,14 +135,25 @@ public class OrderItemController {
             value = "/removeOrderItem/{id}",
             method = RequestMethod.DELETE)
     public ResponseEntity<OrderItem> removeOrderItem(@PathVariable("id") Long id) {
-        orderItemService.delete(id);
-        return new ResponseEntity<OrderItem>(HttpStatus.NO_CONTENT);
+        OrderItem orderItem = orderItemService.findOne(id);
+        if (orderItem.getOiStatus().equals("Waiting for waiter") || orderItem.getOiStatus().equals("Waiting")) {
+            orderItemService.delete(id);
+            return new ResponseEntity<OrderItem>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            return new ResponseEntity<OrderItem>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @MessageMapping("/updateOrderItem/{rid}")
     @SendTo("/topic/orderItems/{rid}")
     @Transactional
-    public Boolean updateOrderItemAsSocket(@DestinationVariable Long rid, OrderItem orderItem){
+    public long updateOrderItemAsSocket(@DestinationVariable Long rid, OrderItem orderItem){
+
+        if (orderItem.getOiStatus() == null || orderItem.getOiReadyByArrival() == null) {
+            return -1;
+        }
+
         OrderItem originalOrderItem = orderItemService.findOne(orderItem.getId());
         originalOrderItem.setUser(orderItem.getUser());
         originalOrderItem.setMenu(orderItem.getMenu());
@@ -152,7 +173,13 @@ public class OrderItemController {
             order.setoStatus("Ready");
             orderService.save(order);
         }
-        return true;
+
+        if (order.getCurrentWaiter() != null) {
+            return order.getCurrentWaiter().getId();
+        }
+        else {
+            return -1;
+        }
     }
 
 }

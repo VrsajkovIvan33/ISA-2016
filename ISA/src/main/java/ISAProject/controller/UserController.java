@@ -43,21 +43,25 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> login(@RequestBody TempUser tempUser){
-        User user = userService.findByEmail(tempUser.getEmail());
-        System.out.print(user);
-        if(user != null) {
-            if (user.getPassword().equals(tempUser.getPassword())) {
-                if (user instanceof Guest) {
-                    if (((Guest) user).isActive())
+        if (tempUser.getEmail() != null && tempUser.getPassword() != null) {
+            User user = userService.findByEmail(tempUser.getEmail());
+            System.out.print(user);
+            if(user != null) {
+                if (user.getPassword().equals(tempUser.getPassword())) {
+                    if (user instanceof Guest) {
+                        if (((Guest) user).isActive())
+                            return new ResponseEntity<User>(user, HttpStatus.OK);
+                        else
+                            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                    } else
                         return new ResponseEntity<User>(user, HttpStatus.OK);
-                    else
-                        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-                } else
-                    return new ResponseEntity<User>(user, HttpStatus.OK);
-            } else {
+                } else {
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }
+            }else
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }else
+        }
+        else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
@@ -67,37 +71,52 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Guest> registerUser(@RequestBody Guest guest) throws Exception {
-        Guest savedGuest = guestService.save(guest);
-        mailManager.sendMail(guest);
-        return new ResponseEntity<Guest>(savedGuest, HttpStatus.CREATED);
+        if (guest.getName() != null && guest.getSurname() != null && guest.getEmail() != null && guest.getPassword() != null) {
+            Guest savedGuest = guestService.save(guest);
+            mailManager.sendMail(guest);
+            return new ResponseEntity<Guest>(savedGuest, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<Guest>(guest, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<User> confirmRegistration(@RequestBody TempUser user) throws Exception{
-        User userRegistered = userService.findByEmail(user.getEmail());
-        if(userRegistered instanceof Guest){
-            ((Guest) userRegistered).setActive(true);
-            Guest saved = guestService.save((Guest)userRegistered);
-            return new ResponseEntity<User>(saved, HttpStatus.OK);
-        }else{
+        if (user.getEmail() != null) {
+            User userRegistered = userService.findByEmail(user.getEmail());
+            if(userRegistered instanceof Guest){
+                ((Guest) userRegistered).setActive(true);
+                Guest saved = guestService.save((Guest)userRegistered);
+                return new ResponseEntity<User>(saved, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }
+        else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<User> updateUser(@RequestBody User user) throws Exception{
-        User userRegistered = userService.findOne(user.getId());
-        Guest saved = null;
-        if(userRegistered instanceof Guest){
-            userRegistered.setName(user.getName());
-            userRegistered.setSurname(user.getSurname());
-            userRegistered.setEmail(user.getEmail());
-            saved = guestService.save((Guest)userRegistered);
+        if (user.getEmail() != null && user.getName() != null && user.getSurname() != null) {
+            User userRegistered = userService.findOne(user.getId());
+            Guest saved = null;
+            if(userRegistered instanceof Guest){
+                userRegistered.setName(user.getName());
+                userRegistered.setSurname(user.getSurname());
+                userRegistered.setEmail(user.getEmail());
+                saved = guestService.save((Guest)userRegistered);
+            }
+            if(saved != null)
+                return new ResponseEntity<User>(saved, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        if(saved != null)
-            return new ResponseEntity<User>(saved, HttpStatus.OK);
-        else
+        else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(
